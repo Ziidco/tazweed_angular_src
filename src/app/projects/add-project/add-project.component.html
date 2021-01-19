@@ -1,0 +1,324 @@
+<app-after-login-header></app-after-login-header>
+<div class="container">
+<!-- <div *ngFor="let projectConfig of projectConfig">
+  {{projectConfig | json}}
+
+</div> -->
+
+  <div *ngIf="showAddForm" class="add-project-container col-lg-9 col-md-9 col-12"> 
+    <div class="form-title">
+      <h1>أضاف مشروع جديد</h1>
+
+
+      <div class="anotherRegisteration">
+        <span class="ask reg-font">تساعدنا هذه المعلومات في اختيار الكاتب المناسب لمشروعك</span>
+      </div>
+      <progressbar [value]="progressValue"></progressbar>
+    </div>
+    <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addProjectForm" (ngSubmit)="addProject()">
+
+      <!-- step 1 -->
+      <div class="step-1" [ngClass]="stepValue == 1 ? 'd-block' : 'd-none'">
+        <div class="form-group">
+          <h6>العنوان المقترح للمقال</h6>
+          <input type="text" name="projectTitle" class="form-control" formControlName="projectTitle"
+            placeholder="(اكتب اقتراحك هنا وسيعمل الكاتب على تحسينه)" />
+          <span *ngIf="!addProjectForm.get('projectTitle').valid && addProjectForm.get('projectTitle').touched">ادخل العنوان المقترح للمقال</span>
+        </div>
+        <div class="form-group">
+          <h6>في أي مجال تحب نكتب لك؟</h6>
+          <input type="text" name="projectField" class="form-control" formControlName="projectField"
+            placeholder="(اختر أقرب المجالات لمشروعك) " />
+          <span *ngIf="!addProjectForm.get('projectField').valid && addProjectForm.get('projectField').touched">اختر
+            المجال</span>
+        </div>
+        <div class="form-group">
+          <h6>لديك أفكار تحب التركيز عليها؟ <span class="reg-font-2 addon">(اختياري)</span></h6>
+          <input type="text" name="projectIdea" class="form-control" formControlName="projectIdea"
+            placeholder="(يمكنك استغلال هذه الفرصة للترويج لخدماتك التي تحل مشاكل العملاء)" />
+        </div>
+        <div class="form-group justify-content-end d-flex">
+          <button [disabled]="!addProjectForm.get('projectTitle').valid || !addProjectForm.get('projectField').valid "
+            (click)="stepValue = 2;progressValue=50" type="button"
+            class="btn btn-success next generalBtnStyle add-roject-btn">التالى
+            <span>
+              <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </span></button>
+        </div>
+      </div>
+
+      <!-- step 2 -->
+
+      <div class="step-2" [ngClass]="stepValue == 2 ? 'd-block' : 'd-none'">
+        <h1>الآن ندخل في العمق ونستهدف جمهورك</h1>
+        <div class="form-group">
+          <h6>كلمات مفتاحية تريد استهدافها في محركات البحث</h6>
+          <mat-form-field class="form-control">
+            <mat-chip-list #chipList aria-label="Fruit selection">
+              <mat-chip *ngFor="let tag of tagsList"  [selectable]="selectable"
+                       [removable]="removable" (removed)="remove(tag)">
+                {{tag.name}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input 
+                     [matChipInputFor]="chipList"
+            
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+
+
+        </div>
+
+        <div class="form-group">
+          <h6>لديك مصادر تريد أن يستفيد منها الكاتب؟<span class="ask reg-font">(اختياري)</span></h6>
+          <textarea class="form-control" placeholder="(مثلا، الملف التعريفي للشركة، تقرير حول مجال عملك)" formControlName="resource"></textarea>
+
+        </div>
+        <div class="form-group">
+          <h6>لديك روابط تريد إدراجها في المقال؟<span class="ask reg-font">(اختياري)</span></h6>
+          <mat-form-field class="form-control">
+            <mat-chip-list #chipList2 >
+              <mat-chip *ngFor="let externalLink of externalLinks" [selectable]="selectable"
+                       [removable]="removable" (removed)="removeLink(externalLink)">
+                {{externalLink.name}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input 
+                     [matChipInputFor]="chipList2"
+            
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="addLinks($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+        </div>
+        <div class="form-group justify-content-between d-flex">
+          <button (click)="stepValue = 1;progressValue=33" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+          <button (click)="stepValue = 3;progressValue=75" type="button"
+            class="btn btn-success generalBtnStyle next add-roject-btn">التالى
+            <span>
+              <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- step 3 -->
+
+      <div class="step-3" [ngClass]="stepValue == 3 ? 'd-block' : 'd-none'">
+        <h1>أنت على وشك تحديد حجم استثمارك في المحتوى</h1>
+        <div class="form-group mb40">
+          <h6>اختر حجم المشروع </h6>
+          <!-- <div class="d-flex">
+            <div class="radio-item-c">
+              <input id="short" type="radio" value="1" name="size" formControlName="size">
+              <label for="short">مشروع قصير <br>600 كلمة</label>
+            </div>
+            <div class="radio-item-c">
+              <input id="medium" type="radio" value="2" name="size" formControlName="size">
+              <label for="medium">مشروع متوسط <br>1200 كلمة</label>
+            </div>
+            <div class="radio-item-c">
+              <input id="large" type="radio" value="3" name="size" formControlName="size">
+              <label for="large">مشروع طويل <br>2400 كلمة</label>
+            </div>
+          </div> -->
+
+
+
+          <div class="d-flex">
+            <div class="radio-item-c" *ngFor="let projectConfig of projectConfig">
+              <input (change)="calculateCost()" id="projectConfig.id" type="radio" [value]="projectConfig.id"  formControlName="size">
+              <!-- <label for="projectConfig.id">{{projectConfig.name}} <br>{{projectConfig.size}} كلمة</label> -->
+
+
+
+              <label for="projectConfig.id">
+                <span *ngIf="projectConfig.id==1">مشروع قصير</span>
+                <span *ngIf="projectConfig.id==2">مشروع متوسط</span>
+                <span *ngIf="projectConfig.id==3">مشروع طويل</span>
+           
+                <br>
+                {{projectConfig.size}} كلمة
+              </label>
+            </div>
+            <!-- <div class="radio-item-c">
+              <input id="medium" type="radio" value="2" name="size" formControlName="size">
+              <label for="medium">مشروع متوسط <br>1200 كلمة</label>
+            </div>
+            <div class="radio-item-c">
+              <input id="large" type="radio" value="3" name="size" formControlName="size">
+              <label for="large">مشروع طويل <br>2400 كلمة</label>
+            </div> -->
+          </div>
+
+
+
+        </div>
+
+        <div class="form-group mb40">
+          <h6>حدد مدة التنفيذ</h6> 
+          <div class="d-flex">
+            <div class="radio-item-c">
+              <input (change)="calculateCost()"  id="shortTime" type="radio" value="1" name="timePerDay" formControlName="timePerDay">
+              <label for="short">24 ساعة <br>يوم واحد</label>
+            </div>
+            <div class="radio-item-c">
+              <input (change)="calculateCost()"  id="mediumTime" type="radio" value="2" name="timePerDay" formControlName="timePerDay">
+              <label for="mediumTime">48 ساعة <br>يومين</label>
+            </div>
+            <div class="radio-item-c">
+              <input (change)="calculateCost()"  id="largeTime" type="radio" value="3" name="timePerDay" formControlName="timePerDay">
+              <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+            </div>
+          </div>
+        </div>
+        <div class="total-container">
+
+
+
+          <div class="form-group">
+            <h6>تكلفة المشروع</h6>
+            <h5>{{projectCost}} ريال سعودى</h5>
+          </div>
+
+
+          <div class="form-group additon">
+            <button type="button" class="btn very-normal-btn" (click)="addAddition(additoin.value)">أضف</button>
+            <input type="text" class="form-control" formControlName="additionFake" #additoin placeholder="(أجر إضافي (اختياري" />
+            <span class="hint">زيادة القيمة تجذب أفضل الكتاب وتمنحك الأولوية</span>
+          </div>
+
+          <div class="form-group">
+            <span>الإجمالي (التكلفة + الأجر الإضافي) = </span><span class="total-num">{{finalCost}} ريال سعودي</span>
+          </div>
+
+        </div>
+        <div class="form-group justify-content-between d-flex">
+          <button (click)="stepValue = 2;progressValue=50" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+          <button  [disabled]="!addProjectForm.get('size').valid || !addProjectForm.get('timePerDay').valid " (click)="stepValue = 4;progressValue=100" type="button"
+            class="btn btn-success generalBtnStyle next add-roject-btn">التالى
+            <span>
+              <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- step 4 -->
+
+      <div class="step-4" [ngClass]="stepValue == 4 ? 'd-block' : 'd-none'">
+        <div class="form-group">
+
+          <h1>أدفع تكلفة المشروع</h1>
+          <h6 class=" gray reg-font">بعد هذه الخطوة سيكون مشروعك بين أيدي كتاب تزويد</h6>
+        </div>
+        <div class="total-container">
+
+
+          <div class="form-group d-flex justify-content-between">
+            <span>تكلفة المشروع</span>
+            <span class="colored">{{projectCost}} ريال سعودى</span>
+          </div>
+          <div class="form-group d-flex justify-content-between">
+            <span>الأجر الإضافي</span>
+            <span class="colored">{{addProjectForm.get("additionFake").value}} ريال سعودي</span>
+          </div>
+          <hr>
+          <div class="form-group d-flex justify-content-between">
+            <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+            <span class="colored">{{finalCost}} ريال سعودي</span>
+          </div>
+        </div>
+        <!-- <div class="payment-container">
+          <h4>أدخل بيانات بطاقتك الائتمانية</h4>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="أسم صاحب البطاقة" />
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="رقم بطاقة الائتمان (XXXXXXXXXXXXXXXX)" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="الشهر / السنة" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="الرقم السري (CVV)" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <div class="form-group justify-content-between d-flex">
+          <button (click)="stepValue = 3" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+          <button type="submit" class="btn btn-success generalBtnStyle add-project-submit">أدفع الأن وأضف مشروعك
+          </button>
+
+
+        </div>
+
+      </div>
+
+
+
+    </form>
+     <!-- <div class="text-center showFailMessage" *ngIf="showFailMessage">
+  
+      <p>{{errorDetails}}</p>
+    </div>
+    <div class="text-center showSuccessMessage" *ngIf="showSuccessMessage">
+  
+      <p>تم التسجيل بنجاح برجاء فتح بريدك الالكترونى لتأكيد التسجيل</p>
+    </div> -->
+    <!-- <div *ngIf="showSuccessMessage" class="text-center success-project">
+      <fa-icon [icon]="faCheckCircle"></fa-icon>
+      <h1>طلبك وصل!</h1>
+      <p>شكرا لاستخدامك منصة تزويد.. الآن نختار لك الكاتب المميز</p>
+      <button type="button" class="btn btn-success generalBtnStyle add-project-submit">أنتقل إلى صفحة المشاريع </button>
+    </div> -->
+
+  </div>
+
+
+  <div *ngIf="showSuccessMessage" class="text-center success-project"> 
+    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    <h1>طلبك وصل!</h1>
+    <p>سوف يتم تحويلك تلقائيا الى صفحة الدفع واتمام اضافة المشروع</p>
+    <!-- <button routerLink="/myProjects" type="button" class="btn btn-success generalBtnStyle add-project-submit">أنتقل إلى صفحة المشاريع </button> -->
+    <!-- <a target="_blank" class="btn btn-success generalBtnStyle add-project-submit" [href]="paymentUrl">أنتقل إلى صفحة الدفع لاتمام اضافة مشروعك</a> -->
+  </div>
+ 
+
+</div>

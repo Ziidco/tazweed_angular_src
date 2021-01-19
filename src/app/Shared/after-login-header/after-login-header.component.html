@@ -1,0 +1,170 @@
+<header class="after-login-header fixed-header">
+  <div class="container text-center">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <img class="inner-logo" src="../../../assets/images/logo.png" />
+      <div class="float-right d-none d-sm-block">
+        <nav class="nav">
+          <li><a class="nav-link" routerLink="/profile" routerLinkActive="active">
+              <fa-icon class="ml5" [icon]="faUserAlt"></fa-icon>حسابي
+            </a></li>
+          <li><a class="nav-link" routerLink="/myProjects" routerLinkActive="active">
+              <fa-icon class="ml5" [icon]="faFolderOpen"></fa-icon>مشاريعي
+            </a></li>
+          <li><a routerLink="/myProjects" class="nav-link ">
+              <fa-icon class="ml5" [icon]="faHistory"></fa-icon>مشاريعي السابقة
+            </a></li>
+            <li><a routerLink="/allProjects" class="nav-link " *ngIf="showPartnerPart">
+              <fa-icon class="ml5" [icon]="faHistory"></fa-icon>كل المشاريع
+            </a></li>
+        </nav>
+      </div>
+      <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed;"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="d-flex d-lg-none d-md-none d-sm-none" style="width: 100%;">
+        <div>
+          <img class="userIconImage" *ngIf="userImageBase!='default'" [src]="userImageBase" />
+          <img class="userIconImage" *ngIf="userImageBase=='default'" src="../../assets/images/profile/avatar.png" />
+
+        </div>
+        <h6 class="notification-title title-mobile">مرحباً {{userName}}</h6>
+        
+
+
+      </div>
+      <!-- ACCORDION PART START -->
+      <div id="accordion-part" class="d-lg-none d-md-none d-sm-none">
+
+        <div [ngbCollapse]="isCollapsed">
+          <ul class="menu">
+
+            <li class="list active">
+              <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+                <fa-icon class="ml5" [icon]="faUserAlt"></fa-icon>حسابي
+              </a>
+            </li>
+            <li class="list">
+              <a class="nav-link" routerLink="/myProjects" routerLinkActive="active">
+                <fa-icon class="ml5" [icon]="faFolderOpen"></fa-icon>مشاريعي
+              </a>
+            </li>
+            <li class="list">
+              <a routerLink="/myProjects" class="nav-link ">
+                <fa-icon class="ml5" [icon]="faHistory"></fa-icon>مشاريعي السابقة
+              </a>
+            </li>
+            <li><a routerLink="/allProjects" class="nav-link " *ngIf="showPartnerPart">
+              <fa-icon class="ml5" [icon]="faHistory"></fa-icon>كل المشاريع
+            </a></li>
+            <li class="list" *ngIf="showClientPart">
+              <button routerLink="/addProject" type="submit" class="btn btn-success nobg-btn p520"><span
+                  style="padding-left: 5px;">+</span>أضاف مشروع جديد</button>
+            </li>
+
+            <li class="list">
+              <button routerLink="/profile" ngbDropdownItem>
+                <fa-icon class="ml5" [icon]="faUserAlt"></fa-icon>تعديل البيانات الشخصية
+              </button>
+            </li>
+            <li class="list">
+              <button (click)="signOut()" type="button" ngbDropdownItem>
+                <fa-icon class="ml5" [icon]="faSignOutAlt"></fa-icon>تسجيل الخروج
+              </button>
+
+            </li>
+
+
+
+
+          </ul>
+        </div>
+
+
+
+
+
+      </div>
+      <!-- ACCORDION PART END -->
+
+      <div class="collapse navbar-collapse d-none d-sm-block" id="navbarText">
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item active ml30" *ngIf="showClientPart"> 
+            <button routerLink="/addProject" type="submit" class="btn btn-success nobg-btn p520"><span
+                style="padding-left: 5px;">+</span>أضاف مشروع جديد</button>
+          </li>
+          <li class="nav-item ml30">
+            <div class="btn-group no-arrow">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn plr0 noarrow font20" ngbDropdownToggle>
+                  <fa-icon [icon]="faBell"></fa-icon>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <div class="drop-down-title">
+                    <h6 class="notification-title">الإشعارات</h6>
+                  </div>
+                  <button ngbDropdownItem>تم قبول طلب من العميل. ابدأ الأن</button>
+                  <button ngbDropdownItem>تم قبول طلب من العميل. ابدأ الأن</button>
+                  <button ngbDropdownItem>تم قبول طلب من العميل. ابدأ الأن</button>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item ml30">
+            <div class="btn-group no-arrow">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn plr0 noarrow font20" ngbDropdownToggle>
+                  <fa-icon [icon]="faEnvelope"></fa-icon>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <div class="drop-down-title">
+                    <h6 class="notification-title">الرسائل</h6>
+                  </div>
+                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
+                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
+                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item profile-small-image ml30">
+            <div class="btn-group no-arrow">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="dropdown-toggle btn noarrow p0" ngbDropdownToggle>
+                  <img *ngIf="userImageBase!='default'" [src]="userImageBase" />
+                  <img *ngIf="userImageBase=='default'" src="../../assets/images/profile/avatar.png" />
+                </button>
+
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <div class="drop-down-title">
+                    <h6 class="notification-title">مرحباً {{userName}}</h6>
+                  </div>
+                  <button routerLink="/profile" ngbDropdownItem>
+                    <fa-icon class="ml5" [icon]="faUserAlt"></fa-icon>تعديل البيانات الشخصية
+                  </button>
+                  <div class="drop-down-footer">
+                    <button (click)="signOut()" type="button" ngbDropdownItem>
+                      <fa-icon class="ml5" [icon]="faSignOutAlt"></fa-icon>تسجيل الخروج
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <img  src="../../../assets/images/profile/small.jpg" /> -->
+          </li>
+
+          <!-- <li class="nav-item ">
+            <button class="sign-out" (click)="signOut()" type="button">
+              <fa-icon [icon]="faSignOutAlt"></fa-icon>
+            </button>
+
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>

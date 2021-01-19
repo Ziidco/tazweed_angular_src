@@ -1,0 +1,88 @@
+<app-after-login-header></app-after-login-header>
+<div class="container">
+  <div *ngIf="showEditSuccessMessage" class="modal2 custom-modal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">تعديل بيانات المشروع</h5>
+          <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>تم تعديل بيانات المشروع بنجاح</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <p>you will edit project with id {{projectId}}</p>
+  <p>you will edit project with details {{editedProjectObject|json}}</p> -->
+  <div class="form-title">
+    <h1>تعديل المشروع</h1>
+  </div>
+  <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="editProjectForm" (ngSubmit)="editPrpject()">
+    <div class="form-group">
+      <h6>العنوان المقترح للمقال</h6>
+      <input type="text" class="form-control" formControlName="projectTitle" />
+    </div>
+    <div class="form-group">
+      <h6>في أي مجال تحب نكتب لك؟</h6>
+      <input type="text" class="form-control" formControlName="projectField" />
+    </div>
+    <div class="form-group">
+      <h6>لديك أفكار تحب التركيز عليها؟ <span class="reg-font-2 addon">(اختياري)</span></h6>
+      <input type="text" class="form-control" formControlName="projectIdea" />
+    </div>
+
+
+
+    <div class="form-group">
+      <h6>اختر حجم المشروع </h6>
+      <div class="d-flex">
+        <div class="radio-item-c" *ngFor="let projectConfig of projectConfig">
+          <input id="projectConfig.id" type="radio" [value]="projectConfig.id" formControlName="size">
+          <!-- <label for="projectConfig.id">{{projectConfig.name}} <br>{{projectConfig.size}} كلمة</label> -->
+
+
+
+          <label for="projectConfig.id">
+            <span *ngIf="projectConfig.id==1">مشروع قصير</span>
+            <span *ngIf="projectConfig.id==2">مشروع متوسط</span>
+            <span *ngIf="projectConfig.id==3">مشروع طويل</span>
+
+            <br>
+            {{projectConfig.size}} كلمة
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <h6>حدد مدة التنفيذ</h6>
+      <div class="d-flex">
+        <div class="radio-item-c">
+          <input id="shortTime" type="radio" [value]="1" formControlName="timePerDay">
+          <label for="short">24 ساعة <br>يوم واحد</label>
+        </div>
+        <div class="radio-item-c">
+          <input id="mediumTime" type="radio" [value]="2" formControlName="timePerDay">
+          <label for="mediumTime">48 ساعة <br>يومين</label>
+        </div>
+        <div class="radio-item-c">
+          <input id="largeTime" type="radio" [value]="3" formControlName="timePerDay">
+          <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-success auto-width-btn">حفظ التعديلات</button>
+    </div>
+
+  </form>
+
+
+  <!-- <ngb-rating [(rate)]="currentRate"></ngb-rating>
+<hr>
+<pre>Rate: <b>{{currentRate}}</b></pre>  -->
+</div>
