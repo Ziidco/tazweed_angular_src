@@ -2,7 +2,11 @@
 <div class="container">
 
 
-  <h1>selected project {{selectedProject|json}}</h1>
+  <h1>selected project {{selectedProject|json}}</h1> 
+  <div id="exportContent" style="display: none;">
+    <!-- Your content to export here -->
+    {{selectedProject.document}}
+</div>
 
   <div class="project-item mt30">
     <div class="card-body">
@@ -262,6 +266,8 @@
               class="btn btn-success auto-width-btn">
               مراجعة المشروع
             </button>
+            <button class="btn btn-success auto-width-btn export-btn" *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed' && loggedUserType =='client'" (click)="Export2Doc('exportContent', selectedProject.projectTitle)"><fa-icon class="ml5" [icon]="faFileDownload"></fa-icon>تحميل النص</button>
+
 
           </div>
         </div>
@@ -335,10 +341,10 @@
         يرسل تعديلات)</p>
       <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="deliverJobForm" (ngSubmit)="deliverJob()">
         <textarea formControlName="document" class="form-control mh200" placeholder="محتوى المشروع"></textarea>
-        <div class="calculations d-flex reg-font">
+        <!-- <div class="calculations d-flex reg-font">
           <span>الحروف: 0</span>
-        </div>
-        <button type="submit" class="btn btn-success auto-width-btn">إرسال المشروع للمراجعة</button>
+        </div> -->
+        <button style="margin-top: 20px;" type="submit" class="btn btn-success auto-width-btn">إرسال المشروع للمراجعة</button>
       </form>
     </div>
   </div>

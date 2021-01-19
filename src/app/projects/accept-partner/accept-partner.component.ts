@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UserService } from 'src/app/services/user.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faArrowLeft,faFileDownload } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -15,6 +15,7 @@ import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 export class AcceptPartnerComponent implements OnInit {
   faEnvelope = faEnvelope;
   faArrowLeft = faArrowLeft;
+  faFileDownload = faFileDownload;
   currentRate = 0;
   showApplyBoxFail = false;
   showApplyBoxSuccess = false;
@@ -311,5 +312,38 @@ export class AcceptPartnerComponent implements OnInit {
   showReviewBox(){
     this.showFinishBoxSuccess = true;
   }
+
+  Export2Doc(element, filename = ''){
+    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body style='direction:rtl'>";
+    var postHtml = "</body></html>";
+    var html = preHtml+document.getElementById(element).innerHTML+postHtml;
+
+    var blob = new Blob(['\ufeff', html],{
+        type: 'application/msword'
+    });
+
+    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html)
+
+    filename = filename?filename+'.doc': 'document.doc';
+
+    var downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if(navigator.msSaveOrOpenBlob){
+        navigator.msSaveOrOpenBlob(blob, filename);
+    }else{
+        downloadLink.href = url;
+
+        downloadLink.download = filename;
+
+        downloadLink.click();
+    }
+
+    document.body.removeChild(downloadLink);
+
+
+}
+
 
 }

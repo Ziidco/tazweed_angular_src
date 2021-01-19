@@ -42,7 +42,7 @@ export class AddProjectComponent implements OnInit {
     // this.calculateCost();
     // this.addAddition(0);
 
-    this.uuidValue = this.Uuid.generateUUID();
+    this.uuidValue = this.Uuid.generateUUID(); 
     console.log("this.uuidvalue");
     console.log(this.uuidValue);
     this.projectServ.configJop(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
@@ -264,7 +264,9 @@ export class AddProjectComponent implements OnInit {
     this.projectCost = totalCost;
     this.finalCost = +this.projectCost;
     this.addProjectForm.get("additionFake").setValue("0");
-
+    this.addProjectForm.get("totalCost").setValue(this.finalCost);
+    this.addProjectForm.get("amount").setValue(this.finalCost);
+    
 
 
 
