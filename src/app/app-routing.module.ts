@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { ClientPolicyGuard } from './client-policy.guard';
 import { ConfirmResetPasswordComponent } from './confirm-reset-password/confirm-reset-password.component';
@@ -42,7 +44,9 @@ const routes: Routes = [
   {path:"projectSetails/:id",component:ProjectDetailsComponent},
   {path:"acceptPartner/:id",component:AcceptPartnerComponent},
   {path:"successAddedProject",component:AddProjectSuccessComponent},
-  {path:"failAddedProject",component:AddProjectFailComponent}
+  {path:"failAddedProject",component:AddProjectFailComponent},
+  {path:"admin/login",component:AdminLoginComponent},
+  {path:"dashboard",component:DashboardComponent}
   
 ];
 

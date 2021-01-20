@@ -2,7 +2,7 @@
 <div class="container">
 
 
-  <h1>selected project {{selectedProject|json}}</h1> 
+  <!-- <h1>selected project {{selectedProject|json}}</h1>  -->
   <div id="exportContent" style="display: none;">
     <!-- Your content to export here -->
     {{selectedProject.document}}
@@ -11,7 +11,7 @@
   <div class="project-item mt30">
     <div class="card-body">
       <h6>{{selectedProject.projectTitle}}</h6>
-      <h6>{{selectedProject.partnerId}}</h6>
+      <!-- <h6>{{selectedProject.partnerId}}</h6> -->
       <div *ngIf="selectedProject.status=='active' || selectedProject.status=='prePayment' " class="custom-stepper">
         <div class="rpp-stepper">
 
@@ -70,10 +70,16 @@
 
 
           <div class="rpp-stepper-divider"></div>
-          <a class="stepper-link" (click)="logStepValue('pending')">
-            <div class="rpp-stepper-item" ngClass="rpp-stepper-item-pending">
+          <a *ngIf="loggedUserType =='partner'" class="stepper-link">
+            <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
               <span class="rpp-stepper-item-content">2</span>
               <div class="step-title-custom">قبول الكاتب</div>
+            </div>
+          </a>
+          <a  *ngIf="loggedUserType =='client'"  class="stepper-link">
+            <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
+              <span class="rpp-stepper-item-content">2</span>
+              <div style="cursor: pointer;" class="step-title-custom" (click)="logStepValue('pending')">قبول الكاتب</div>
             </div>
           </a>
           <div class="rpp-stepper-divider"></div>
@@ -221,7 +227,7 @@
           <a class="stepper-link">
             <div class="rpp-stepper-item " ngClass="rpp-stepper-item-completed">
               <span class="rpp-stepper-item-content">1</span>
-              <div class="step-title-custom">انشاء الطلب</div>
+              <div class="step-title-custom">انشاء الطلب</div> 
             </div>
           </a>
 
@@ -445,13 +451,53 @@
       <p>انتظر حتى يتقدم لمشروع أفضل الكتاب</p>
     </div>
   </div>
-
   <div *ngIf="showApplyBoxSuccess" class="project-item">
     <div class="card-body">
       <h6>يوجد كاتب متقدم لمشروعك</h6>
-      <h6>{{partnerName}}</h6>
+      <h6>
+       
+          {{partnerName}}
+       
+      </h6>
+      
     </div>
   </div>
+
+  <!-- <div *ngIf="showApplyBoxSuccess" class="project-item">
+    <div class="card-body">
+      <h6>يوجد كاتب متقدم لمشروعك</h6>
+      <h6>
+        <a style="cursor: pointer;font-size: 20px;color: #247d8f;" (click)="showProjectPartnerMessage='true'">
+          {{partnerName}}
+          <fa-icon class="profile-navigator" [icon]="faAddressCard"></fa-icon>
+        </a>
+      </h6>
+      
+    </div>
+  </div> -->
+
+
+  <!-- <div *ngIf="showProjectPartnerMessage" class="modal2 custom-modal custom-modal22" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">بيانات الكاتب</h5>
+          <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-right">
+          <h6> <fa-icon class="ml5 writerIcon"  [icon]="faUserAlt"></fa-icon> {{partnerDialogObject.firstName}} {{partnerDialogObject.lastName}}</h6>
+          <h6><fa-icon class="ml5 writerIcon"   [icon]="faEnvelope"></fa-icon> {{partnerDialogObject.email}}</h6>
+          <h6><fa-icon class="ml5 writerIcon"   [icon]="faMobileAlt"></fa-icon> {{partnerDialogObject.mobileNumber}}</h6>
+          <h6><fa-icon class="ml5 writerIcon"   [icon]="faFlag"></fa-icon> {{partnerDialogObject.country}}</h6>
+          <h6><fa-icon  class="ml5 writerIcon"  [icon]="faVenusMars"></fa-icon> {{partnerDialogObject.gender}}</h6>
+          
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
   <div *ngIf="showApplyBoxSuccess" class="project-item">
     <div class="card-body">
       <h6 class="project-title mb0">هل توافق على الكاتب للبدء في مشروعك؟</h6>

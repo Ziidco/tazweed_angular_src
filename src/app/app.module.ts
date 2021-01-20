@@ -44,6 +44,8 @@ import { ProjectDetailsComponent } from './projects/project-details/project-deta
 import { AcceptPartnerComponent } from './projects/accept-partner/accept-partner.component';
 import { AddProjectSuccessComponent } from './projects/add-project-success/add-project-success.component';
 import { AddProjectFailComponent } from './projects/add-project-fail/add-project-fail.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { AddProjectFailComponent } from './projects/add-project-fail/add-project
     ProjectDetailsComponent,
     AcceptPartnerComponent,
     AddProjectSuccessComponent,
-    AddProjectFailComponent
+    AddProjectFailComponent,
+    AdminLoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

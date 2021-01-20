@@ -65,8 +65,8 @@
     <!-- <input type="text" [(ngModel)]="filteredStatus"> -->
     <!-- project start -->
     <div class="col-lg-8 col-md-8 col-12">
-      <input type="text" class="form-control" (input)="searchWithFilter()" [(ngModel)]="filteredStatus"> 
-      <h4>search with word {{filteredStatus}}</h4>
+      <input type="text" placeholder="أبحث بأسم المشروع" class="form-control" (input)="searchWithFilter()" [(ngModel)]="filteredStatus"> 
+      <!-- <h4>search with word {{filteredStatus}}</h4> -->
       <div *ngFor="let project of allProjects ">
         <div class="card project-item">
           <div class="card-body">
@@ -107,28 +107,28 @@
                 </label> -->
 
                 <div *ngIf="project.size==1" class="project-prop">
-                  <h2>{{project.size}}</h2>
+                  <!-- <h2>{{project.size}}</h2> -->
                   <h6>مشروع قصير</h6>
                   <span>
                     (600 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==2" class="project-prop">
-                  <h2>{{project.size}}</h2>
+                  <!-- <h2>{{project.size}}</h2> -->
                   <h6>مشروع متوسط</h6>
                   <span>
                     (1200 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==3" class="project-prop">
-                  <h2>{{project.size}}</h2>
+                  <!-- <h2>{{project.size}}</h2> -->
                   <h6>مشروع طويل</h6>
                   <span>
                     (2400 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==null" class="project-prop">
-                  <h2>{{project.size}}</h2>
+                  <!-- <h2>{{project.size}}</h2> -->
                   <h6>مشروع غير محدد</h6>
                   <span>
                     (؟؟؟ كلمة)

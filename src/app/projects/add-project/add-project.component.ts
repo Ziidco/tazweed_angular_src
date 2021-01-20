@@ -100,7 +100,7 @@ export class AddProjectComponent implements OnInit {
       timePerDay: new FormControl(null, Validators.required),
       status: new FormControl("active"),
       amount: new FormControl(null),
-      addtionalAmount: new FormControl(null),
+      addtionalAmount: new FormControl("0"),
       totalCost: new FormControl(null),
       briefProject: new FormControl(null),
       additionFake: new FormControl(null)
@@ -277,7 +277,7 @@ export class AddProjectComponent implements OnInit {
     this.addProjectForm.get("addtionalAmount").patchValue(val);
 
     this.finalCost = +val + this.projectCost;
-    this.addProjectForm.get("totalCost").setValue(this.finalCost);
+    this.addProjectForm.get("totalCost").setValue(this.finalCost); 
   }
 
 } 

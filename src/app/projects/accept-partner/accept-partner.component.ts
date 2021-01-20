@@ -4,18 +4,22 @@ import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UserService } from 'src/app/services/user.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import { faEnvelope, faArrowLeft,faFileDownload } from '@fortawesome/free-solid-svg-icons';
-
+import { faEnvelope, faArrowLeft,faFileDownload,faAddressCard,faUserAlt,faMobileAlt,faFlag,faVenusMars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-accept-partner',
-  templateUrl: './accept-partner.component.html',
+  templateUrl: './accept-partner.component.html', 
   styleUrls: ['./accept-partner.component.css']
 })
 export class AcceptPartnerComponent implements OnInit {
   faEnvelope = faEnvelope;
   faArrowLeft = faArrowLeft;
   faFileDownload = faFileDownload;
+  faAddressCard = faAddressCard;
+  faMobileAlt = faMobileAlt;
+  faUserAlt = faUserAlt;
+  faFlag = faFlag;
+  faVenusMars = faVenusMars;
   currentRate = 0;
   showApplyBoxFail = false;
   showApplyBoxSuccess = false;
@@ -25,6 +29,7 @@ export class AcceptPartnerComponent implements OnInit {
   projectId;
   partnerId;
   partnerName;
+  partnerDialogObject;
   acceptJobForm: FormGroup;
   rejectJobForm: FormGroup;
   deliverJobForm: FormGroup;
@@ -33,6 +38,7 @@ export class AcceptPartnerComponent implements OnInit {
   rejectProjectForm: FormGroup;
   showRejectForm: boolean = false;
   showFinishBoxSuccess = false;
+  showProjectPartnerMessage:boolean = false;
   loggedUserType;
   commentForJob;
   showdeliverBox = false;
@@ -113,6 +119,7 @@ export class AcceptPartnerComponent implements OnInit {
           this.partnerName = response.data.userName;
           console.log("partner profile data ====== ");
           console.log(response.data);
+          this.partnerDialogObject = response.data;
 
 
         }
@@ -343,6 +350,10 @@ export class AcceptPartnerComponent implements OnInit {
     document.body.removeChild(downloadLink);
 
 
+}
+
+closeDialog(){
+  this.showProjectPartnerMessage = false;
 }
 
 
