@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import { faSignOutAlt, faFileAlt, faHourglassHalf, faMoneyBillWave,faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faFileAlt, faHourglassHalf, faMoneyBillWave, faArrowLeft, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { project } from 'src/app/Model/project';
 import { ManageImageService } from 'src/app/services/manage-image.service';
@@ -23,22 +23,18 @@ export class AllProjectsComponent implements OnInit {
   faHourglassHalf = faHourglassHalf;
   faMoneyBillWave = faMoneyBillWave;
   faArrowLeft = faArrowLeft;
+  faFolderOpen = faFolderOpen;
   filteredStatus = '';
+  showProjectsContainer = false;
+  showNoProjectsContainer = false;
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private imageServ: ManageImageService) { }
 
   ngOnInit(): void {
-    console.log("type of all project object ================ ");
-    console.log(typeof (this.allProjects));
-
-
     this.uuidValue = this.Uuid.generateUUID();
-    console.log("this.uuidvalue");
-    console.log(this.uuidValue);
-
     this.imageServ.profileImagePathShared.subscribe(
       (response) => {
-        console.log("user profile image exist");
-        console.log(response);
+        // console.log("user profile image exist");
+        // console.log(response);
         this.userImageBase = response;
 
       },
@@ -50,15 +46,25 @@ export class AllProjectsComponent implements OnInit {
     )
     this.projectServ.getAllProjects(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
-        console.log("all projects obj");
-        console.log(JSON.stringify(response.data.body.data));
         this.allProjects = response.data.body.data;
+        
+        if (this.allProjects == "") {
+          this.showProjectsContainer = false;
+          this.showNoProjectsContainer = true;
+
+        }
+        else{
+          this.showProjectsContainer = true;
+          this.showNoProjectsContainer = false;
+        }
 
 
       },
       err => {
         console.log("something went wrong");
         console.log(err)
+        this.showProjectsContainer = false;
+          this.showNoProjectsContainer = true;
 
       }
     )
@@ -67,9 +73,9 @@ export class AllProjectsComponent implements OnInit {
     this.route.navigate(["/login"]);
     localStorage.clear();
   }
-  onCheckboxChange(event,valueReal){
+  onCheckboxChange(event, valueReal) {
     console.log(event);
-    if (event.target.checked){
+    if (event.target.checked) {
       console.log(valueReal.value);
       const checkValue = valueReal.value;
 
@@ -78,31 +84,31 @@ export class AllProjectsComponent implements OnInit {
         this.ngOnInit()
       }
 
-       if (checkValue == 1)  {
+      if (checkValue == 1) {
         this.allProjects = this.allProjects.filter(
           res => {
-            return res.size ==1;
+            return res.size == 1;
           }
         )
       }
-      if (checkValue == 2)  {
+      if (checkValue == 2) {
         this.allProjects = this.allProjects.filter(
           res => {
-            return res.size ==2;
+            return res.size == 2;
           }
         )
       }
-       if (checkValue == 3)  {
+      if (checkValue == 3) {
         this.allProjects = this.allProjects.filter(
           res => {
-            return res.size ==3;
+            return res.size == 3;
           }
         )
       }
-      if (checkValue == 1 && checkValue == 3)  {
+      if (checkValue == 1 && checkValue == 3) {
         this.allProjects = this.allProjects.filter(
           res => {
-            return res.size ==1 && res.size ==3;
+            return res.size == 1 && res.size == 3;
           }
         )
       }
@@ -115,13 +121,13 @@ export class AllProjectsComponent implements OnInit {
       //     }
       //   )
       // }
-      
+
     }
-    else{
+    else {
       this.ngOnInit()
     }
 
-    
+
   }
   searchWithFilter() {
     // if (this.allProjects.size == 1) { 
@@ -143,16 +149,16 @@ export class AllProjectsComponent implements OnInit {
       this.allProjects = this.allProjects.filter(
         res => {
           // return (res.size).toString().match(this.filteredStatus.toString())
-          return res.size ==1;
+          return res.size == 1;
         }
       )
     }
 
 
   }
-  openProject(project){
+  openProject(project) {
     this.projectServ.selectedPoject.next(project);
-    this.route.navigate(["projectSetails/"+project._id]);
+    this.route.navigate(["projectSetails/" + project._id]);
   }
 
 }

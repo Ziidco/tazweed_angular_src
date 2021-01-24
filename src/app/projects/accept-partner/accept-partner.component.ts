@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -54,8 +54,8 @@ export class AcceptPartnerComponent implements OnInit {
     this.rejectJobForm = new FormGroup({
       clinetId: new FormControl(localStorage.getItem("clientId")),
       partnerId: new FormControl(null),
-      status: new FormControl("active"),
-      rejectionReason: new FormControl(null)
+      status: new FormControl("rejected"),
+      rejectionReason: new FormControl(null,Validators.required)
 
     })
     this.deliverJobForm = new FormGroup({
@@ -281,7 +281,7 @@ export class AcceptPartnerComponent implements OnInit {
       (response: any) => {
         console.log("تم نسليم المشروع");
         console.log(response)
-        this.route.navigate(['/myProjects']);
+        this.route.navigate(['/finishingProjectMessage']);
 
       },
       err => {

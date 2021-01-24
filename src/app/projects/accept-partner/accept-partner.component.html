@@ -272,12 +272,58 @@
               class="btn btn-success auto-width-btn">
               مراجعة المشروع
             </button>
-            <button class="btn btn-success auto-width-btn export-btn" *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed' && loggedUserType =='client'" (click)="Export2Doc('exportContent', selectedProject.projectTitle)"><fa-icon class="ml5" [icon]="faFileDownload"></fa-icon>تحميل النص</button>
+            
 
 
           </div>
         </div>
       </div>
+      <div *ngIf="selectedProject.status=='completed' && selectedProject.partnerId!='null'"
+      class="custom-stepper">
+      <div class="rpp-stepper">
+        <a class="stepper-link">
+          <div class="rpp-stepper-item " ngClass="rpp-stepper-item-completed">
+            <span class="rpp-stepper-item-content">1</span>
+            <div class="step-title-custom">انشاء الطلب</div> 
+          </div>
+        </a>
+
+
+        <div class="rpp-stepper-divider"></div>
+        <a class="stepper-link">
+          <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
+            <span class="rpp-stepper-item-content">2</span>
+            <div class="step-title-custom">قبول الكاتب</div>
+          </div>
+        </a>
+        <div class="rpp-stepper-divider"></div>
+
+        <a class="stepper-link">
+          <div class="rpp-stepper-item " ngClass="rpp-stepper-item-completed">
+            <span class="rpp-stepper-item-content">3</span>
+            <div class="step-title-custom">قيد التنفيذ</div>
+          </div>
+        </a>
+        <div class="rpp-stepper-divider"></div>
+        <a class="stepper-link">
+          <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
+            <span class="rpp-stepper-item-content">4</span>
+            <div class="step-title-custom">المراجعة</div>
+          </div>
+        </a>
+
+
+        <div class="rpp-stepper-divider"></div>
+        <a class="stepper-link">
+          <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
+            <span class="rpp-stepper-item-content">5</span>
+            <div class="step-title-custom">انتهاء المشروع</div>
+          </div>
+        </a>
+      </div>
+
+    
+    </div>
 
 
 
@@ -354,10 +400,15 @@
       </form>
     </div>
   </div>
+  <div *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed'  && selectedProject.partnerId!='null'" class="project-item">
+    <textarea disabled style="min-height: 200px;" class="form-control">{{selectedProject.document}}</textarea>
+  </div>
+  <button class="btn btn-success auto-width-btn export-btn" *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed'" (click)="Export2Doc('exportContent', selectedProject.projectTitle)"><fa-icon class="ml5" [icon]="faFileDownload"></fa-icon>تحميل النص</button>
+
 
   <div *ngIf="showFinishBoxSuccess" class="project-item">
     <div class="card-body">
-      <h6 class="project-title ">مرحلة مراجعة المشروع</h6>
+      <h6 class="project-title ">مرحلة مراجعة المشروع</h6> 
       <h6 class="reg-font mb20">هل لديك تعديلات؟ بقبولك المشروع بعد المراجعة سوف ينتهي المشروع ويتم تحويل المبلغ لرصيد
         الكاتب</h6>
       <div class="d-flex">
@@ -381,18 +432,18 @@
   <!-- rating section -->
 
   <div class="project-item"
-    *ngIf="selectedProject.status=='reviewing' && selectedProject.partnerId!='null' && loggedUserType =='client'">
+    *ngIf="selectedProject.status=='completed' && selectedProject.partnerId!='null'">
     <div class="card-body">
-      <h6 class="project-title">تقييم الكاتب</h6>
+      <h6 class="project-title">التقييم</h6>
       <div class="rating-block">
         <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addRatingForm" (ngSubmit)="addRate()">
           <ngb-rating max="5" formControlName="rate" [(rate)]="currentRate"></ngb-rating>
           <hr>
           <pre>Rate: <b>{{currentRate}}</b></pre>
           <textarea formControlName="comment" class="form-control"
-            placeholder="اكتب تقييمك وملاحظاتك عن الكاتب"></textarea>
-          <span>قم بتقييم الكاتب حتى تشارك خبرتك مع العملاء الاخرين في المستقبل</span>
-          <div><button type="submit" class="btn btn-success app-button">اضف تقييم للكاتب</button></div>
+            placeholder="اكتب تقييمك وملاحظاتك "></textarea>
+          <span>قم بتقييم المستخدم حتى تشارك خبرتك مع العملاء الاخرين في المستقبل</span>
+          <div><button type="submit" class="btn btn-success app-button">اضف تقييم</button></div>
         </form>
       </div>
     </div>
@@ -402,7 +453,7 @@
   <!-- comments section -->
   <!-- selectedProject.status=='reviewing' && -->
   <div class="project-item"
-    *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='reviewing' || selectedProject.status=='completed' || selectedProject.status=='inprogress'">
+    *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='completed' || selectedProject.status=='reviewing'">
     <div class="card-body">
       <h6 class="project-title">
         <fa-icon class="ml5" [icon]="faEnvelope"></fa-icon>الرسائل
@@ -451,7 +502,7 @@
       <p>انتظر حتى يتقدم لمشروع أفضل الكتاب</p>
     </div>
   </div>
-  <div *ngIf="showApplyBoxSuccess" class="project-item">
+  <!-- <div *ngIf="showApplyBoxSuccess" class="project-item">
     <div class="card-body">
       <h6>يوجد كاتب متقدم لمشروعك</h6>
       <h6>
@@ -461,9 +512,9 @@
       </h6>
       
     </div>
-  </div>
+  </div> -->
 
-  <!-- <div *ngIf="showApplyBoxSuccess" class="project-item">
+  <div *ngIf="showApplyBoxSuccess" class="project-item">
     <div class="card-body">
       <h6>يوجد كاتب متقدم لمشروعك</h6>
       <h6>
@@ -474,10 +525,10 @@
       </h6>
       
     </div>
-  </div> -->
+  </div>
 
 
-  <!-- <div *ngIf="showProjectPartnerMessage" class="modal2 custom-modal custom-modal22" role="dialog">
+  <div *ngIf="showProjectPartnerMessage" class="modal2 custom-modal custom-modal22" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -496,7 +547,7 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
   
   <div *ngIf="showApplyBoxSuccess" class="project-item">
     <div class="card-body">
@@ -514,7 +565,8 @@
         <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="rejectJobForm" (ngSubmit)="rejectPartner()">
           <textarea style="margin-bottom: 20px;" placeholder="اكتب أسباب رفضك هنا" class="form-control"
             formControlName="rejectionReason"></textarea>
-          <button type="submit" class="btn btn-success auto-width-btn ml20">تأكيد رفض الكاتب</button>
+            <div class="reg-font red" *ngIf="!rejectJobForm.get('rejectionReason').valid && rejectJobForm.get('rejectionReason').touched ">من فضلك ادخل سبب الرفض</div>
+          <button [disabled]="!rejectJobForm.valid" type="submit" class="btn btn-success auto-width-btn ml20">تأكيد رفض الكاتب</button>
         </form>
       </div>
     </div>

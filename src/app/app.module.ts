@@ -46,6 +46,7 @@ import { AddProjectSuccessComponent } from './projects/add-project-success/add-p
 import { AddProjectFailComponent } from './projects/add-project-fail/add-project-fail.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ProjectThanksComponent } from './projects/project-thanks/project-thanks.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
     AddProjectSuccessComponent,
     AddProjectFailComponent,
     AdminLoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProjectThanksComponent
   ],
   imports: [
     BrowserModule,

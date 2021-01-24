@@ -143,9 +143,9 @@
 
 
               <label for="projectConfig.id">
-                <span *ngIf="projectConfig.id==1">مشروع قصير</span>
-                <span *ngIf="projectConfig.id==2">مشروع متوسط</span>
-                <span *ngIf="projectConfig.id==3">مشروع طويل</span>
+                <span *ngIf="projectConfig.id==1">قصير</span>
+                <span *ngIf="projectConfig.id==2">متوسط</span>
+                <span *ngIf="projectConfig.id==3">طويل</span>
            
                 <br>
                 {{projectConfig.size}} كلمة
@@ -190,11 +190,27 @@
             <h6>تكلفة المشروع</h6>
             <h5>{{projectCost}} ريال سعودى</h5>
           </div>
-
+          <!-- *ngIf="showAdditionnalValueMessage" -->
+          <div *ngIf="showAdditionnalValueMessage" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">القيمة الاضافيه</h5>
+                  <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-right">
+                  <h6 class="reg-font">تم اضافة قيمة اضافية</h6>
+                  <h6 class="reg-font">{{addProjectForm.get('additionFake').value}} ريال</h6>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="form-group additon">
             <button type="button" class="btn very-normal-btn" (click)="addAddition(additoin.value)">أضف</button>
-            <input type="text" class="form-control" formControlName="additionFake" #additoin placeholder="(أجر إضافي (اختياري" />
+            <input  type="text" class="form-control" formControlName="additionFake" #additoin placeholder="(أجر إضافي (اختياري" />
             <span class="hint">زيادة القيمة تجذب أفضل الكتاب وتمنحك الأولوية</span>
           </div> 
 

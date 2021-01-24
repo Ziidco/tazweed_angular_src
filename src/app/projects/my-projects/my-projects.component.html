@@ -7,6 +7,8 @@
     ["prePayment","active", "pending", "inprogress","reviewing","rejected", "completed"] 
   
   -->
+
+
   <div *ngFor="let project of myProjects ">
 
     <div class="card project-item">
@@ -27,7 +29,10 @@
 
             <div *ngIf="project.status=='active' ||project.status=='prePayment'" class="project-details-btn reg-font">
               <button (click)="editPoject(project)" type="button" class="btn">تعديل المشروع<fa-icon
-                  [icon]="faArrowLeft"></fa-icon></button></div>
+                  [icon]="faArrowLeft"></fa-icon></button>
+            </div>
+
+
           </div>
 
 
@@ -256,6 +261,12 @@
           </div>
 
         </div>
+        <div *ngIf="project.status=='prePayment' && userType=='client'">
+          <button (click)="repayProject(project)" type="button"
+            class="btn btn-success generalBtnStyle float-left repay-btn">اتمام عملية الدفع</button>
+        </div>
+
+
 
 
 
@@ -263,12 +274,12 @@
         <div *ngIf="userType=='partner'">
 
 
-          <!-- <div class="d-flex justify-content-between" *ngIf="project.status!='active' || project.status!='prePayment'">
+          <div class="d-flex justify-content-between" *ngIf="project.status!='active' || project.status!='prePayment'">
 
-            <h6>{{project.projectTitle}}</h6>
-            <h4>project status : {{project.status}}</h4>
+            <!-- <h6>{{project.projectTitle}}</h6> -->
+            <!-- <h4>project status : {{project.status}}</h4> -->
 
-          </div> -->
+          </div>
 
 
 
@@ -371,7 +382,7 @@
             <div class="text-left">
 
               <div class="project-details-btn reg-font">
-                <button (click)="openProject(project)" type="button" class="btn">
+                <button (click)="openProject(project)" type="button" class="btn btn-success auto-width-btn deliver-btn">
                   تسليم المشروع للمراجعة
                   <fa-icon [icon]="faArrowLeft"></fa-icon>
                 </button>
@@ -426,7 +437,7 @@
               </a>
             </div>
 
-            
+
 
 
           </div>
@@ -474,7 +485,7 @@
               </a>
             </div>
 
-            
+
 
 
           </div>
@@ -492,7 +503,7 @@
     </div>
 
 
-   
+
 
 
 

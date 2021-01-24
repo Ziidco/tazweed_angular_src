@@ -69,7 +69,7 @@ export class PartnerRegisterComponent implements OnInit {
       err => {
         console.log(err);  
         this.showFailMessage = true;
-        this.errorDetails =  err.statusText;
+        this.errorDetails =  err.error.message;
        
 
       }

@@ -492,22 +492,12 @@ header.after-login-header .nav-link:focus {
   box-shadow: 0px 0px 10px #247D8F29;
   border: 1px solid #D6D6D6;
   border-radius: 8px;
-  padding: 5px 10px 5px 40px;
   margin-left: 15px;
   color: #777777;
   position: relative;
+  text-align: center;
+  padding: 5px 10px 5px 10px;
 }
-
-/* .radio-item-c input[type="radio"]{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  right: 0;
-  left: 0;
-  top: 0;
-  border: 0;
-  appearance: inherit;
-} */
 
 .radio-back:focus.radio.item-c {
   border: 1px solid #247D8F;
@@ -567,6 +557,10 @@ input[type="radio"] {
   margin: auto;
 }
 
+.radio-item-c label {
+  font-size: 13px;
+}
+
 .mb40 {
   margin-bottom: 40px;
 }
@@ -579,6 +573,13 @@ input[type="radio"] {
 .total-num {
   font-size: 24px;
   color: #247D8F;
+}
+
+.deliver-btn {
+  color: #fff !important;
+  margin: 20px 0 10px !important;
+  margin: 20px 0 10px !important;
+  background: #3f51b5 !important
 }
 
 .gray {
@@ -594,7 +595,7 @@ input[type="radio"] {
   padding: 50px 0;
 }
 
-.success-project fa-icon {
+.success-project>fa-icon {
   color: #247D8F;
   font-size: 100px;
 }
@@ -623,6 +624,11 @@ input[type="radio"] {
   box-shadow: 0px 0px 9px 3px #00000014;
   border-radius: 20px;
   padding: 20px 0;
+}
+
+.noProjectsMessage fa-icon {
+  color: #707070;
+  font-size: 40px;
 }
 
 .sign-out {
@@ -1005,7 +1011,7 @@ ngb-rating {
 .step-title-custom {
   position: relative;
   bottom: -40px;
-  z-index: 99999999999;
+  z-index: 99;
   font-size: 14px;
   min-width: 100px;
   right: -12px;
@@ -1106,7 +1112,8 @@ ngb-rating {
   padding: 0 !important;
   outline: none !important;
 }
-.admin-block{
+
+.admin-block {
   background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 7px 2px #00000014;
@@ -1114,7 +1121,8 @@ ngb-rating {
   padding: 20px;
   margin-bottom: 30px;
 }
-.admin-icon{
+
+.admin-icon {
   background: #D3E5E9;
   width: 40px;
   height: 40px;
@@ -1126,23 +1134,63 @@ ngb-rating {
   margin-left: 10px;
   color: #247d8f;
 }
-.orange{color: #F2711C !important;}
-.light-orane{background: #FCE3D2 !important;}
-.blue{color: #2185D0 !important;}
-.purble{color: #6435C9 !important;}
-.light-purble{background: #E0D7F4 !important;}
-.green{color: #00B5AD !important;}
-.light-green{background-color: #CCF0EF !important;}
-.yellow{color: #FBBD08 !important;}
-.light-yellow{background-color: #FEF2CE !important;}
-.custom-modal22{
+
+.orange {
+  color: #F2711C !important;
+}
+
+.light-orane {
+  background: #FCE3D2 !important;
+}
+
+.blue {
+  color: #2185D0 !important;
+}
+
+.purble {
+  color: #6435C9 !important;
+}
+
+.light-purble {
+  background: #E0D7F4 !important;
+}
+
+.green {
+  color: #00B5AD !important;
+}
+
+.light-green {
+  background-color: #CCF0EF !important;
+}
+
+.yellow {
+  color: #FBBD08 !important;
+}
+
+.light-yellow {
+  background-color: #FEF2CE !important;
+}
+
+.custom-modal22 {
   width: 400px;
   right: 45%;
   z-index: 999999999999999999;
   bottom: 20px;
 }
-.profile-navigator{font-size: 30px;margin-right: 15px;}
-.writerIcon{
+
+.addition-box.custom-modal22 {
+  width: 250px;
+  left: 50px;
+  right: auto;
+  bottom: 100px;
+}
+
+.profile-navigator {
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.writerIcon {
   background: #247d8f;
   color: #fff;
   display: inline-block;
@@ -1152,6 +1200,58 @@ ngb-rating {
   text-align: center;
   border-radius: 5px;
   font-size: 16px;
+}
+
+.horizontal-tabs .nav-pills .nav-link.active,
+.horizontal-tabs .nav-pills .show>.nav-link {
+  background-color: #247d8f;
+}
+
+.horizontal-tabs .nav-pills .nav-link {
+  padding: 10px 40px;
+}
+
+.repay-btn {
+  margin-top: 10px;
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.upload-image-block {
+  position: relative;
+}
+
+.upload-tool {
+  position: absolute;
+  top: 22px;
+  left: -18px;
+  background: #247D8F;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 5px solid #fff;
+}
+.image-block-top{
+  display: inline-block;
+  width: 245px;
+  box-shadow: 0px 0px 9px 3px #1677811A;
+  border-radius: 10px 10px 0 0;
+  margin-top: 30px;
+  padding: 10px;
+}
+.upload-profile-icon {
+  color: #fff;
+  font-size: 16px;
+  line-height: 34px
+}
+.attach-image-last{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  left: 0;
+  opacity: 0;
 }
 @media(min-width:992px) {
   .navbar-expand-lg .navbar-nav .dropdown-menu {

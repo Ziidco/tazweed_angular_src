@@ -2,12 +2,20 @@
 <!-- <div>
   {{allProjects|json}}
 </div> -->
-<div class="container" style="margin-top:30px;">
+<div *ngIf="showNoProjectsContainer" class="container" style="margin-top:150px;"> 
+  <div class="text-center noProjectsMessage">
+    <fa-icon [icon]="faFolderOpen"></fa-icon>
+    <h4>لا يوجد مشاريع االأن</h4>
+    <p class="reg-font">انتظر حتى يتم اضافة مشاريع بواسطة العملاء</p>
+  </div>
+  
+</div>
+<div *ngIf="showProjectsContainer" class="container" style="margin-top:30px;">
   <div class="row">
     <!-- right side menu -->
     <div class="col-lg-4 col-md-4 col-12">
       <div class="right-side-pannel">
-        <h5 class="widget">المشاريع المفتوحة</h5>
+        <h5 class="widget">المشاريع المفتوحة</h5> 
         <hr />
         <!-- filter block -->
         <div class="filter-block">
@@ -108,28 +116,28 @@
 
                 <div *ngIf="project.size==1" class="project-prop">
                   <!-- <h2>{{project.size}}</h2> -->
-                  <h6>مشروع قصير</h6>
+                  <h6>قصير</h6>
                   <span>
                     (600 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==2" class="project-prop">
                   <!-- <h2>{{project.size}}</h2> -->
-                  <h6>مشروع متوسط</h6>
+                  <h6>متوسط</h6>
                   <span>
                     (1200 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==3" class="project-prop">
                   <!-- <h2>{{project.size}}</h2> -->
-                  <h6>مشروع طويل</h6>
+                  <h6>طويل</h6>
                   <span>
                     (2400 كلمة)
                   </span>
                 </div>
                 <div *ngIf="project.size==null" class="project-prop">
                   <!-- <h2>{{project.size}}</h2> -->
-                  <h6>مشروع غير محدد</h6>
+                  <h6>غير محدد</h6>
                   <span>
                     (؟؟؟ كلمة)
                   </span>

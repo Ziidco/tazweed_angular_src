@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './after-login-header.component.html',
   styleUrls: ['./after-login-header.component.css']
 })
-export class AfterLoginHeaderComponent implements OnInit {
+export class AfterLoginHeaderComponent implements OnInit { 
   uuidValue: any;
   userImageBase;
   public isCollapsed = true;
@@ -41,8 +41,8 @@ export class AfterLoginHeaderComponent implements OnInit {
       this.showClientPart = true;
     }
     this.uuidValue = this.Uuid.generateUUID();
-    console.log("this.uuidvalue");
-    console.log(this.uuidValue);
+    // console.log("this.uuidvalue");
+    // console.log(this.uuidValue);
     const userProfileData = {
       profileId: localStorage.getItem("userId"),
       email: localStorage.getItem("email")
@@ -50,7 +50,7 @@ export class AfterLoginHeaderComponent implements OnInit {
  // retrieve profile data 
  this.userServ.getOneProfileData(localStorage.getItem("userId"), localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
   (userProfileResponse: any) => {
-    console.log("all user profile object is --------------------------");
+    // console.log("all user profile object is --------------------------");
     console.log(userProfileResponse.data);
     localStorage.setItem("sessionFirstName", userProfileResponse.data.firstName);
     localStorage.setItem("sessionLastName", userProfileResponse.data.lastName);

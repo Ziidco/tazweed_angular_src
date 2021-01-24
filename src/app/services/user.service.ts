@@ -74,7 +74,7 @@ export class UserService {
   }
   isLoggedIn() {
     if (localStorage.getItem("auth")) {
-      console.log("---------------- safe route ");
+      // console.log("---------------- safe route ");
 
       return true;
     }
@@ -92,8 +92,21 @@ export class UserService {
       return false;
     }
   }
+//https://www.tazweedservice.ml/rest/api/v1/profile/balance/profileId
 
 
+ // get balance
+ getBalance(profileId, customerType: string, X_Request_ID: string, token) {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-Customer-Type': customerType,
+    'X-Request-ID': X_Request_ID,
+    'auth': token
+
+  })
+  return this.http.get(this.baseUrl + "profile/balance/" + profileId, { headers: headers });
+
+}
 
 
   // add Rating

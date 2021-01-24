@@ -32,6 +32,7 @@ export class AddProjectComponent implements OnInit {
   tags;
   additionVlaue;
   showSuccessMessage = false;
+  showAdditionnalValueMessage = false;
   projectConfig;
   projectCost;
   finalCost;
@@ -39,36 +40,14 @@ export class AddProjectComponent implements OnInit {
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router) { }
 
   ngOnInit(): void {
-    // this.calculateCost();
-    // this.addAddition(0);
-
-    this.uuidValue = this.Uuid.generateUUID(); 
-    console.log("this.uuidvalue");
-    console.log(this.uuidValue);
+    this.uuidValue = this.Uuid.generateUUID();
     this.projectServ.configJop(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (configResponse: any) => {
-        console.log("config object ====== ");
-        // console.log(JSON.stringify(configResponse));
         this.projectConfig = configResponse.data[0].jobConfig;
-        console.log(this.projectConfig);
-        // if(this.projectConfig.id==1){
-        //   this.packageSizeNameArabic = "مقال قصير";
-        // }
-        // else if(this.projectConfig.id==2){
-        //   this.packageSizeNameArabic = "مقال متوسط";
-        // }
-        // else if(this.projectConfig.id==3){
-        //   this.packageSizeNameArabic = "مقال كبير";
-        // }
-        // else{
-        //   this.packageSizeNameArabic = "مقال مخصص"; 
-        // }
-
       },
       err => {
         console.log("error in getting project configuration");
         console.log(err);
-
 
       }
     )
@@ -105,13 +84,6 @@ export class AddProjectComponent implements OnInit {
       briefProject: new FormControl(null),
       additionFake: new FormControl(null)
 
-
-
-
-
-
-
-
     })
   }
 
@@ -139,7 +111,6 @@ export class AddProjectComponent implements OnInit {
       this.tagsList.splice(index, 1);
       const control = <FormArray>this.addProjectForm.controls['projectTags'];
       control.removeAt(index);
-      //  ( (<FormArray> this.addProjectForm.get("projectTags")).controls["tag"](index))
     }
   }
 
@@ -168,7 +139,6 @@ export class AddProjectComponent implements OnInit {
       this.externalLinks.splice(index, 1);
       const control = <FormArray>this.addProjectForm.controls['helpfulLinks'];
       control.removeAt(index);
-      //  ( (<FormArray> this.addProjectForm.get("projectTags")).controls["tag"](index))
     }
   }
 
@@ -215,14 +185,6 @@ export class AddProjectComponent implements OnInit {
   }
 
   calculateCost() {
-    // const projectRealCost = 0;
-    // const projectCostRadio = this.addProjectForm.get("size").value;
-    // if(projectCostRadio==0){
-
-    // }
-    console.log(this.addProjectForm.get("size").value);
-    console.log(this.addProjectForm.get("timePerDay").value);
-
     let size = this.addProjectForm.get("size").value;
     let packagInitCost;
     if (size == "1") {
@@ -266,7 +228,7 @@ export class AddProjectComponent implements OnInit {
     this.addProjectForm.get("additionFake").setValue("0");
     this.addProjectForm.get("totalCost").setValue(this.finalCost);
     this.addProjectForm.get("amount").setValue(this.finalCost);
-    
+
 
 
 
@@ -274,10 +236,26 @@ export class AddProjectComponent implements OnInit {
   }
   addAddition(val) {
     console.log(val);
-    this.addProjectForm.get("addtionalAmount").patchValue(val);
+    if (val < 0) {
+      alert("addition value must be positive");
+    }
+    else {
+      this.addProjectForm.get("addtionalAmount").patchValue(val);
 
-    this.finalCost = +val + this.projectCost;
-    this.addProjectForm.get("totalCost").setValue(this.finalCost); 
+      this.finalCost = +val + this.projectCost;
+      this.addProjectForm.get("totalCost").setValue(this.finalCost);
+      this.showAdditionnalValueMessage = true;
+      setTimeout(() => {
+        this.showAdditionnalValueMessage = false;
+      }, 1500);
+    }
+
+  }
+
+
+
+  closeDialog() {
+    this.showAdditionnalValueMessage = false;
   }
 
 } 

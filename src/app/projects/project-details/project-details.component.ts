@@ -29,8 +29,8 @@ export class ProjectDetailsComponent implements OnInit {
   selectedProject;
   ngOnInit(): void {
     this.uuidValue = this.Uuid.generateUUID();
-    console.log("this.uuidvalue");
-    console.log(this.uuidValue);
+    // console.log("this.uuidvalue");
+    // console.log(this.uuidValue);
     this.projectSev.selectedPoject.subscribe(
       (result) => {
         this.selectedProject = result;
@@ -55,8 +55,8 @@ export class ProjectDetailsComponent implements OnInit {
 
     ).subscribe(
       (userImageResponse: any) => {
-        console.log("user profile image exist");
-        console.log(userImageResponse);
+        // console.log("user profile image exist");
+        // console.log(userImageResponse);
         this.userImageBase = userImageResponse.data.body.data.image;
         localStorage.setItem("userImage", this.userImageBase);
         if (this.userImageBase == null) {

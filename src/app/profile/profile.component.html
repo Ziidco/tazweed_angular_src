@@ -48,7 +48,7 @@
     </div>
   </div>
 </div>
-<div class="container">
+<!-- <div class="container">
 
 
   <h1>upload image </h1>
@@ -66,7 +66,7 @@
 
   </form>
 
-</div>
+</div> -->
 
 <!-- <h1>user image {{userImageBase}}</h1> -->
 <div class="container">
@@ -76,13 +76,27 @@
         <!-- <ngb-toast *ngIf="showMessage" header="تغيير صورة البروفايل" [autohide]="false" (hidden)="show=false">
                 تم رفع صورة البروفايل بنجاح
               </ngb-toast> -->
-        <div class="user-image medium-profile-image">
-          <img *ngIf="userImageBase!='default'" [src]="userImageBase" />
-          <img *ngIf="userImageBase=='default'" src="../../assets/images/profile/avatar.png" />
+        <div class="user-image medium-profile-image image-block-top">
+          <div class="d-inline-block upload-image-block">
+
+
+            <img *ngIf="userImageBase!='default'" [src]="userImageBase" />
+            <img *ngIf="userImageBase=='default'" src="../../assets/images/profile/avatar.png" />
+            <div class="upload-tool">
+              <fa-icon class="upload-profile-icon" [icon]="faImage">
+                
+              <!-- <input type="text" hidden name="attach" class="form-control" formControlName="image"> -->
+              
+              </fa-icon>
+              <input type="file" name="attach" accept="image/x-png,image/jpeg" class="attach-image-last"
+                (change)="onChange($event)" placeholder="رابط الصورة الشخصية">
+            </div>
+          </div>
           <h5>{{firstNameProfile}} {{lastNameProfile}}</h5>
           <h6 *ngIf="userTypeProfile =='partner'">كاتب</h6>
           <h6 *ngIf="userTypeProfile =='client'">عميل</h6>
           <h6 *ngIf="userTypeProfile =='admin'">أدمن / صاحب الموقع</h6>
+
         </div>
 
 
@@ -200,11 +214,11 @@
                 </div>
               </form>
             </tab>
-            <tab>
+            <tab *ngIf="userTypeProfile =='partner'">
               <ng-template tabHeading>
                 <fa-icon class="ml5" [icon]="faArchive"></fa-icon>رصيدي
               </ng-template>
-              Vertical content 1
+              <fa-icon class="ml5" [icon]="faArchive"></fa-icon> {{partnerBalance}} ريال
             </tab>
             <tab>
               <ng-template tabHeading>

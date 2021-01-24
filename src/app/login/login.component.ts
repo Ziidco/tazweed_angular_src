@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
       this.registerNewLine = true;
     }
     this.uuidValue = this.Uuid.generateUUID();
-    console.log("this.uuidvalue");
-    console.log(this.uuidValue);
+    // console.log("this.uuidvalue");
+    // console.log(this.uuidValue);
     this.loginForm = new FormGroup({
       "email" : new FormControl(null,[Validators.required,Validators.email]), 
       "password" : new FormControl(null,[Validators.required,Validators.minLength(8)]),
@@ -96,10 +96,10 @@ export class LoginComponent implements OnInit {
 
       // login method start
   login(userType:string){
-    console.log("user login type is ==== " + userType);
+    // console.log("user login type is ==== " + userType);
     
     
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     if(localStorage.getItem("sessionUserType")){
       this.userServ.signIn(this.loginForm.value,userType,this.uuidValue).subscribe(
         (response:any)=>{
@@ -134,11 +134,11 @@ export class LoginComponent implements OnInit {
       
     }
     else{
-      console.log("user is login random");
+      // console.log("user is login random");
       this.userServ.signIn(this.loginForm.value,userType,this.uuidValue).subscribe(
         (response:any)=>{
-          console.log("login response is");
-          console.log(response);
+          // console.log("login response is");
+          // console.log(response);
           localStorage.setItem("auth",response.data.token);
           localStorage.setItem("sessionUserType",userType);
           if(userType ==='partner'){

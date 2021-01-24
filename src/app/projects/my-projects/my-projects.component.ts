@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import {faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft,faLongArrowAltDown } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -13,6 +13,7 @@ import {faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class MyProjectsComponent implements OnInit {
   faArrowLeft = faArrowLeft;
+  faLongArrowAltDown =faLongArrowAltDown;
   uuidValue: any;
   myProjects;
   firstFormGroup: FormGroup;
@@ -26,6 +27,7 @@ export class MyProjectsComponent implements OnInit {
   showSuccessForPartner = true;
   showdeliverBox = false;
   userType = localStorage.getItem("sessionUserType");
+  paymentUrl;
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -44,8 +46,8 @@ export class MyProjectsComponent implements OnInit {
     this.uuidValue = this.Uuid.generateUUID();
     this.projectServ.getMyProjects(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), localStorage.getItem("userId")).subscribe(
       (response: any) => {
-        console.log("all projects obj");
-        console.log(JSON.stringify(response.data));
+        // console.log("all projects obj");
+        // console.log(JSON.stringify(response.data));
         this.myProjects = response.data;
         const projectStatue = this.myProjects.status;
         if (projectStatue == 'active') {
@@ -99,5 +101,36 @@ export class MyProjectsComponent implements OnInit {
     this.showSuccessForPartner = false;
     this.showdeliverBox = true;
   }
+
+
+
+
+  repayProject(project) {
+    console.log(project);
+    this.projectServ.addJop(project, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
+      (response: any) => {
+        console.log("success");
+        console.log(response);
+        this.paymentUrl = response.data.redirectUrl;
+        window.open(this.paymentUrl);
+
+
+      },
+      err => {
+        console.log("error");
+        console.log(err);
+
+
+
+      }
+    )
+
+
+  }
+
+  // repayProject(project){
+  //   console.log(project);
+    
+  // }
 
 }

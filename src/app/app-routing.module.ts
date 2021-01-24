@@ -17,6 +17,7 @@ import { AllProjectsComponent } from './projects/all-projects/all-projects.compo
 import { ManageMyProjectComponent } from './projects/manage-my-project/manage-my-project.component';
 import { MyProjectsComponent } from './projects/my-projects/my-projects.component';
 import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
+import { ProjectThanksComponent } from './projects/project-thanks/project-thanks.component';
 import { AdminRegisterComponent } from './register/admin-register/admin-register.component';
 import { ClientRegisterComponent } from './register/client-register/client-register.component';
 import { PartnerRegisterComponent } from './register/partner-register/partner-register.component';
@@ -46,7 +47,8 @@ const routes: Routes = [
   {path:"successAddedProject",component:AddProjectSuccessComponent},
   {path:"failAddedProject",component:AddProjectFailComponent},
   {path:"admin/login",component:AdminLoginComponent},
-  {path:"dashboard",component:DashboardComponent}
+  {path:"dashboard",component:DashboardComponent},
+  {path:"finishingProjectMessage",component:ProjectThanksComponent}
   
 ];
 

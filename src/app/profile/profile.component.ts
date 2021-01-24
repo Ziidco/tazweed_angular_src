@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faSignOutAlt, faUserAlt, faTable, faLock, faArchive, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserAlt, faTable, faLock, faArchive, faStar,faImage } from '@fortawesome/free-solid-svg-icons';
 import { user } from '../Model/user';
 import { ManageImageService } from '../services/manage-image.service';
 import { UploadFileService } from '../services/upload-file.service';
@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   faLock = faLock;
   faArchive = faArchive;
   faStar = faStar;
+  faImage = faImage;
   userImageBase;
   userProfileData:user;
   showMessage = false;
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
   profileRating;
   ratingPersonId;
   ratingPerson;
+  partnerBalance;
   constructor(
     private route: Router,
     private imageServ: ManageImageService,
@@ -201,6 +203,29 @@ this.imageServ.retrieveImageFromServer(userProfileData,
     )
 
 
+
+    // get partner Balance
+    if(localStorage.getItem("sessionUserType")=='partner'){
+      this.userServ.getBalance(localStorage.getItem("userId"),"partner",this.uuidValue,localStorage.getItem("auth")).subscribe(
+        (response:any)=>{
+          console.log("balance object ==== ");
+          // console.log(response.data);
+          this.partnerBalance = response.data[0].totalBalance;
+     
+          
+        },
+        err=>{
+          console.log("no balance found");
+          console.log(err);
+          
+          
+        }
+      )
+
+    }
+    
+
+
   }
   
 getRaterProfile(profileID){
@@ -220,6 +245,7 @@ getRaterProfile(profileID){
       (upData) => {
         console.log(typeof (upData));
         this.uploadImageForm.controls['image'].setValue(upData);
+        this.uploadImage();
       }
     )
   }
@@ -258,12 +284,22 @@ getRaterProfile(profileID){
  
   uploadImage() {
 
+    // this.uploadImageForm = new FormGroup({
+    //   image: new FormControl(null, Validators.required),
+    //   profileId: new FormControl(localStorage.getItem("userId")),
+    //   email: new FormControl(localStorage.getItem("email"))
+
+    // });
 
     let formData = new FormData();
-    formData.append('image', "sssss");
+    formData.append('image', this.uploadImageForm.get("image").value);
     formData.append('profileId', this.uploadImageForm.get("profileId").value);
     formData.append('email', this.uploadImageForm.get("email").value);
     console.log(this.uploadImageForm.value);
+    // console.log(formData);
+
+
+
     this.imageServ.uploadImageToServer(
       this.uploadImageForm.value,
       localStorage.getItem("sessionUserType"),
