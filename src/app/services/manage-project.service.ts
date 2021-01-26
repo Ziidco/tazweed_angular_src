@@ -80,6 +80,18 @@ export class ManageProjectService {
     })
     return this.http.put(this.baseUrl + "profile/job/" + jopId, data, { headers: headers });
   }
+  repayJop(data, customerType: string, X_Request_ID: string, token) {
 
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.post(this.baseUrl + "payment", data, { headers: headers });
+  }
+  // https://www.tazweedservice.ml/rest/api/v1/payment
 
 }

@@ -431,6 +431,7 @@ header.after-login-header .nav-link:focus {
 
 .medium-profile-image img {
   width: 100px;
+  height: 100px;
   border-radius: 10px;
 }
 

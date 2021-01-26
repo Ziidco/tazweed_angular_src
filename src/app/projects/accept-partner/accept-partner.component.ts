@@ -190,7 +190,7 @@ export class AcceptPartnerComponent implements OnInit {
     console.log(this.clientAddCommentForm.value);
 
 
-    this.userServ.addComment(this.clientAddCommentForm.value, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
+    this.userServ.addComment(this.clientAddCommentForm.value, localStorage.getItem("sessionUserType"), this.uuidValue+"fheossss", localStorage.getItem("auth")).subscribe(
       (response) => {
         console.log("comment added successfully");
         console.log(response);

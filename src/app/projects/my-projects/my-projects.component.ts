@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import {faArrowLeft,faLongArrowAltDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faLongArrowAltDown,faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -13,7 +13,8 @@ import {faArrowLeft,faLongArrowAltDown } from '@fortawesome/free-solid-svg-icons
 })
 export class MyProjectsComponent implements OnInit {
   faArrowLeft = faArrowLeft;
-  faLongArrowAltDown =faLongArrowAltDown;
+  faLongArrowAltDown = faLongArrowAltDown;
+  faFolderOpen = faFolderOpen;
   uuidValue: any;
   myProjects;
   firstFormGroup: FormGroup;
@@ -26,6 +27,12 @@ export class MyProjectsComponent implements OnInit {
   showApplyBoxSuccess = false;
   showSuccessForPartner = true;
   showdeliverBox = false;
+  prePaymentStatusArray = [];
+  activeStatusArray = [];
+  pendingStatusArray = [];
+  inprogressStatusArray = [];
+  reviewingStatusArray = [];
+  completedStatusArray = [];
   userType = localStorage.getItem("sessionUserType");
   paymentUrl;
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private _formBuilder: FormBuilder) { }
@@ -63,6 +70,33 @@ export class MyProjectsComponent implements OnInit {
 
         }
 
+        for(const project of this.myProjects){
+          if(project.status=="prePayment"){
+            this.prePaymentStatusArray.push("1");
+          }
+          else if(project.status=="active"){
+            this.activeStatusArray.push("1");
+          }
+          else if(project.status=="pending"){
+            this.pendingStatusArray.push("1");
+          }
+          else if(project.status=="inprogress"){
+            this.inprogressStatusArray.push("1");
+          }
+          else if(project.status=="reviewing"){
+            this.reviewingStatusArray.push("1");
+          }
+          else if(project.status=="completed"){
+            this.completedStatusArray.push("1");
+          }
+          console.log(this.prePaymentStatusArray.length);
+          console.log(this.activeStatusArray.length);
+          console.log(this.pendingStatusArray.length);
+          console.log(this.inprogressStatusArray.length);
+          console.log(this.reviewingStatusArray.length);
+          console.log(this.completedStatusArray.length);
+        }
+
 
       },
       err => {
@@ -80,9 +114,9 @@ export class MyProjectsComponent implements OnInit {
 
   }
 
-  openProject(project){
+  openProject(project) {
     this.projectServ.selectedPoject.next(project);
-    this.route.navigate(["acceptPartner/"+project._id]);
+    this.route.navigate(["acceptPartner/" + project._id]);
   }
 
   logStepValue(status: string) {
@@ -97,7 +131,7 @@ export class MyProjectsComponent implements OnInit {
     }
 
   }
-  deliverProjectForClient(){
+  deliverProjectForClient() {
     this.showSuccessForPartner = false;
     this.showdeliverBox = true;
   }
@@ -106,8 +140,13 @@ export class MyProjectsComponent implements OnInit {
 
 
   repayProject(project) {
-    console.log(project);
-    this.projectServ.addJop(project, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
+    
+    const prjectPrePayment = {
+      "profileId": localStorage.getItem("userId"),
+      "jobId": project._id
+    }
+    console.log(prjectPrePayment);
+    this.projectServ.repayJop(prjectPrePayment, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
         console.log("success");
         console.log(response);
@@ -128,9 +167,6 @@ export class MyProjectsComponent implements OnInit {
 
   }
 
-  // repayProject(project){
-  //   console.log(project);
-    
-  // }
+
 
 }
