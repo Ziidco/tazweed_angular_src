@@ -71,7 +71,7 @@
 
           <div class="rpp-stepper-divider"></div>
           <a *ngIf="loggedUserType =='partner'" class="stepper-link">
-            <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed">
+            <div class="rpp-stepper-item" ngClass="rpp-stepper-item-completed"> 
               <span class="rpp-stepper-item-content">2</span>
               <div class="step-title-custom">قبول الكاتب</div>
             </div>
@@ -452,14 +452,13 @@
 
   <!-- comments section -->
   <!-- selectedProject.status=='reviewing' && -->
-  <div class="project-item"
-    *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='completed' || selectedProject.status=='reviewing'">
+  <div class="project-item">
     <div class="card-body">
-      <h6 class="project-title">
+      <h6 class="project-title" *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='completed' || selectedProject.status=='reviewing'">
         <fa-icon class="ml5" [icon]="faEnvelope"></fa-icon>الرسائل
       </h6>
-      <p class="reg-font">قم بالتواصل مع الكاتب لمعرفة أخر المستجدات في المشروع</p>
-      <div class="rating-block">
+      <p *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='reviewing'" class="reg-font">قم بالتواصل مع الكاتب لمعرفة أخر المستجدات في المشروع</p>
+      <div class="rating-block" *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='reviewing'">
         <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="clientAddCommentForm" (ngSubmit)="addComment()">
           <div formGroupName="message">
 
@@ -471,7 +470,7 @@
         </form>
       </div>
 
-      <div class="previous-comments">
+      <div class="previous-comments" *ngIf="selectedProject.partnerId!='null' && selectedProject.status=='inprogress' || selectedProject.status=='completed' || selectedProject.status=='reviewing'">
         <h6>الرسائل</h6>
         <!-- <div>{{commentForJob|json}}</div> -->
 
@@ -495,8 +494,8 @@
   </div>
 
 
-
-  <div *ngIf="showApplyBoxFail" class="project-item">
+  <!-- partnerId  *ngIf="showApplyBoxFail" -->
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId==null" class="project-item"> 
     <div class="card-body">
       <h6>لا يوجد كاتب بعد</h6>
       <p>انتظر حتى يتقدم لمشروع أفضل الكتاب</p>
@@ -514,10 +513,11 @@
     </div>
   </div> -->
 
-  <div *ngIf="showApplyBoxSuccess" class="project-item">
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null" class="project-item">
     <div class="card-body">
       <h6>يوجد كاتب متقدم لمشروعك</h6>
       <h6>
+        <!-- (click)="showProjectPartnerMessage='true'" -->
         <a style="cursor: pointer;font-size: 20px;color: #247d8f;" (click)="showProjectPartnerMessage='true'">
           {{partnerName}}
           <fa-icon class="profile-navigator" [icon]="faAddressCard"></fa-icon>
@@ -539,17 +539,25 @@
         </div>
         <div class="modal-body text-right">
           <h6> <fa-icon class="ml5 writerIcon"  [icon]="faUserAlt"></fa-icon> {{partnerDialogObject.firstName}} {{partnerDialogObject.lastName}}</h6>
-          <h6><fa-icon class="ml5 writerIcon"   [icon]="faEnvelope"></fa-icon> {{partnerDialogObject.email}}</h6>
-          <h6><fa-icon class="ml5 writerIcon"   [icon]="faMobileAlt"></fa-icon> {{partnerDialogObject.mobileNumber}}</h6>
-          <h6><fa-icon class="ml5 writerIcon"   [icon]="faFlag"></fa-icon> {{partnerDialogObject.country}}</h6>
-          <h6><fa-icon  class="ml5 writerIcon"  [icon]="faVenusMars"></fa-icon> {{partnerDialogObject.gender}}</h6>
+          <!-- <h6><fa-icon class="ml5 writerIcon"   [icon]="faEnvelope"></fa-icon> {{partnerDialogObject.email}}</h6> -->
+          <!-- <h6><fa-icon class="ml5 writerIcon"   [icon]="faMobileAlt"></fa-icon> {{partnerDialogObject.mobileNumber}}</h6> -->
+          <h6><fa-icon class="ml5 writerIcon"   [icon]="faFolderOpen"></fa-icon> عدد المشاريع المكتملة <span class="jobCount green">{{partnerNumOfCompletedJobs}}</span></h6>
+          <h6><fa-icon class="ml5 writerIcon"   [icon]="faFolderOpen"></fa-icon> عدد المشاريع المرفوضة <span class="jobCount red">{{partnerNumOfRejectedJobs}}</span></h6>
+          <div class="text-center">
+            <ngb-rating max="5" [readonly]="true" [rate]="partnerRatingAverage"></ngb-rating>
+          </div>
+          
+          <!-- <h6><fa-icon class="ml5 writerIcon"   [icon]="faEnvelope"></fa-icon> {{partnerRatingAverage}}</h6> -->
+          
+          <!-- <h6><fa-icon class="ml5 writerIcon"   [icon]="faFlag"></fa-icon> {{partnerDialogObject.country}}</h6>
+          <h6><fa-icon  class="ml5 writerIcon"  [icon]="faVenusMars"></fa-icon> {{partnerDialogObject.gender}}</h6> -->
           
         </div>
       </div>
     </div>
   </div>
-  
-  <div *ngIf="showApplyBoxSuccess" class="project-item">
+  <!-- *ngIf="showApplyBoxSuccess" -->
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null"  class="project-item">
     <div class="card-body">
       <h6 class="project-title mb0">هل توافق على الكاتب للبدء في مشروعك؟</h6>
       <h6 class="reg-font mb20">بموافقك على الكاتب سوف يبدأ في العمل مباشرة على المشروع الخاص بك</h6>

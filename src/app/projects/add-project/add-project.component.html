@@ -209,8 +209,8 @@
           </div>
 
           <div class="form-group additon">
-            <button type="button" class="btn very-normal-btn" (click)="addAddition(additoin.value)">أضف</button>
-            <input  type="text" class="form-control" formControlName="additionFake" #additoin placeholder="(أجر إضافي (اختياري" />
+            <button [disabled]="!addProjectForm.get('size').valid || !addProjectForm.get('timePerDay').valid " type="button" class="btn very-normal-btn" (click)="addAddition(additoin.value)">أضف</button>
+            <input  type="number" class="form-control" formControlName="additionFake" #additoin placeholder="(أجر إضافي (اختياري" />
             <span class="hint">زيادة القيمة تجذب أفضل الكتاب وتمنحك الأولوية</span>
           </div> 
 

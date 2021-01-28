@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UserService } from 'src/app/services/user.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import { faEnvelope, faArrowLeft,faFileDownload,faAddressCard,faUserAlt,faMobileAlt,faFlag,faVenusMars } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faArrowLeft,faFileDownload,faAddressCard,faUserAlt,faMobileAlt,faFlag,faVenusMars,faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-accept-partner',
@@ -20,6 +20,7 @@ export class AcceptPartnerComponent implements OnInit {
   faUserAlt = faUserAlt;
   faFlag = faFlag;
   faVenusMars = faVenusMars;
+  faFolderOpen = faFolderOpen;
   currentRate = 0;
   showApplyBoxFail = false;
   showApplyBoxSuccess = false;
@@ -39,6 +40,9 @@ export class AcceptPartnerComponent implements OnInit {
   showRejectForm: boolean = false;
   showFinishBoxSuccess = false;
   showProjectPartnerMessage:boolean = false;
+  partnerNumOfCompletedJobs;
+  partnerNumOfRejectedJobs;
+  partnerRatingAverage;
   loggedUserType;
   commentForJob;
   showdeliverBox = false;
@@ -90,6 +94,7 @@ export class AcceptPartnerComponent implements OnInit {
       rate: new FormControl(null),
       comment: new FormControl(null)
     })
+    this.showPartnerData();
 
 
 
@@ -117,7 +122,7 @@ export class AcceptPartnerComponent implements OnInit {
       this.userServ.getOneProfileData(this.partnerId, "partner", this.uuidValue, localStorage.getItem("auth")).subscribe(
         (response: any) => {
           this.partnerName = response.data.userName;
-          console.log("partner profile data ====== ");
+          console.log("partner for this project data ====== ");
           console.log(response.data);
           this.partnerDialogObject = response.data;
 
@@ -131,6 +136,33 @@ export class AcceptPartnerComponent implements OnInit {
 
 
     }
+
+  }
+
+  showPartnerData() {
+    
+
+
+      this.userServ.getOneProfileData(this.partnerId, "partner", this.uuidValue, localStorage.getItem("auth")).subscribe(
+        (response: any) => {
+          this.partnerName = response.data.userName;
+          console.log("partner for this project data ====== ");
+          console.log(response.data);
+          this.partnerDialogObject = response.data;
+          this.partnerNumOfCompletedJobs = response.data.numOfCompletedJobs;
+          this.partnerNumOfRejectedJobs = response.data.numOfRejectedJobs;
+          this.partnerRatingAverage = response.data.ratingAverage;
+
+          
+
+        }
+      )
+
+
+
+
+
+
 
   }
   acceptPartner() {

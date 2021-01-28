@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageProjectService } from 'src/app/services/manage-project.service';
 import { UUIDService } from 'src/app/services/uuid.service';
-import { faArrowLeft, faLongArrowAltDown,faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faLongArrowAltDown, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -35,7 +36,15 @@ export class MyProjectsComponent implements OnInit {
   completedStatusArray = [];
   userType = localStorage.getItem("sessionUserType");
   paymentUrl;
-  constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private _formBuilder: FormBuilder) { }
+  profileRating;
+  constructor(
+    private projectServ: ManageProjectService,
+    private Uuid: UUIDService,
+    private route: Router,
+    private _formBuilder: FormBuilder,
+    private userServ:UserService
+
+  ) { }
 
   ngOnInit(): void {
     this.firstFormGroup = this._formBuilder.group({
@@ -51,6 +60,7 @@ export class MyProjectsComponent implements OnInit {
       fourthCtrl: ['']
     });
     this.uuidValue = this.Uuid.generateUUID();
+    this.getProfileRating();
     this.projectServ.getMyProjects(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), localStorage.getItem("userId")).subscribe(
       (response: any) => {
         // console.log("all projects obj");
@@ -70,31 +80,31 @@ export class MyProjectsComponent implements OnInit {
 
         }
 
-        for(const project of this.myProjects){
-          if(project.status=="prePayment"){
+        for (const project of this.myProjects) {
+          if (project.status == "prePayment") {
             this.prePaymentStatusArray.push("1");
           }
-          else if(project.status=="active"){
+          else if (project.status == "active") {
             this.activeStatusArray.push("1");
           }
-          else if(project.status=="pending"){
+          else if (project.status == "pending") {
             this.pendingStatusArray.push("1");
           }
-          else if(project.status=="inprogress"){
+          else if (project.status == "inprogress") {
             this.inprogressStatusArray.push("1");
           }
-          else if(project.status=="reviewing"){
+          else if (project.status == "reviewing") {
             this.reviewingStatusArray.push("1");
           }
-          else if(project.status=="completed"){
+          else if (project.status == "completed") {
             this.completedStatusArray.push("1");
           }
-          console.log(this.prePaymentStatusArray.length);
-          console.log(this.activeStatusArray.length);
-          console.log(this.pendingStatusArray.length);
-          console.log(this.inprogressStatusArray.length);
-          console.log(this.reviewingStatusArray.length);
-          console.log(this.completedStatusArray.length);
+          // console.log(this.prePaymentStatusArray.length);
+          // console.log(this.activeStatusArray.length);
+          // console.log(this.pendingStatusArray.length);
+          // console.log(this.inprogressStatusArray.length);
+          // console.log(this.reviewingStatusArray.length);
+          // console.log(this.completedStatusArray.length);
         }
 
 
@@ -140,7 +150,7 @@ export class MyProjectsComponent implements OnInit {
 
 
   repayProject(project) {
-    
+
     const prjectPrePayment = {
       "profileId": localStorage.getItem("userId"),
       "jobId": project._id
@@ -165,6 +175,40 @@ export class MyProjectsComponent implements OnInit {
     )
 
 
+  }
+
+
+  getProfileRating() {
+    // get profile ratings
+    //localStorage.getItem("sessionUserType"),this.uuidValue,localStorage.getItem("auth")
+    this.userServ.getRating(localStorage.getItem("userId"), localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
+      (response: any) => {
+        console.log("rating object ==== ");
+        console.log(response.data);
+        this.profileRating = response.data;
+        // for (const oneRate of this.profileRating) {
+        //   this.ratingPersonId = oneRate.profileId;
+        //   console.log(this.ratingPersonId);
+        //   this.getRaterProfile(this.ratingPersonId);
+
+
+
+
+        // }
+        // this.ratingPersonId = response.data.rate;
+        // console.log(this.ratingPersonId)
+        // this.userServ.getOneProfileData(this.ratingPersonId,localStorage.getItem("sessionUserType"),this.uuidValue,localStorage.getItem("auth")).subscribe(
+        //   (response)=>{
+        //     console.log(response)
+        //   }
+        // )
+
+      },
+      err => {
+        console.log("no rating found");
+
+      }
+    )
   }
 
 

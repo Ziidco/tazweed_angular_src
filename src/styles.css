@@ -1203,10 +1203,10 @@ ngb-rating {
   font-size: 16px;
 }
 
-.horizontal-tabs .nav-pills .nav-link.active,
+/* .horizontal-tabs .nav-pills .nav-link.active,
 .horizontal-tabs .nav-pills .show>.nav-link {
   background-color: #247d8f;
-}
+} */
 
 .horizontal-tabs .nav-pills .nav-link {
   padding: 10px 40px;
@@ -1216,6 +1216,12 @@ ngb-rating {
   margin-top: 10px;
   background-color: #dc3545 !important;
   border-color: #dc3545 !important;
+}
+.jobCount{
+  margin-right: 10px;
+  font-size: 24px;
+  position: relative;
+  top: 3px;
 }
 
 .upload-image-block {
@@ -1253,6 +1259,15 @@ ngb-rating {
   right: 0;
   left: 0;
   opacity: 0;
+}
+.secondLevelTabs .nav.nav-pills{margin: 20px 100px 20px 0;}
+.nav-pills{background-color: #EBF5F7;}
+ .nav-pills .nav-link{color: #707070;border-radius: 0;}
+ .nav-pills .nav-link.active,.firstLevelTabs > .nav-pills .show>.nav-link{
+  background-color: transparent;
+    color: #247D8F;
+    border-bottom: 3px solid #247D8F;
+
 }
 @media(min-width:992px) {
   .navbar-expand-lg .navbar-nav .dropdown-menu {
