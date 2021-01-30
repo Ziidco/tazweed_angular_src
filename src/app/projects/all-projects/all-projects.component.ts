@@ -5,6 +5,7 @@ import { faSignOutAlt, faFileAlt, faHourglassHalf, faMoneyBillWave, faArrowLeft,
 import { Router } from '@angular/router';
 import { project } from 'src/app/Model/project';
 import { ManageImageService } from 'src/app/services/manage-image.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 
@@ -19,17 +20,22 @@ export class AllProjectsComponent implements OnInit {
   userImageBase;
   // allProjects:project[];
   allProjects;
+  filterProjectForm:FormGroup;
   faFileAlt = faFileAlt;
   faHourglassHalf = faHourglassHalf;
   faMoneyBillWave = faMoneyBillWave;
   faArrowLeft = faArrowLeft;
   faFolderOpen = faFolderOpen;
   filteredStatus = '';
+  checkValue;
   showProjectsContainer = false;
   showNoProjectsContainer = false;
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private imageServ: ManageImageService) { }
 
   ngOnInit(): void {
+    this.filterProjectForm = new FormGroup({
+      filterSize:new FormControl(null)
+    })
     this.uuidValue = this.Uuid.generateUUID();
     this.imageServ.profileImagePathShared.subscribe(
       (response) => {
@@ -148,8 +154,8 @@ export class AllProjectsComponent implements OnInit {
     else {
       this.allProjects = this.allProjects.filter(
         res => {
-          // return (res.size).toString().match(this.filteredStatus.toString())
-          return res.size == 1;
+          return (res.projectTitle).toString().match(this.filteredStatus.toString())
+          // return res.size == 1;
         }
       )
     }
@@ -161,4 +167,50 @@ export class AllProjectsComponent implements OnInit {
     this.route.navigate(["projectSetails/" + project._id]);
   }
 
+  onChangeSize(projectSize){
+    // this.ngOnInit()
+    // this.allProjects = this.allProjects
+    console.log("filter size value =====");
+    
+    // console.log(this.filterProjectForm.get("filterSize").value);
+
+
+
+     this.checkValue = this.filterProjectForm.get("filterSize").value;
+    console.log(this.checkValue);
+
+      if (this.checkValue == "") {
+        this.ngOnInit()
+      }
+      else{
+        this.allProjects = this.allProjects.filter(
+          res => {
+            return res.size == this.checkValue;
+          }
+        )
+      }
+
+      // if (checkValue == 1) {
+      //   this.allProjects = this.allProjects.filter(
+      //     res => {
+      //       return res.size == 1;
+      //     }
+      //   )
+      // }
+      // if (checkValue == 2) {
+      //   this.allProjects = this.allProjects.filter(
+      //     res => {
+      //       return res.size == 2;
+      //     }
+      //   )
+      // }
+      // if (checkValue == 3) {
+      //   this.allProjects = this.allProjects.filter(
+      //     res => {
+      //       return res.size == 3;
+      //     }
+      //   )
+      // }
+    
+  }
 }

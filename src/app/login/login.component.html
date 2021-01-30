@@ -45,7 +45,11 @@
             <button  class="btn btn-success  float-right" type="submit">تسجيل الدخول</button>
           </div>
     
-    
+          <div *ngIf="showLoader" class="loader">
+            <div class="cssload-container">
+              <div class="cssload-speeding-wheel"></div>
+              </div>
+          </div>
           
         </form>
     
@@ -89,7 +93,11 @@
             <button  class="btn btn-success  float-right" type="submit">تسجيل الدخول</button>
           </div>
     
-    
+          <div *ngIf="showLoader" class="loader">
+            <div class="cssload-container">
+              <div class="cssload-speeding-wheel"></div>
+              </div>
+          </div>
          
         </form>
     
@@ -100,7 +108,7 @@
   </tabset>
   <div *ngIf="showFailed" class="text-center fails stickyMessage ">
     <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-    <h1>تعزر تسجيل الدخول </h1>
+    <h1>تعذر تسجيل الدخول </h1>
     <h2>{{failedLogin.error.message}}</h2>
   </div>
 </div>

@@ -2,39 +2,93 @@
 <!-- <div>
   {{allProjects|json}}
 </div> -->
-<div *ngIf="showNoProjectsContainer" class="container" style="margin-top:150px;"> 
+<div *ngIf="showNoProjectsContainer" class="container" style="margin-top:150px;">
   <div class="text-center noProjectsMessage">
     <fa-icon [icon]="faFolderOpen"></fa-icon>
     <h4>لا يوجد مشاريع االأن</h4>
     <p class="reg-font">انتظر حتى يتم اضافة مشاريع بواسطة العملاء</p>
   </div>
-  
+
 </div>
 <div *ngIf="showProjectsContainer" class="container" style="margin-top:30px;">
   <div class="row">
     <!-- right side menu -->
     <div class="col-lg-4 col-md-4 col-12">
       <div class="right-side-pannel">
-        <h5 class="widget">المشاريع المفتوحة</h5> 
+        <h5 class="widget">المشاريع المفتوحة</h5>
+        <hr />
+        <!-- filter block -->
+        <div class="filter-block">
+          <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="filterProjectForm">
+
+            <h6 class="filter-title">حجم المشروع</h6>
+            <h6> selected :: {{checkValue}}</h6>
+
+            <div>
+              <input id="small" type="radio" (change)="onChangeSize(1)" [value]="1"
+                formControlName="filterSize">
+              <label for="small">مشاريع صغيرة (600 كلمة)</label>
+            </div>
+
+            <div>
+              <input id="mid" type="radio" (change)="onChangeSize(2)" [value]="2"
+              formControlName="filterSize">
+              <label for="mid"> مشاريع متوسطة (1200 كلمة)</label>
+            </div>
+            <div>
+              <input id="long" type="radio" (change)="onChangeSize(3)" [value]="3"
+                 formControlName="filterSize">
+              <label for="long">مشاريع طويلة (2400 كلمة)</label>
+            </div>
+
+
+            <!-- <div class="form-check">
+              <input class="form-check-input" (change)="onCheckboxChange($event,smallProject)" name="smallProject"
+                type="checkbox" value="1" #smallProject id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                مشاريع صغيرة (600 كلمة)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" (change)="onCheckboxChange($event,smallProject2)" name="smallProject2"
+                type="checkbox" value="2" #smallProject2 id="flexCheckChecked2">
+              <label class="form-check-label" for="flexCheckChecked2">
+                مشاريع متوسطة (1200 كلمة)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" (change)="onCheckboxChange($event,smallProject3)" name="smallProject3"
+                type="checkbox" value="3" #smallProject3 id="flexCheckChecked3">
+              <label class="form-check-label" for="flexCheckChecked3">
+                مشاريع طويلة (2400 كلمة)
+              </label>
+            </div> -->
+          </form>
+        </div>
+
+        <hr />
         <hr />
         <!-- filter block -->
         <div class="filter-block">
 
           <h6 class="filter-title">حجم المشروع</h6>
           <div class="form-check">
-            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject)" name="smallProject" type="checkbox" value="1" #smallProject id="flexCheckDefault">
+            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject)" name="smallProject"
+              type="checkbox" value="1" #smallProject id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
               مشاريع صغيرة (600 كلمة)
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject2)" name="smallProject2" type="checkbox" value="2" #smallProject2 id="flexCheckChecked2">
+            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject2)" name="smallProject2"
+              type="checkbox" value="2" #smallProject2 id="flexCheckChecked2">
             <label class="form-check-label" for="flexCheckChecked2">
               مشاريع متوسطة (1200 كلمة)
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject3)" name="smallProject3" type="checkbox" value="3" #smallProject3 id="flexCheckChecked3">
+            <input class="form-check-input" (change)="onCheckboxChange($event,smallProject3)" name="smallProject3"
+              type="checkbox" value="3" #smallProject3 id="flexCheckChecked3">
             <label class="form-check-label" for="flexCheckChecked3">
               مشاريع طويلة (2400 كلمة)
             </label>
@@ -73,7 +127,8 @@
     <!-- <input type="text" [(ngModel)]="filteredStatus"> -->
     <!-- project start -->
     <div class="col-lg-8 col-md-8 col-12">
-      <input type="text" placeholder="أبحث بأسم المشروع" class="form-control" (input)="searchWithFilter()" [(ngModel)]="filteredStatus"> 
+      <input type="text" placeholder="أبحث بأسم المشروع" class="form-control" (input)="searchWithFilter()"
+        [(ngModel)]="filteredStatus">
       <!-- <h4>search with word {{filteredStatus}}</h4> -->
       <div *ngFor="let project of allProjects ">
         <div class="card project-item">
@@ -92,8 +147,9 @@
 
               </div>
               <div class="float-left project-details-btn reg-font">
-                <button (click)="openProject(project)" type="button" class="btn">افتح تفاصيل المشروع<fa-icon [icon]="faArrowLeft"></fa-icon></button>
-                
+                <button (click)="openProject(project)" type="button" class="btn">افتح تفاصيل المشروع<fa-icon
+                    [icon]="faArrowLeft"></fa-icon></button>
+
               </div>
             </div>
             <h5 class="project-title">{{project.projectTitle}}</h5>

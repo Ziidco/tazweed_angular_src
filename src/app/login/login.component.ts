@@ -12,6 +12,7 @@ import { UUIDService } from '../services/uuid.service';
 })
 export class LoginComponent implements OnInit {
   faEye = faEye;
+  showLoader = false;
   faEyeSlash = faEyeSlash;
   faExclamationTriangle = faExclamationTriangle;
   faEdit = faEdit;
@@ -41,68 +42,14 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // // login method start
-  // login(){
-  //   console.log(this.loginForm.value);
-  //   if(localStorage.getItem("sessionUserType")){
-  //     this.userServ.signIn(this.loginForm.value,"client",this.uuidValue).subscribe(
-  //       (response:any)=>{
-  //         console.log("login response is");
-  //         console.log(response);
-  //         localStorage.setItem("auth",response.data.token);
-  //         localStorage.setItem("sessionUserType","client");
-  //         this.route.navigate(["addProject"]);  
-          
-          
-  //       },
-  //       err=>{
-  //         this.showFailed = true;
-  //         this.failedLogin = err;
-          
-  //       }
-  //     )
-      
-      
-  //   }
-  //   else{
-  //     console.log("user is login random");
-  //     this.userServ.signIn(this.loginForm.value,"client",this.uuidValue).subscribe(
-  //       (response:any)=>{
-  //         console.log("login response is");
-  //         console.log(response);
-  //         localStorage.setItem("auth",response.data.token);
-  //         localStorage.setItem("sessionUserType","client");
-  //         this.route.navigate(["addProject"]); 
-          
-          
-  //       },
-  //       err=>{
-  //         this.showFailed = true;
-  //         this.failedLogin = err;
-          
-  //       }
-  //     )
-      
-      
-  //   }
-    
-  // }
-
-    // login method end
-
-
-
-
 
       // login method start
   login(userType:string){
-    // console.log("user login type is ==== " + userType);
-    
-    
-    // console.log(this.loginForm.value);
+    this.showLoader = true;
     if(localStorage.getItem("sessionUserType")){
       this.userServ.signIn(this.loginForm.value,userType,this.uuidValue).subscribe(
         (response:any)=>{
+          this.showLoader = false;
           console.log("login response is");
           console.log(response);
           localStorage.setItem("auth",response.data.token);
@@ -125,6 +72,7 @@ export class LoginComponent implements OnInit {
           
         },
         err=>{
+          this.showLoader = false;
           this.showFailed = true;
           this.failedLogin = err;
           
@@ -134,11 +82,10 @@ export class LoginComponent implements OnInit {
       
     }
     else{
-      // console.log("user is login random");
+      this.showLoader = true;
       this.userServ.signIn(this.loginForm.value,userType,this.uuidValue).subscribe(
         (response:any)=>{
-          // console.log("login response is");
-          // console.log(response);
+          this.showLoader = false;
           localStorage.setItem("auth",response.data.token);
           localStorage.setItem("sessionUserType",userType);
           if(userType ==='partner'){
@@ -158,6 +105,7 @@ export class LoginComponent implements OnInit {
           
         },
         err=>{
+          this.showLoader = false;
           this.showFailed = true;
           this.failedLogin = err;
           

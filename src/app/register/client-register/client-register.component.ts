@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UploadFileService } from '../../services/upload-file.service';
 import { UserService } from '../../services/user.service';
 import { UUIDService } from '../../services/uuid.service';
-import { faEye,faEyeSlash,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEye,faEyeSlash,faCheckCircle,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -15,7 +15,8 @@ export class ClientRegisterComponent implements OnInit {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
   faCheckCircle = faCheckCircle;
-
+  faExclamationTriangle = faExclamationTriangle;
+  showLoader = false;
   showPasswordIcon:boolean = true;
   hidePasswordIcon:boolean = false;
   registerForm: FormGroup;
@@ -53,6 +54,7 @@ export class ClientRegisterComponent implements OnInit {
     )
   }
   register() {
+    this.showLoader = true;
     console.log(this.registerForm.value); 
     this.userServ.signUp(this.registerForm.value, this.userType, this.uuidValue).subscribe(
       (response:any) => {
@@ -62,6 +64,7 @@ export class ClientRegisterComponent implements OnInit {
         this.showSuccessMessage = true;
         console.log("successfully registered ");
         console.log(response);
+        this.showLoader = false;
         localStorage.setItem("newUserId",response.data._id);
         localStorage.setItem("sessionUserType",this.userType);
         localStorage.setItem("sessionUuidValue",this.uuidValue);
@@ -69,6 +72,7 @@ export class ClientRegisterComponent implements OnInit {
       },
       err => {
         console.log(err);  
+        this.showLoader = false;
         this.showFailMessage = true;
         this.errorDetails =  err.error.message;
        

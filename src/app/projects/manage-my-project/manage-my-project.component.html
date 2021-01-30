@@ -15,65 +15,95 @@
       </div>
     </div>
   </div>
-
+  <p>you will edit project with details {{editedProjectObject|json}}</p>
   <!-- <p>you will edit project with id {{projectId}}</p>
   <p>you will edit project with details {{editedProjectObject|json}}</p> -->
   <div class="form-title">
     <h1>تعديل المشروع</h1>
   </div>
-  <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="editProjectForm" (ngSubmit)="editPrpject()">
-    <div class="form-group">
-      <h6>العنوان المقترح للمقال</h6>
-      <input type="text" class="form-control" formControlName="projectTitle" />
-    </div>
-    <div class="form-group">
-      <h6>في أي مجال تحب نكتب لك؟</h6>
-      <input type="text" class="form-control" formControlName="projectField" />
-    </div>
-    <div class="form-group">
-      <h6>لديك أفكار تحب التركيز عليها؟ <span class="reg-font-2 addon">(اختياري)</span></h6>
-      <input type="text" class="form-control" formControlName="projectIdea" />
-    </div>
-
-
-
-    <div class="form-group">
-      <h6>اختر حجم المشروع </h6>
-      <div class="d-flex">
-        <div class="radio-item-c" *ngFor="let projectConfig of projectConfig">
-          <input id="projectConfig.id" type="radio" [value]="projectConfig.id" formControlName="size">
-          <!-- <label for="projectConfig.id">{{projectConfig.name}} <br>{{projectConfig.size}} كلمة</label> -->
-
-
-
-          <label for="projectConfig.id">
-            <span *ngIf="projectConfig.id==1">مشروع قصير</span>
-            <span *ngIf="projectConfig.id==2">مشروع متوسط</span>
-            <span *ngIf="projectConfig.id==3">مشروع طويل</span>
-
-            <br>
-            {{projectConfig.size}} كلمة
-          </label>
+  <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="editProjectForm" (ngSubmit)="editProject()">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-12">
+        <div class="form-group">
+          <h6>العنوان المقترح للمقال</h6>
+          <input type="text" class="form-control" formControlName="projectTitle" />
+        </div>
+        <div class="form-group">
+          <h6>في أي مجال تحب نكتب لك؟</h6>
+          <input type="text" class="form-control" formControlName="projectField" />
+        </div>
+        <div class="form-group">
+          <h6>لديك أفكار تحب التركيز عليها؟ <span class="reg-font-2 addon">(اختياري)</span></h6>
+          <input type="text" class="form-control" formControlName="projectIdea" />
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <h6>حدد مدة التنفيذ</h6>
-      <div class="d-flex">
-        <div class="radio-item-c">
-          <input id="shortTime" type="radio" [value]="1" formControlName="timePerDay">
-          <label for="short">24 ساعة <br>يوم واحد</label>
+      <div class="col-lg-6 col-md-6 col-12">
+        <div class="form-group">
+          <h6>اختر حجم المشروع </h6>
+          <div class="d-flex">
+            <div class="radio-item-c" *ngFor="let projectConfig of projectConfig">
+
+
+              <input (change)="calculateCost()" id="projectConfig.id" type="radio" [value]="projectConfig.id"
+                formControlName="size">
+              <!-- <label for="projectConfig.id">{{projectConfig.name}} <br>{{projectConfig.size}} كلمة</label> -->
+
+
+
+              <label for="projectConfig.id">
+                <span *ngIf="projectConfig.id==1"> قصير</span>
+                <span *ngIf="projectConfig.id==2"> متوسط</span>
+                <span *ngIf="projectConfig.id==3"> طويل</span>
+
+                <br>
+                {{projectConfig.size}} كلمة
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="radio-item-c">
-          <input id="mediumTime" type="radio" [value]="2" formControlName="timePerDay">
-          <label for="mediumTime">48 ساعة <br>يومين</label>
+        <div class="form-group">
+          <h6>حدد مدة التنفيذ</h6>
+          <div class="d-flex">
+            <div class="radio-item-c">
+
+              <input (change)="calculateCost()" id="shortTime" type="radio" [value]="1" formControlName="timePerDay">
+              <label for="short">24 ساعة <br>يوم واحد</label>
+            </div>
+            <div class="radio-item-c">
+              <input (change)="calculateCost()" id="mediumTime" type="radio" [value]="2" formControlName="timePerDay">
+              <label for="mediumTime">48 ساعة <br>يومين</label>
+            </div>
+            <div class="radio-item-c">
+              <input (change)="calculateCost()" id="largeTime" type="radio" [value]="3" formControlName="timePerDay">
+              <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+            </div>
+          </div>
         </div>
-        <div class="radio-item-c">
-          <input id="largeTime" type="radio" [value]="3" formControlName="timePerDay">
-          <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+
+        <div class="form-group">
+          <h6>تكلفة المشروع</h6>
+          <h5>{{projectCost}} ريال سعودى</h5>
         </div>
+        <div class="form-group additon">
+          <h6>الأجر الاضافى</h6>
+         <button  type="button" class="btn very-normal-btn addion_btn" (click)="addAddition(additoin.value)">أضف</button>
+          <input #additoin    type="number" class="form-control" formControlName="addtionalAmount"  />
+        </div>
+
+       
+
+        <div class="form-group">
+          <h6>اجمالى تكلفة المشروع ( التكلفة + الاجر الاضافى)</h6>
+          <h5>{{finalTotalCost}} ريال سعودى</h5>
+        </div>
+        
+
       </div>
     </div>
+
+
+
+
 
     <div class="text-center">
       <button type="submit" class="btn btn-success auto-width-btn">حفظ التعديلات</button>

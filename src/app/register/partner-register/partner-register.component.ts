@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UploadFileService } from '../../services/upload-file.service';
 import { UserService } from '../../services/user.service';
 import { UUIDService } from '../../services/uuid.service';
-import { faEye,faEyeSlash,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEye,faEyeSlash,faCheckCircle,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-partner-register',
@@ -14,6 +14,8 @@ export class PartnerRegisterComponent implements OnInit {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
   faCheckCircle = faCheckCircle;
+  showLoader = false;
+  faExclamationTriangle = faExclamationTriangle;
   showPasswordIcon:boolean = true;
   hidePasswordIcon:boolean = false;
   registerForm: FormGroup;
@@ -52,12 +54,15 @@ export class PartnerRegisterComponent implements OnInit {
     )
   }
   register() {
+    this.showLoader = true;
     console.log(this.registerForm.value); 
     this.userServ.signUp(this.registerForm.value, this.userType, this.uuidValue).subscribe(
       (response:any) => {
         localStorage.clear();
+        this.showLoader = false;
         this.showFormSubmit = false;
         this.showFailMessage = false;
+
         this.showSuccessMessage = true;
         console.log("successfully registered ");
         console.log(response);
@@ -68,6 +73,7 @@ export class PartnerRegisterComponent implements OnInit {
       },
       err => {
         console.log(err);  
+        this.showLoader = false;
         this.showFailMessage = true;
         this.errorDetails =  err.error.message;
        
