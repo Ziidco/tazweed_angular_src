@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { project } from 'src/app/Model/project';
 import { ManageImageService } from 'src/app/services/manage-image.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -30,13 +31,31 @@ export class AllProjectsComponent implements OnInit {
   checkValue;
   showProjectsContainer = false;
   showNoProjectsContainer = false;
-  constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private imageServ: ManageImageService) { }
+  userStatus;
+  showProjects;
+  constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private imageServ: ManageImageService,private userServ:UserService) { }
 
   ngOnInit(): void {
+    this.userServ.activeAccount.subscribe(
+      (response)=>{
+        console.log("active account from service value is ==== " + response);
+        
+        this.showProjects = response;
+      }
+    )
+    this.userStatus = localStorage.getItem("sessionUserStatus");
+    // if(this.userStatus ==="active"){
+    //   this.showProjects = true;
+    // }
+    // else{
+    //   this.showProjects = false;
+
+    // }
     this.filterProjectForm = new FormGroup({
       filterSize:new FormControl(null)
     })
     this.uuidValue = this.Uuid.generateUUID();
+    // this.userStatus = localStorage.getItem("sessionUserStatus");
     this.imageServ.profileImagePathShared.subscribe(
       (response) => {
         // console.log("user profile image exist");
@@ -50,6 +69,22 @@ export class AllProjectsComponent implements OnInit {
 
       }
     )
+    
+    // if(this.userStatus =="active"){
+      this.getAllProjects();
+    
+    // }
+    // else{
+    //   console.log("error error error");
+    //   // this.ngOnInit()
+      
+    // }
+
+
+
+  }
+
+  getAllProjects(){
     this.projectServ.getAllProjects(localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
         this.allProjects = response.data.body.data;

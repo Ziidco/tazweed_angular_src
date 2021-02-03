@@ -27,6 +27,8 @@ export class AfterLoginHeaderComponent implements OnInit {
   showPartnerPart: boolean = false;
   showClientPart: boolean = false;
   userName:string;
+  profileMessages:any;
+  messagesStorage:any;
   ngOnInit(): void {
 
 
@@ -99,12 +101,35 @@ export class AfterLoginHeaderComponent implements OnInit {
 
     //   }
     // )
-
+this.messagesStorage = localStorage.getItem("profileMessagesStorage");
+if(this.messagesStorage==null){
+  this.getProfileMessages();
+}
 
   }
   signOut() {
     this.route.navigate(["/login"]);
     localStorage.clear();
+  }
+
+  getProfileMessages(){
+    this.userServ.getProfileMessages(localStorage.getItem("userId"), localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
+      (response:any)=>{
+        this.profileMessages = response.data;
+        console.log("messages in profile ***************");
+        console.log(response);
+        localStorage.setItem("profileMessagesStorage",JSON.stringify(response.data));
+        
+        
+
+      },
+      err=>{
+        // console.log("no messages");
+        console.log(err);
+        
+        
+      }
+    )
   }
 
 }

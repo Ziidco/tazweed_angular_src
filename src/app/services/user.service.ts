@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { from } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  activeAccount= new BehaviorSubject<boolean>(false);
   baseUrl: string = "https://www.tazweedservice.ml/rest/api/v1/";
   constructor(private http: HttpClient) {
   }
@@ -92,7 +93,7 @@ export class UserService {
       return false;
     }
   }
-//https://www.tazweedservice.ml/rest/api/v1/profile/balance/profileId
+
 
 
  // get balance
@@ -160,6 +161,164 @@ export class UserService {
     })
     return this.http.get(this.baseUrl + "comment/" + jobId , { headers: headers });
   }
+
+  // get profile messages
+  // https://www.tazweedservice.ml/rest/api/v1/admin/message/:profileId
+  getProfileMessages(profileId,customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/message/" + profileId , { headers: headers });
+  }
+
+
+
+  /* admin part ===============
+  ============================== */
+
+  // get statistics
+  getStatistics(customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/statistics" , { headers: headers });
+  }
+
+
+   // get all partners
+   getAllPartners(customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/profile?customerType=partner" , { headers: headers });
+  }
+
+   // get all clients
+   getAllClients(customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/profile?customerType=client" , { headers: headers });
+  }
+
+  // https://www.tazweedservice.ml/rest/api/v1/admin/profile/profileID
+
+
+
+  // updata profile by admin
+
+     // updata profile
+     updateProfileByAdmin(profileId,newStatus,customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.put(this.baseUrl + "admin/profile/"+profileId,newStatus , { headers: headers });
+    }
+
+
+    // send message to user
+
+    sendMessageToUser(data,customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.post(this.baseUrl + "admin/message",data , { headers: headers });
+    }
+
+
+
+    // send message to category
+
+    sendMessageToCategory(data,customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.post(this.baseUrl + "admin/message",data , { headers: headers });
+    }
+
+
+     // get all messages sent by admin
+
+     getAllAdminMessages(customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.get(this.baseUrl + "admin/message" , { headers: headers });
+    }
+
+
+    // get unpaid Balance
+
+    // https://www.tazweedservice.ml/rest/api/v1/admin/unpaid/balance
+    getUnpaidBalance(customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.get(this.baseUrl + "admin/unpaid/balance" , { headers: headers });
+    }
+    // https://www.tazweedservice.ml/rest/api/v1/admin/balance/:partnerId
+// update unpaid Balance
+    updateUnpaidBalance(data,partnerId,customerType: string, X_Request_ID: string, token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Customer-Type': customerType,
+        'X-Request-ID': X_Request_ID,
+        'auth': token
+  
+      })
+      return this.http.put(this.baseUrl + "admin/balance/" + partnerId,data , { headers: headers });
+    }
+
+
+  // get expired jobs
+
+  getExpiredJobs(customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/job/expired" , { headers: headers });
+  }
+
 
 
 }

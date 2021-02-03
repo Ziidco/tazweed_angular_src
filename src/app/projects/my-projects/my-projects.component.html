@@ -38,7 +38,7 @@
                       <h6><a class="project-title" style="cursor: pointer;"
                           (click)="openProject(project)">{{project.projectTitle}}</a></h6>
 
-                      <h4>project status : {{project.status}}</h4>
+                      <!-- <h4>project status : {{project.status}}</h4> -->
                       <!-- <h4>project id : {{project._id}}</h4> -->
 
                       <div *ngIf="project.status=='prePayment'" class="project-details-btn reg-font">
@@ -137,7 +137,7 @@
                       <h6><a class="project-title" style="cursor: pointer;"
                           (click)="openProject(project)">{{project.projectTitle}}</a></h6>
 
-                      <h4>project status : {{project.status}}</h4>
+                      <!-- <h4>project status : {{project.status}}</h4> -->
 
                       <div class="project-details-btn reg-font">
                         <button (click)="editPoject(project)" type="button" class="btn">تعديل المشروع<fa-icon
@@ -903,4 +903,11 @@
 
 
 
+</div>
+
+<!-- *ngIf="showLoader" -->
+<div *ngIf="showLoaderMaster"  class="loader loaderMaster">
+  <div class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+    </div>
 </div>

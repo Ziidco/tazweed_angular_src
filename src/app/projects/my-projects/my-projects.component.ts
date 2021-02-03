@@ -26,6 +26,7 @@ export class MyProjectsComponent implements OnInit {
   stepperValue;
   showApplyBoxFail = false;
   showApplyBoxSuccess = false;
+  showLoaderMaster = false;
   showSuccessForPartner = true;
   showdeliverBox = false;
   prePaymentStatusArray = [];
@@ -153,15 +154,18 @@ export class MyProjectsComponent implements OnInit {
 
     const prjectPrePayment = {
       "profileId": localStorage.getItem("userId"),
-      "jobId": project._id
+      "jobId": project._id 
     }
     console.log(prjectPrePayment);
+    this.showLoaderMaster = true;
     this.projectServ.repayJop(prjectPrePayment, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
         console.log("success");
         console.log(response);
         this.paymentUrl = response.data.redirectUrl;
-        window.open(this.paymentUrl);
+        // window.open(this.paymentUrl);
+        window.location.href = this.paymentUrl;
+        this.showLoaderMaster = false;
 
 
       },

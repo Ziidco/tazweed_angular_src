@@ -22,6 +22,8 @@ export class AdminLoginComponent implements OnInit {
   failedLogin;
   showFailed = false;
   registerNewLine: boolean = true;
+  
+showLoader = false;
 
   constructor(private route: Router, private userServ: UserService, private Uuid: UUIDService) { }
 
@@ -45,9 +47,11 @@ export class AdminLoginComponent implements OnInit {
       console.log(this.loginForm.value);
     
 
+      this.showLoader = true;
         console.log("user is login random");
         this.userServ.signIn(this.loginForm.value,userType,this.uuidValue).subscribe(
           (response:any)=>{
+            this.showLoader = false;
             console.log("login response is");
             console.log(response);
             localStorage.setItem("auth",response.data.token);
@@ -63,6 +67,7 @@ export class AdminLoginComponent implements OnInit {
             
           },
           err=>{
+            this.showLoader = false;
             this.showFailed = true;
             this.failedLogin = err;
             

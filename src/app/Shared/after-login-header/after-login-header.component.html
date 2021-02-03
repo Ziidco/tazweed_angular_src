@@ -10,9 +10,9 @@
           <li><a class="nav-link" routerLink="/myProjects" routerLinkActive="active">
               <fa-icon class="ml5" [icon]="faFolderOpen"></fa-icon>مشاريعي
             </a></li>
-          <li><a routerLink="/myProjects" class="nav-link ">
+          <!-- <li><a routerLink="/myProjects" class="nav-link ">
               <fa-icon class="ml5" [icon]="faHistory"></fa-icon>مشاريعي السابقة
-            </a></li>
+            </a></li> -->
             <li><a routerLink="/allProjects" class="nav-link " *ngIf="showPartnerPart">
               <fa-icon class="ml5" [icon]="faHistory"></fa-icon>كل المشاريع
             </a></li>
@@ -50,11 +50,11 @@
                 <fa-icon class="ml5" [icon]="faFolderOpen"></fa-icon>مشاريعي
               </a>
             </li>
-            <li class="list">
+            <!-- <li class="list">
               <a routerLink="/myProjects" class="nav-link ">
                 <fa-icon class="ml5" [icon]="faHistory"></fa-icon>مشاريعي السابقة
               </a>
-            </li>
+            </li> -->
             <li class="list"><a routerLink="/allProjects" class="nav-link " *ngIf="showPartnerPart">
               <fa-icon class="ml5" [icon]="faHistory"></fa-icon>كل المشاريع
             </a></li>
@@ -121,9 +121,18 @@
                   <div class="drop-down-title">
                     <h6 class="notification-title">الرسائل</h6>
                   </div>
-                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
-                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
-                  <button ngbDropdownItem>السلام عليكم يا أستاذ عبدالكريم اية الاخبار معاك وهـ</button>
+                  <div ngbDropdownItem *ngFor="let message of profileMessages"  class="clearfix">
+                    <div  class="project-small-image float-right">
+                      <img  src="../../assets/images/profile/avatar.png">
+                    </div>
+                    <div  class="owner-data float-right">
+                      <h5>{{message.fromName}}</h5>
+                      <span  class="gray reg-font font-13">{{message.createAt | date}}</span>
+                    </div>
+                    <p>{{message.message}}</p>
+                  </div>
+                  <!-- <button *ngFor="let message of profileMessages" ngbDropdownItem>{{message.message}} -    </button> -->
+
                 </div>
               </div>
             </div>
