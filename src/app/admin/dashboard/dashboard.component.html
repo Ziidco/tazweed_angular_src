@@ -289,7 +289,9 @@
         <ng-template tabHeading>
           <fa-icon class="ml5" [icon]="faFolderOpen"></fa-icon>المشاريع
         </ng-template>
-        المشاريع
+        <ul>
+          <li *ngFor="let project of allJobsAdmin">{{project.firstName}} {{project.lastName}} -- {{project.projectTitle}} -- {{project.status}}</li>
+        </ul>
       </tab>
       <tab>
         <ng-template tabHeading>
@@ -324,7 +326,7 @@
           <fa-icon class="ml5" [icon]="faEnvelope"></fa-icon>الرسائل
         </ng-template>
         <div class="sendMessageForCategory mb30">
-
+          <!-- <h1>{{messageObject | json}}</h1> -->
           <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="sendMessageForCategoryForm"
               (ngSubmit)="sendMeaageForCategory()">
 
@@ -376,7 +378,8 @@
               </thead>
               <tbody>
                 <tr *ngFor="let message of messageObject">
-                  <td>{{message.profileId}}</td>
+                  <td *ngIf="message.firstName ==null && message.lastName ==null">اسم مستلم تجريبى</td>
+                  <td *ngIf="message.firstName !=null && message.lastName !=null">{{message.firstName}} {{message.lastName}}</td>
                   <td>{{message.message}}</td>
                   <td>{{message.createAt | date}}</td>
                 </tr>

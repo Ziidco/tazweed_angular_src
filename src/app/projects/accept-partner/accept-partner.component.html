@@ -400,6 +400,11 @@
       </form>
     </div>
   </div>
+  <div *ngIf="deliverJobSuccess" class="project-item"> 
+    <div class="card-body">
+      <p>تم تسليم المشروع للمراجعة</p>
+    </div>
+  </div>
   <div *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed'  && selectedProject.partnerId!='null'" class="project-item">
     <textarea disabled style="min-height: 200px;" class="form-control">{{selectedProject.document}}</textarea>
   </div>
@@ -493,7 +498,7 @@
     </div>
   </div>
 
-
+  
   <!-- partnerId  *ngIf="showApplyBoxFail" -->
   <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId==null" class="project-item"> 
     <div class="card-body">
@@ -513,29 +518,26 @@
     </div>
   </div> -->
 
-  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null" class="project-item">
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null && loggedUserType =='client'" class="project-item">
     <div class="card-body">
       <h6>يوجد كاتب متقدم لمشروعك</h6>
       <h6>
         <!-- (click)="showProjectPartnerMessage='true'" -->
-        <a style="cursor: pointer;font-size: 20px;color: #247d8f;" (click)="showProjectPartnerMessage='true'">
           {{partnerName}}
-          <fa-icon class="profile-navigator" [icon]="faAddressCard"></fa-icon>
-        </a>
+          <!-- <fa-icon class="profile-navigator" [icon]="faAddressCard"></fa-icon> -->
+       
       </h6>
       
     </div>
   </div>
 
 
-  <div *ngIf="showProjectPartnerMessage" class="modal2 custom-modal custom-modal22" role="dialog">
-    <div class="modal-dialog" role="document">
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null && loggedUserType =='client'">
+    <div>
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">بيانات الكاتب</h5>
-          <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+         
         </div>
         <div class="modal-body text-right">
           <h6> <fa-icon class="ml5 writerIcon"  [icon]="faUserAlt"></fa-icon> {{partnerDialogObject.firstName}} {{partnerDialogObject.lastName}}</h6>
@@ -557,7 +559,7 @@
     </div>
   </div>
   <!-- *ngIf="showApplyBoxSuccess" -->
-  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null"  class="project-item">
+  <div *ngIf="selectedProject.status =='pending' && selectedProject.partnerId!=null && loggedUserType =='client'"  class="project-item">
     <div class="card-body">
       <h6 class="project-title mb0">هل توافق على الكاتب للبدء في مشروعك؟</h6>
       <h6 class="reg-font mb20">بموافقك على الكاتب سوف يبدأ في العمل مباشرة على المشروع الخاص بك</h6>

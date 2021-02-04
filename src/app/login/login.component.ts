@@ -161,9 +161,11 @@ export class LoginComponent implements OnInit {
         console.log(this.sessionUserStatus);
         if(this.sessionUserStatus == "active"){
           this.userServ.activeAccount.next(true);
+          // localStorage.setItem("userAccountStatusInStorage",this.sessionUserStatus);
         }
         else{
           this.userServ.activeAccount.next(false);
+          // localStorage.setItem("userAccountStatusInStorage",this.sessionUserStatus);
         }
         
         

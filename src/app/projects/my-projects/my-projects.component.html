@@ -21,7 +21,7 @@
           <div [ngClass]="prePaymentStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>
@@ -96,7 +96,7 @@
 
                     <div *ngIf="project.status=='prePayment'">
                       <button (click)="repayProject(project)" type="button"
-                        class="btn btn-success generalBtnStyle float-left repay-btn">اتمام عملية الدفع</button>
+                        class="btn btn-success generalBtnStyle float-left repay-btn">أكمل عملية الدفع</button>
                     </div>
 
 
@@ -119,7 +119,7 @@
           <div [ngClass]="activeStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>
@@ -214,12 +214,12 @@
         </tab>
         <tab>
           <ng-template tabHeading>
-            اختيار الكاتب
+            عروض الكتاب
           </ng-template>
           <div [ngClass]="pendingStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>
@@ -352,7 +352,7 @@
           <div [ngClass]="inprogressStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>
@@ -507,7 +507,7 @@
           <div [ngClass]="reviewingStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>
@@ -731,7 +731,7 @@
           <div [ngClass]="completedStatusArray.length==0? 'd-block' : 'd-none'" class="container">
             <div class="text-center noProjectsMessage" style="margin-top: 50px;">
               <fa-icon [icon]="faFolderOpen"></fa-icon>
-              <h4>لا يوجد مشاريع االأن</h4>
+              <h4>لا يوجد مشاريع</h4>
             </div>
 
           </div>

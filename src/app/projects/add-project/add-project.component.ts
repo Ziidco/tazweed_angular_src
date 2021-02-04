@@ -158,7 +158,8 @@ export class AddProjectComponent implements OnInit {
           // this.route.navigateByUrl(this.paymentUrl);
           this.showSuccessMessage = false;
           // window.open(this.paymentUrl, "_blank");
-          window.open(this.paymentUrl);
+          // window.open(this.paymentUrl);
+          window.location.href = this.paymentUrl;
 
 
         }, 1000);

@@ -36,21 +36,22 @@ export class AllProjectsComponent implements OnInit {
   constructor(private projectServ: ManageProjectService, private Uuid: UUIDService, private route: Router, private imageServ: ManageImageService,private userServ:UserService) { }
 
   ngOnInit(): void {
+    // localStorage.setItem("sessionUserStatus", this.sessionUserStatus);
     this.userServ.activeAccount.subscribe(
       (response)=>{
-        console.log("active account from service value is ==== " + response);
+        console.log("active account from service value is ==== " + response); 
         
         this.showProjects = response;
       }
     )
     this.userStatus = localStorage.getItem("sessionUserStatus");
-    // if(this.userStatus ==="active"){
-    //   this.showProjects = true;
-    // }
-    // else{
-    //   this.showProjects = false;
+    if(this.userStatus =="active"){
+      this.showProjects = true;
+    }
+    else{
+      this.showProjects = false;
 
-    // }
+    }
     this.filterProjectForm = new FormGroup({
       filterSize:new FormControl(null)
     })

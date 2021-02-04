@@ -39,6 +39,7 @@ export class AcceptPartnerComponent implements OnInit {
   rejectProjectForm: FormGroup;
   showRejectForm: boolean = false;
   showFinishBoxSuccess = false;
+  deliverJobSuccess = false;
   showProjectPartnerMessage:boolean = false;
   partnerNumOfCompletedJobs;
   partnerNumOfRejectedJobs;
@@ -291,7 +292,13 @@ export class AcceptPartnerComponent implements OnInit {
       (response: any) => {
         console.log("تم نسليم المشروع");
         console.log(response)
-        this.route.navigate(['/myProjects']);
+        this.deliverJobSuccess = true;
+        setTimeout(() => {
+          this.deliverJobSuccess = false;
+          this.route.navigate(['/myProjects']);
+          
+        }, 2500);
+        
 
       },
       err => {

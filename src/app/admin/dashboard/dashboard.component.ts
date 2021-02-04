@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit {
   showsendAllFail = false;
   messageReceiverName;
   messageReceiverNames = [];
+  allJobsAdmin:any;
   expiredJobs: any;
 
 
@@ -406,11 +407,12 @@ export class DashboardComponent implements OnInit {
 
   getAllJobs() {
     
-    this.projectServ.getAllProjects("client", this.uuidValue, localStorage.getItem("auth")).subscribe(
+    this.projectServ.getAllProjectsForAdmin("admin", this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
-        console.log("all jobs object ---------------------- ");
+        console.log("all admin jobs object ---------------------- ");
 
         console.log(response.data);
+        this.allJobsAdmin = response.data;
         // this.allClients = response.data;
 
       },

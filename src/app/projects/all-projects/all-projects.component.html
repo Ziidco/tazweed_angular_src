@@ -122,6 +122,7 @@
           <div class="card project-item">
             <div class="card-body">
               <div class="clearfix">
+                <h5 class="project-title">{{project.projectTitle}}</h5>
                 <div class="project-small-image float-right">
                   <!-- <img src="../../../assets/images/profile/small.jpg"> -->
                   <img *ngIf="userImageBase!='default'" [src]="userImageBase" />
@@ -134,14 +135,9 @@
                   <span class="gray reg-font font-13">{{project.createdAt | date}}</span>
 
                 </div>
-                <div class="float-left project-details-btn reg-font">
-                  <button (click)="openProject(project)" type="button" class="btn">افتح تفاصيل المشروع<fa-icon
-                      [icon]="faArrowLeft"></fa-icon></button>
-
-                </div>
+                
               </div>
-              <h5 class="project-title">{{project.projectTitle}}</h5>
-              <h6>{{project.briefProject}}</h6>
+              
               <!-- <h6>{{project.category}}</h6> -->
               <div class="d-flex justify-content-around">
                 <div class="d-flex">
@@ -196,25 +192,25 @@
                     <fa-icon [icon]="faHourglassHalf"></fa-icon>
                   </div>
                   <div *ngIf="project.timePerDay==1" class="project-prop">
-                    <h6>مدة التنفيذ 24 ساعة</h6>
+                    <h6>مدة التنفيذ</h6>
                     <span>
                       (يوم واحد)
                     </span>
                   </div>
                   <div *ngIf="project.timePerDay==2" class="project-prop">
-                    <h6>مدة التنفيذ 48 ساعة</h6>
+                    <h6>مدة التنفيذ</h6>
                     <span>
                       (يومين)
                     </span>
                   </div>
                   <div *ngIf="project.timePerDay==3" class="project-prop">
-                    <h6>مدة التنفيذ 72 ساعة</h6>
+                    <h6>مدة التنفيذ</h6>
                     <span>
                       (ثلاثة أيام)
                     </span>
                   </div>
                   <div *ngIf="project.timePerDay==null" class="project-prop">
-                    <h6>مدة التنفيذ غير محددة</h6>
+                    <h6>مدة التنفيذ</h6>
                     <span>
                       (؟؟؟؟)
                     </span>
@@ -231,6 +227,11 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="float-left project-details-btn reg-font">
+              <button (click)="openProject(project)" type="button" class="btn open-btn">تصفح المشروع<fa-icon
+                  [icon]="faArrowLeft"></fa-icon></button>
+
             </div>
           </div>
         </div>

@@ -53,6 +53,19 @@ export class ManageProjectService {
     return this.http.get(this.baseUrl + "job/profile", { headers: headers });
   }
 
+  getAllProjectsForAdmin(customerType: string, X_Request_ID: string, token) {
+
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.get(this.baseUrl + "admin/job", { headers: headers });
+  }
+
 
   getMyProjects(customerType: string, X_Request_ID: string, token, userId) {
 

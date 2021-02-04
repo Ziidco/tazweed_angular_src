@@ -30,6 +30,21 @@
     </div>
   </div>
 </div>
+<div *ngIf="showUploadImageMessageFail" class="modal2 custom-modal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">تغيير صورة البروفايل</h5>
+        <button (click)="closeDialogFail()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>خطأ أثناء تغيير الصورة</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -80,7 +95,7 @@
           <div class="d-inline-block upload-image-block">
 
 
-            <img *ngIf="userImageBase!='default'" [src]="userImageBase" />
+            <img *ngIf="userImageBase!='default'" [src]="newProfileImagePath" />
             <img *ngIf="userImageBase=='default'" src="../../assets/images/profile/avatar.png" />
             <div class="upload-tool">
               <fa-icon class="upload-profile-icon" [icon]="faImage">
@@ -243,4 +258,9 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="showLoaderMaster"  class="loader loaderMaster">
+  <div class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+    </div>
 </div>
