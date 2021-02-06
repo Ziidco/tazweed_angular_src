@@ -47,6 +47,7 @@ export class AcceptPartnerComponent implements OnInit {
   loggedUserType;
   commentForJob;
   showdeliverBox = false;
+  showRequetsEditsForm = false;
   constructor(private projectSev: ManageProjectService, private Uuid: UUIDService, private route: Router, private userServ: UserService) { }
 
   ngOnInit(): void {
@@ -336,21 +337,22 @@ export class AcceptPartnerComponent implements OnInit {
   }
 
   rejectProject(){
-    console.log(this.rejectProjectForm.value);
-    this.projectSev.editJob(this.rejectProjectForm.value, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), this.projectId).subscribe(
-      (response: any) => {
-        console.log("تم نسليم المشروع");
-        console.log(response)
-        this.route.navigate(['/myProjects']);
+    this.showRequetsEditsForm = true;
+    // console.log(this.rejectProjectForm.value);
+    // this.projectSev.editJob(this.rejectProjectForm.value, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), this.projectId).subscribe(
+    //   (response: any) => {
+    //     console.log("تم نسليم المشروع");
+    //     console.log(response)
+    //     this.route.navigate(['/myProjects']);
 
-      },
-      err => {
-        console.log("something went wrong");
-        console.log(err);
+    //   },
+    //   err => {
+    //     console.log("something went wrong");
+    //     console.log(err);
 
 
-      }
-    )
+    //   }
+    
     
 
   }

@@ -35,6 +35,7 @@ export class MyProjectsComponent implements OnInit {
   inprogressStatusArray = [];
   reviewingStatusArray = [];
   completedStatusArray = [];
+  rejectedStatusArray = [];
   userType = localStorage.getItem("sessionUserType");
   paymentUrl;
   profileRating;
@@ -99,6 +100,9 @@ export class MyProjectsComponent implements OnInit {
           }
           else if (project.status == "completed") {
             this.completedStatusArray.push("1");
+          }
+          else if(project.status == "rejected"){
+            this.rejectedStatusArray.push("1");
           }
           // console.log(this.prePaymentStatusArray.length);
           // console.log(this.activeStatusArray.length);

@@ -58,6 +58,13 @@ export class DashboardComponent implements OnInit {
   messageReceiverNames = [];
   allJobsAdmin:any;
   expiredJobs: any;
+  prePaymentStatusArray = [];
+  activeStatusArray = [];
+  pendingStatusArray = [];
+  inprogressStatusArray = [];
+  reviewingStatusArray = [];
+  completedStatusArray = [];
+  rejectedStatusArray = [];
 
 
   constructor(
@@ -149,6 +156,28 @@ export class DashboardComponent implements OnInit {
     this.getUnpaidBalance();
     this.getAllJobs();
     this.getExpiredJobs();
+
+    // for (const project of this.allJobsAdmin) {
+    //   if (project.status == "prePayment") {
+    //     this.prePaymentStatusArray.push("1");
+    //   }
+    //   else if (project.status == "active") {
+    //     this.activeStatusArray.push("1");
+    //   }
+    //   else if (project.status == "pending") {
+    //     this.pendingStatusArray.push("1");
+    //   }
+    //   else if (project.status == "inprogress") {
+    //     this.inprogressStatusArray.push("1");
+    //   }
+    //   else if (project.status == "reviewing") {
+    //     this.reviewingStatusArray.push("1");
+    //   }
+    //   else if (project.status == "completed") {
+    //     this.completedStatusArray.push("1");
+    //   }
+
+    // }
   }
 
   signOut() {
@@ -171,7 +200,10 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
+  openProject(project) {
+    this.projectServ.selectedPoject.next(project);
+    this.route.navigate(["acceptPartner/" + project._id]);
+  }
   getAllClients() {
     this.userServ.getAllClients("admin", this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
@@ -269,6 +301,11 @@ export class DashboardComponent implements OnInit {
 
         this.showsendSuccess = true;
         this.showsendFail = false;
+        setTimeout(() => {
+          this.showsendSuccess = false; 
+          this.ngOnInit();
+          
+        }, 2000);
       },
       err => {
         console.log(err);
@@ -291,6 +328,11 @@ export class DashboardComponent implements OnInit {
         console.log('message sent for category');
         console.log(response);
         this.showsendAllSuccess = true;
+        setTimeout(() => {
+          this.showsendAllSuccess = false;
+          this.ngOnInit();
+          
+        }, 2000);
         // this.ngOnInit;
       },
       err => {
@@ -375,7 +417,10 @@ export class DashboardComponent implements OnInit {
         //   this.showPayDialog = false;
         // this.ngOnInit();
         // }, 2000);
-
+        setTimeout(() => {
+          this.ngOnInit();
+          
+        }, 2000);
 
       },
       err => {
@@ -414,6 +459,31 @@ export class DashboardComponent implements OnInit {
         console.log(response.data);
         this.allJobsAdmin = response.data;
         // this.allClients = response.data;
+
+        for (const project of response.data) {
+          if (project.status == "prePayment") {
+            this.prePaymentStatusArray.push("1");
+          }
+          else if (project.status == "active") {
+            this.activeStatusArray.push("1");
+          }
+          else if (project.status == "pending") {
+            this.pendingStatusArray.push("1");
+          }
+          else if (project.status == "inprogress") {
+            this.inprogressStatusArray.push("1");
+          }
+          else if (project.status == "reviewing") {
+            this.reviewingStatusArray.push("1");
+          }
+          else if(project.status == "rejected"){
+            this.rejectedStatusArray.push("1");
+          }
+          else if (project.status == "completed") {
+            this.completedStatusArray.push("1");
+          }
+    
+        }
 
       },
       err => {

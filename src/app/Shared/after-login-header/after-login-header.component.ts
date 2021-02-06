@@ -57,10 +57,21 @@ export class AfterLoginHeaderComponent implements OnInit {
 
       }
     )
+      setTimeout(() => {
+        this.messagesStorage = JSON.parse(localStorage.getItem("profileMessagesStorage")) ;
+      }, 1000);
+    
 
-    this.messagesStorage = localStorage.getItem("profileMessagesStorage");
-    if (this.messagesStorage == null) {
+    // console.log("message from storage ==== " + this.messagesStorage);
+    if(!localStorage.getItem("profileMessagesStorage")){
       this.getProfileMessages();
+    }
+    else if (this.messagesStorage == null || this.messagesStorage == '' || !this.messagesStorage) {
+      this.getProfileMessages();
+    }
+    else{
+      this.messagesStorage = JSON.parse(localStorage.getItem("profileMessagesStorage"))
+      
     }
 
     this.newProfileImagePath = localStorage.getItem("userImage");
