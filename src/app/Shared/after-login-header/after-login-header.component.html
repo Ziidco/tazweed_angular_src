@@ -114,14 +114,15 @@
           <li class="nav-item ml30">
             <div class="btn-group no-arrow">
               <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                <button class="btn plr0 noarrow font20" ngbDropdownToggle>
+                <button class="btn plr0 noarrow font20 noBorderNoShadow" ngbDropdownToggle>
+                  <span *ngIf="unreadMessagesArray.length>0" class="badge badge-light">{{unreadMessagesArray.length}}</span>
                   <fa-icon [icon]="faEnvelope"></fa-icon>
                 </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
+                <div class="dropdown-menu messages-drop-down" ngbDropdownMenu>
                   <div class="drop-down-title">
                     <h6 class="notification-title">الرسائل</h6>
                   </div>
-                  <div ngbDropdownItem *ngFor="let message of messagesStorage"  class="clearfix message">
+                  <div style="color: #247d8f;cursor: pointer;" (click)="readMessage(message)" ngbDropdownItem *ngFor="let message of messagesStorage" [ngClass]="message.read? 'read' : 'unRead'"  class="clearfix message">
                     <div  class="project-small-image float-right">
                       <img  src="../../assets/images/profile/avatar.png">
                     </div>
@@ -129,7 +130,7 @@
                       <h5>{{message.fromName}}</h5>
                       <span  class="gray reg-font font-13">{{message.createAt | date}}</span>
                     </div>
-                    <p>{{message.message}}</p>
+                    <p class="message-brief">{{message.message}}</p>
                   </div>
                   <!-- <button *ngFor="let message of profileMessages" ngbDropdownItem>{{message.message}} -    </button> -->
 
@@ -177,3 +178,5 @@
     </nav>
   </div>
 </header>
+ <!-- <h6>{{profileMessages|json}}</h6> -->
+<!--<h1>unread message array {{unreadMessagesArray.length}}</h1> -->

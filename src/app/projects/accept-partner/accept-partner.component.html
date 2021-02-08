@@ -7,10 +7,12 @@
     <!-- Your content to export here -->
     {{selectedProject.document}}
 </div>
-
+<h6 *ngIf="loggedUserType=='admin'">اسم العميل : {{selectedProject.firstName}} {{selectedProject.lastName}}</h6>
+      <h6 *ngIf="loggedUserType=='admin'">اسم الكاتب : {{partnerName}}</h6>
   <div class="project-item mt30">
     <div class="card-body">
       <h6>{{selectedProject.projectTitle}}</h6>
+      
       <!-- <h6>{{selectedProject.partnerId}}</h6> -->
       <div *ngIf="selectedProject.status=='active' || selectedProject.status=='prePayment' " class="custom-stepper">
         <div class="rpp-stepper">

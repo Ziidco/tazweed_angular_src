@@ -65,6 +65,7 @@ export class DashboardComponent implements OnInit {
   reviewingStatusArray = [];
   completedStatusArray = [];
   rejectedStatusArray = [];
+  expiredStatusArray = [];
 
 
   constructor(
@@ -438,7 +439,11 @@ export class DashboardComponent implements OnInit {
         console.log("expired jobs object ---------------------- ");
 
         console.log(response.data);
-        // this.allClients = response.data;
+        this.expiredJobs = response.data;
+        for (const project of this.expiredJobs) {
+          this.expiredStatusArray.push(project);
+          
+        }
 
       },
       err => {

@@ -14,6 +14,7 @@ export class user{
     writerPage: string;
     customerType: string;
     dob:string;
-    gender:string
+    gender:string;
+    briefOfWriter:string;
   
 }

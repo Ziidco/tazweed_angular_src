@@ -8,6 +8,7 @@ import { ConfirmResetPasswordComponent } from './confirm-reset-password/confirm-
 import { ImageComponent } from './image/image.component';
 import { HomeComponent } from './landingPage/home/home.component';
 import { LoginComponent } from './login/login.component';
+import { MessageDetailsComponent } from './message-details/message-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AcceptPartnerComponent } from './projects/accept-partner/accept-partner.component';
 import { AddProjectFailComponent } from './projects/add-project-fail/add-project-fail.component';
@@ -48,7 +49,8 @@ const routes: Routes = [
   {path:"failAddedProject",component:AddProjectFailComponent},
   {path:"admin/login",component:AdminLoginComponent},
   {path:"dashboard",component:DashboardComponent},
-  {path:"finishingProjectMessage",component:ProjectThanksComponent}
+  {path:"finishingProjectMessage",component:ProjectThanksComponent},
+  {path:"messageDetails",component:MessageDetailsComponent,canActivate:[AuthGuard]}
   
 ];
 

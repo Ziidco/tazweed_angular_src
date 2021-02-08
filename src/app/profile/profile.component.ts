@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { faSignOutAlt, faUserAlt, faTable, faLock, faArchive, faStar, faImage } from '@fortawesome/free-solid-svg-icons';
 import { user } from '../Model/user';
@@ -16,7 +17,12 @@ export class ProfileComponent implements OnInit {
   uploadImageForm: FormGroup;
   editForm: FormGroup;
   resetPasswordForm: FormGroup;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  tagsList: any = [];
   uuidValue: any;
+  FieldOfInterestProfile;
   active = 1;
   faSignOutAlt = faSignOutAlt;
   faUserAlt = faUserAlt;
@@ -35,6 +41,7 @@ export class ProfileComponent implements OnInit {
   lastNameProfile;
   userTypeProfile;
   phoneNumberProfile;
+  briefOfWriterProfile;
   dobProfile;
   genderProfile;
   emailProfile;
@@ -151,11 +158,13 @@ export class ProfileComponent implements OnInit {
         this.lastNameProfile = userProfileResponse.data.lastName;
         this.userTypeProfile = userProfileResponse.data.customerType;
         this.phoneNumberProfile = userProfileResponse.data.mobileNumber;
+        this.briefOfWriterProfile = userProfileResponse.data.briefOfWriter;
         this.dobProfile = userProfileResponse.data.dob;
         this.genderProfile = userProfileResponse.data.gender;
         this.emailProfile = userProfileResponse.data.email;
         this.userNameProfile = userProfileResponse.data.userName;
         this.dateOfCreateProfile = userProfileResponse.data.createdAt;
+        this.FieldOfInterestProfile = userProfileResponse.data.fieldsOfInterest;
         this.editForm.get("firstName").setValue(this.userProfileData.firstName);
         this.editForm.get("lastName").setValue(this.userProfileData.lastName);
         this.editForm.get("country").setValue(this.userProfileData.country);
@@ -164,6 +173,8 @@ export class ProfileComponent implements OnInit {
         this.editForm.get("customerType").setValue(this.userProfileData.customerType);
         this.editForm.get("dob").setValue(this.userProfileData.dob);
         this.editForm.get("gender").setValue(this.userProfileData.gender);
+        this.editForm.get("briefOfWriter").setValue(this.userProfileData.briefOfWriter);
+        
 
 
 
@@ -177,7 +188,9 @@ export class ProfileComponent implements OnInit {
       mobileNumber: new FormControl(null),
       customerType: new FormControl(null),
       dob: new FormControl(null),
-      gender: new FormControl(null)
+      gender: new FormControl(null),
+      briefOfWriter:new FormControl(null),
+      fieldsOfInterest:new FormArray([])
 
 
     })
@@ -481,5 +494,33 @@ export class ProfileComponent implements OnInit {
     )
 
   }
+
+  add(event: MatChipInputEvent): void {
+    const tag = new FormControl(event.value);
+    const input = event.input;
+    const value = event.value;
+
+
+    if ((value || '').trim()) {
+
+      this.tagsList.push({ name: value.trim() });
+      (<FormArray>this.editForm.get("fieldsOfInterest")).push(tag);
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+  remove(tag): void {
+    const index = this.tagsList.indexOf(tag);
+
+    if (index >= 0) {
+      this.tagsList.splice(index, 1);
+      const control = <FormArray>this.editForm.controls['fieldsOfInterest'];
+      control.removeAt(index);
+    }
+  }
+
 
 }

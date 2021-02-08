@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserService {
   activeAccount= new BehaviorSubject<boolean>(false);
+  messageToRead = new BehaviorSubject<any>("");
   baseUrl: string = "https://www.tazweedservice.ml/rest/api/v1/";
   constructor(private http: HttpClient) {
   }
@@ -292,7 +293,6 @@ export class UserService {
       })
       return this.http.get(this.baseUrl + "admin/unpaid/balance" , { headers: headers });
     }
-    // https://www.tazweedservice.ml/rest/api/v1/admin/balance/:partnerId
 // update unpaid Balance
     updateUnpaidBalance(data,partnerId,customerType: string, X_Request_ID: string, token) {
       const headers = new HttpHeaders({
@@ -319,6 +319,18 @@ export class UserService {
     return this.http.get(this.baseUrl + "admin/job/expired" , { headers: headers });
   }
 
+  
+  // update unpaid Balance
+  updateMessage(messageId,customerType: string, X_Request_ID: string, token) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Customer-Type': customerType,
+      'X-Request-ID': X_Request_ID,
+      'auth': token
+
+    })
+    return this.http.put(this.baseUrl + "admin/update/message/" + messageId,{"read": true} , { headers: headers });
+  }
 
 
 }
