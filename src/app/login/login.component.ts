@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { faEye, faEyeSlash, faExclamationTriangle, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { UUIDService } from '../services/uuid.service';
@@ -24,9 +24,17 @@ export class LoginComponent implements OnInit {
   showFailed = false;
   registerNewLine: boolean = true;
   sessionUserStatus;
-  constructor(private route: Router, private userServ: UserService, private Uuid: UUIDService) { }
+  activeTabType = "client";
+  constructor(private route: Router, private userServ: UserService, private Uuid: UUIDService,private activRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log("-----------------------------");
+    
+    this.activRoute.queryParams.subscribe(params => {
+      this.activeTabType = params['customerType'];
+      console.log("tab active will be to " + this.activeTabType);
+      
+    });
     if (localStorage.getItem("isRegistered")) {
       this.registerNewLine = false;
     }

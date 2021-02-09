@@ -9,7 +9,7 @@
     </div>
   </div>
   <tabset class="login-tabs">
-    <tab heading="كاتب" id="tab1">
+    <tab [active]="activeTabType=='partner' ||activeTabType=='' || activeTabType==null ? true : false " heading="كاتب" id="tab1">
       
       <div class="row">
         <form (keydown.enter)="$event.preventDefault()" class="col-lg-6 col-md-6 col-sm-12 col-12 mt20" [formGroup]="loginForm" (ngSubmit)="login('partner')">
@@ -56,7 +56,7 @@
       </div>
     
     </tab>
-    <tab heading="عميل"> 
+    <tab [active]="activeTabType=='client' ? true : false " heading="عميل"> 
       
       
       <div class="row">

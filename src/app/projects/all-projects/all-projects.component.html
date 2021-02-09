@@ -2,7 +2,7 @@
 <!-- <div>
   {{allProjects|json}}
 </div> -->
-<div *ngIf="showNoProjectsContainer" class="container" style="margin-top:150px;">
+<div *ngIf="showNoProjectsContainer && showProjects" class="container" style="margin-top:150px;">
   <div class="text-center noProjectsMessage">
     <fa-icon [icon]="faFolderOpen"></fa-icon>
     <h4>لا يوجد مشاريع االأن</h4>
