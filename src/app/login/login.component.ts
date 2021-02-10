@@ -42,15 +42,12 @@ export class LoginComponent implements OnInit {
       this.registerNewLine = true;
     }
     this.uuidValue = this.Uuid.generateUUID();
-    // console.log("this.uuidvalue");
-    // console.log(this.uuidValue);
     this.loginForm = new FormGroup({
       "email": new FormControl(null, [Validators.required, Validators.email]),
       "password": new FormControl(null, [Validators.required, Validators.minLength(8)]),
       "rememberMe": new FormControl(false)
     });
   }
-
 
   // login method start
   login(userType: string) {
@@ -65,23 +62,16 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("sessionUserType", userType);
           localStorage.setItem("userId", response.data.profileId);
           this.getUserData(response.data.profileId);
-          // localStorage.setItem("sessionUserStatus", this.sessionUserStatus);
-
-          // this.route.navigate(["addProject"]);  
           if (userType === 'partner') {
             localStorage.setItem("partnerId", response.data.profileId);
             this.route.navigate(["allProjects"]);
           }
           else {
             localStorage.setItem("clientId", response.data.profileId);
-            // this.route.navigate(["addProject"]);  
             this.route.navigate(["myProjects"]);
           }
 
           localStorage.setItem("email", response.data.email);
-          // localStorage.setItem("sessionUserStatus",response.data.status);
-
-
 
         },
         err => {
@@ -115,14 +105,10 @@ export class LoginComponent implements OnInit {
           }
           else {
             localStorage.setItem("clientId", response.data.profileId);
-            // this.route.navigate(["addProject"]); 
             this.route.navigate(["myProjects"]);
           }
 
           localStorage.setItem("email", response.data.email);
-
-
-
 
         },
         err => {
@@ -132,10 +118,7 @@ export class LoginComponent implements OnInit {
 
         }
       )
-
-
     }
-
   }
 
   showPassword(id) {
@@ -148,10 +131,6 @@ export class LoginComponent implements OnInit {
     this.showPasswordIcon = true;
     this.hidePasswordIcon = false;
   }
-  // logOut(){
-  //   this.route.navigate(["login"]);
-  //   localStorage.clear();
-  // }
 
   resetPassword(userType) {
     console.log("you will reset password for user of type " + userType);
@@ -164,21 +143,16 @@ export class LoginComponent implements OnInit {
     this.userServ.getOneProfileData(profileId, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth")).subscribe(
       (response: any) => {
         console.log("user profile data is ============");
-        // console.log(response);
         this.sessionUserStatus = response.data.status;
         console.log(this.sessionUserStatus);
         if(this.sessionUserStatus == "active"){
           this.userServ.activeAccount.next(true);
-          // localStorage.setItem("userAccountStatusInStorage",this.sessionUserStatus);
         }
         else{
           this.userServ.activeAccount.next(false);
-          // localStorage.setItem("userAccountStatusInStorage",this.sessionUserStatus);
         }
         
-        
         localStorage.setItem("sessionUserStatus", this.sessionUserStatus);
-        
 
       },
       err => {

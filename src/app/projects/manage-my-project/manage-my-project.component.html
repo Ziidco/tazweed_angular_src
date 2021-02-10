@@ -15,9 +15,6 @@
       </div>
     </div>
   </div>
-  <p>you will edit project with details {{editedProjectObject|json}}</p>
-  <!-- <p>you will edit project with id {{projectId}}</p>
-  <p>you will edit project with details {{editedProjectObject|json}}</p> -->
   <div class="form-title">
     <h1>تعديل المشروع</h1>
   </div>
@@ -46,7 +43,6 @@
 
               <input (change)="calculateCost()" id="projectConfig.id" type="radio" [value]="projectConfig.id"
                 formControlName="size">
-              <!-- <label for="projectConfig.id">{{projectConfig.name}} <br>{{projectConfig.size}} كلمة</label> -->
 
 
 
@@ -67,22 +63,22 @@
             <div class="radio-item-c">
 
               <input (change)="calculateCost()" id="shortTime" type="radio" [value]="1" formControlName="timePerDay">
-              <label for="short">24 ساعة <br>يوم واحد</label>
+              <label for="short">24 ساعة</label>
             </div>
             <div class="radio-item-c">
               <input (change)="calculateCost()" id="mediumTime" type="radio" [value]="2" formControlName="timePerDay">
-              <label for="mediumTime">48 ساعة <br>يومين</label>
+              <label for="mediumTime">48 ساعة</label>
             </div>
             <div class="radio-item-c">
               <input (change)="calculateCost()" id="largeTime" type="radio" [value]="3" formControlName="timePerDay">
-              <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+              <label for="largeTime">72 ساعة</label>
             </div>
           </div>
         </div>
 
         <div class="form-group">
           <h6>تكلفة المشروع</h6>
-          <h5>{{projectCost}} ريال سعودى</h5>
+          <h5>{{projectCost}} ر.س</h5>
         </div>
         <div class="form-group additon">
           <h6>الأجر الاضافى</h6>
@@ -94,7 +90,7 @@
 
         <div class="form-group">
           <h6>اجمالى تكلفة المشروع ( التكلفة + الاجر الاضافى)</h6>
-          <h5>{{finalTotalCost}} ريال سعودى</h5>
+          <h5>{{finalTotalCost}} ر.س</h5>
         </div>
         
 
@@ -110,9 +106,4 @@
     </div>
 
   </form>
-
-
-  <!-- <ngb-rating [(rate)]="currentRate"></ngb-rating>
-<hr>
-<pre>Rate: <b>{{currentRate}}</b></pre>  -->
 </div>

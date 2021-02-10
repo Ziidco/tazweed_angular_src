@@ -61,6 +61,10 @@ export class AfterLoginHeaderComponent implements OnInit {
     )
     setTimeout(() => {
       this.messagesStorage = JSON.parse(localStorage.getItem("profileMessagesStorage"));
+      
+
+      // this.messagesStorage.sort((a,b) => a.message.localeCompare(b.message));
+
     }, 1000);
 
 
@@ -135,6 +139,9 @@ export class AfterLoginHeaderComponent implements OnInit {
         this.profileMessages = response.data;
         console.log("messages in profile ***************");
         console.log(response);
+        response.data.sort((a, b) => {
+          return <any>new Date(b.createAt) - <any>new Date(a.createAt);
+        });
         localStorage.setItem("profileMessagesStorage", JSON.stringify(response.data));
         for (const message of response.data) {
           if (message.read == false) {

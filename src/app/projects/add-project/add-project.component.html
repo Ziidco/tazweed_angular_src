@@ -170,15 +170,15 @@
           <div class="d-flex">
             <div class="radio-item-c">
               <input (change)="calculateCost()"  id="shortTime" type="radio" value="1" name="timePerDay" formControlName="timePerDay">
-              <label for="short">24 ساعة <br>يوم واحد</label>
+              <label for="short">24 ساعة </label>
             </div>
             <div class="radio-item-c">
               <input (change)="calculateCost()"  id="mediumTime" type="radio" value="2" name="timePerDay" formControlName="timePerDay">
-              <label for="mediumTime">48 ساعة <br>يومين</label>
+              <label for="mediumTime">48 ساعة</label>
             </div>
             <div class="radio-item-c">
               <input (change)="calculateCost()"  id="largeTime" type="radio" value="3" name="timePerDay" formControlName="timePerDay">
-              <label for="largeTime">72 ساعة <br>ثلاثة أيام</label>
+              <label for="largeTime">72 ساعة</label>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@
 
           <div class="form-group">
             <h6>تكلفة المشروع</h6>
-            <h5>{{projectCost}} ريال سعودى</h5>
+            <h5>{{projectCost}} ر.س</h5>
           </div>
           <!-- *ngIf="showAdditionnalValueMessage" -->
           <div *ngIf="showAdditionnalValueMessage" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
@@ -202,7 +202,7 @@
                 </div>
                 <div class="modal-body text-right">
                   <h6 class="reg-font">تم اضافة قيمة اضافية</h6>
-                  <h6 class="reg-font">{{addProjectForm.get('additionFake').value}} ريال</h6>
+                  <h6 class="reg-font">{{addProjectForm.get('additionFake').value}} ر.س</h6>
                 </div>
               </div>
             </div>
@@ -215,7 +215,7 @@
           </div> 
 
           <div class="form-group">
-            <span>الإجمالي (التكلفة + الأجر الإضافي) = </span><span class="total-num">{{finalCost}} ريال سعودي</span>
+            <span>الإجمالي (التكلفة + الأجر الإضافي) = </span><span class="total-num">{{finalCost}} ر.س</span>
           </div>
 
         </div>
@@ -252,16 +252,16 @@
 
           <div class="form-group d-flex justify-content-between">
             <span>تكلفة المشروع</span>
-            <span class="colored">{{projectCost}} ريال سعودى</span>
+            <span class="colored">{{projectCost}} ر.س</span>
           </div>
           <div class="form-group d-flex justify-content-between">
             <span>الأجر الإضافي</span>
-            <span class="colored">{{addProjectForm.get("addtionalAmount").value}} ريال سعودي</span>
+            <span class="colored">{{addProjectForm.get("addtionalAmount").value}} ر.س</span>
           </div>
           <hr>
           <div class="form-group d-flex justify-content-between">
             <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
-            <span class="colored">{{finalCost}} ريال سعودي</span>
+            <span class="colored">{{finalCost}} ر.س</span>
           </div>
         </div>
         <!-- <div class="payment-container">

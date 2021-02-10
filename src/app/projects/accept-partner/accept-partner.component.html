@@ -157,13 +157,13 @@
 
         <div class="text-center" *ngIf="loggedUserType =='partner'">
 
-          <div class="reg-font">
+          <!-- <div class="reg-font">
             <button style="margin: 20px 0;" (click)="deliverProjectForClient()" type="button"
               class="btn btn-success auto-width-btn">
               تسليم المشروع
             </button>
 
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -210,7 +210,7 @@
             </div>
           </a>
         </div>
-
+<!-- 
         <div class="text-center" *ngIf="loggedUserType =='partner'">
 
           <div class="reg-font">
@@ -220,7 +220,7 @@
             </button>
 
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div *ngIf="selectedProject.status=='reviewing' && selectedProject.partnerId!='null' && loggedUserType =='client'"
@@ -267,7 +267,7 @@
           </a>
         </div>
 
-        <div class="text-center">
+        <!-- <div class="text-center">
 
           <div class="reg-font">
             <button style="margin: 20px 0;" (click)="showReviewBox()" type="button"
@@ -278,7 +278,7 @@
 
 
           </div>
-        </div>
+        </div> -->
       </div>
       <div *ngIf="selectedProject.status=='completed' && selectedProject.partnerId!='null'"
       class="custom-stepper">
@@ -388,7 +388,7 @@
   </div>
 
 
-  <div *ngIf="showdeliverBox" class="card project-item">
+  <div *ngIf="selectedProject.status=='inprogress' && selectedProject.partnerId!='null' && loggedUserType =='partner'" class="card project-item">
     <div class="card-body">
       <h6 class="blue">هل انتهيت من عملك وتريد ارسل نسخة نهائية للمراجعة؟</h6>
       <p>ارسل نسخة نهائية للعميل للمراجعة في حالة انتهائك من تنفيذ المشروع (في مرحلة المراجعة يقبل العميل المشروع أو
@@ -413,7 +413,7 @@
   <button class="btn btn-success auto-width-btn export-btn" *ngIf="selectedProject.status=='reviewing' ||selectedProject.status=='completed'" (click)="Export2Doc('exportContent', selectedProject.projectTitle)"><fa-icon class="ml5" [icon]="faFileDownload"></fa-icon>تحميل النص</button>
 
 
-  <div *ngIf="showFinishBoxSuccess" class="project-item">
+  <div *ngIf="selectedProject.status=='reviewing' && loggedUserType =='client'" class="project-item">
     <div class="card-body">
       <h6 class="project-title ">مرحلة مراجعة المشروع</h6> 
       <h6 class="reg-font mb20">هل لديك تعديلات؟ بقبولك المشروع بعد المراجعة سوف ينتهي المشروع ويتم تحويل المبلغ لرصيد

@@ -1558,6 +1558,7 @@ ngb-rating {
   .userIconImage {
     width: 40px;
     margin-left: 70px;
+    border-radius: 50%;
   }
 
   .title-mobile {
@@ -1646,4 +1647,19 @@ ngb-rating {
   .greenlight{margin-top: 20px;padding: 5px;}
   .row-item{margin: 20px 0;}
   .secondLevelTabs .nav.nav-pills{margin: 20px 10px 20px 0;}
+  .horizontal-tabs .nav-pills .nav-link{padding: 10px 8px;}
+  .btn {font-size: 12px;}
+  .writerIcon {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+  }
+  .project-title,h6, .h6,.colored {font-size: 16px;}
+  .add-project-container{padding: 10px 10px;}
+  .reg-font{font-size: 13px;}
+  .form-control{font-size: 12px;}
+  .generalBtnStyle.btn-success{font-size: 13px;max-width: 100px;}
+  .add-roject-btn.next .ng-fa-icon{margin-right: 15px;}
+  .total-num {font-size: 18px;}
 }
