@@ -5,6 +5,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { ClientPolicyGuard } from './client-policy.guard';
 import { ConfirmResetPasswordComponent } from './confirm-reset-password/confirm-reset-password.component';
+import { FAQComponent } from './faq/faq.component';
 import { ImageComponent } from './image/image.component';
 import { HomeComponent } from './landingPage/home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -37,20 +38,21 @@ const routes: Routes = [
   {path:"addProject",component:AddProjectComponent,canActivate:[AuthGuard,ClientPolicyGuard]},
   {path:"profile",component:ProfileComponent,canActivate:[AuthGuard]},
   {path:"allProjects",component:AllProjectsComponent,canActivate:[AuthGuard,UserPrivilageGuard]},
-  {path:"uploadImage",component:ImageComponent},
+  {path:"uploadImage",component:ImageComponent,canActivate:[AuthGuard]},
   {path:"resetPassword",component:ResetPasswordComponent},
-  {path:"myProjects",component:MyProjectsComponent},
+  {path:"myProjects",component:MyProjectsComponent,canActivate:[AuthGuard]},
   {path:"confirmResetPasswod",component:ConfirmResetPasswordComponent},
   {path:"afterLoginHeader",component:AfterLoginHeaderComponent},
-  {path:"updateProject/:id",component:ManageMyProjectComponent},
-  {path:"projectSetails/:id",component:ProjectDetailsComponent},
-  {path:"acceptPartner/:id",component:AcceptPartnerComponent},
+  {path:"updateProject/:id",component:ManageMyProjectComponent,canActivate:[AuthGuard]},
+  {path:"projectSetails/:id",component:ProjectDetailsComponent,canActivate:[AuthGuard]},
+  {path:"acceptPartner/:id",component:AcceptPartnerComponent,canActivate:[AuthGuard]},
   {path:"successAddedProject",component:AddProjectSuccessComponent},
   {path:"failAddedProject",component:AddProjectFailComponent},
   {path:"admin/login",component:AdminLoginComponent},
   {path:"dashboard",component:DashboardComponent},
   {path:"finishingProjectMessage",component:ProjectThanksComponent},
-  {path:"messageDetails",component:MessageDetailsComponent,canActivate:[AuthGuard]}
+  {path:"messageDetails",component:MessageDetailsComponent,canActivate:[AuthGuard]},
+  {path:"faq",component:FAQComponent}
   
 ];
 

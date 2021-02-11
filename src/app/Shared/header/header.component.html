@@ -6,6 +6,8 @@
         <nav class="nav">
           <li><a class="nav-link" routerLink="/clientRegister">+ أضف مشروع</a></li>
           <li><a class="nav-link active" routerLink="/clientRegister">نفذ مشروع</a></li>
+          <li><a class="nav-link" routerLink="/faq">أسئلة شائعة</a></li>
+          
         </nav>
       </div>
       <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed;"
@@ -28,6 +30,9 @@
             </li>
             <li class="list"><button class="btn btn-success" routerLink="/clientRegister">+ أضف مشروع</button></li>
             <li class="list"><button class="btn btn-success" routerLink="/login">نفذ مشروع</button></li>
+            <li class="list">
+              <button type="submit" routerLink="/faq" class="btn btn-success normal-btn">أسئلة شائعة</button>
+            </li>
 
 
           </ul>

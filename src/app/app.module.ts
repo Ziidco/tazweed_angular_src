@@ -48,6 +48,7 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProjectThanksComponent } from './projects/project-thanks/project-thanks.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
+import { FAQComponent } from './faq/faq.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { MessageDetailsComponent } from './message-details/message-details.compo
     AdminLoginComponent,
     DashboardComponent,
     ProjectThanksComponent,
-    MessageDetailsComponent
+    MessageDetailsComponent,
+    FAQComponent
   ],
   imports: [
     BrowserModule,

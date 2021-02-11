@@ -435,9 +435,9 @@
         </form>
       </div>
 
-      <div *ngIf="showRequetsEditsForm" class="rejectReasonBlock col-lg-6 col-md-6 col-12">
+      <div *ngIf="showRequetsEditsForm" class="rejectReasonBlock col-lg-6 col-md-6 col-12"> 
         <h6 style="margin: 20px 0;">من فضلك اكتب سبب رفضك للمشروع وطلب التعديلات</h6>
-        <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="rejectJobForm" (ngSubmit)="rejectPartner()">
+        <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="rejectEditingProjectForm" (ngSubmit)="rejectEditPartner()">
           <textarea style="margin-bottom: 20px;" placeholder="اكتب أسباب رفضك وطلب تعديلات" class="form-control"
             formControlName="rejectionReason"></textarea>
           <button type="submit" class="btn btn-success auto-width-btn ml20">تأكيد رفض التسليم </button>

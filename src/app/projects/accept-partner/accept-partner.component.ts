@@ -37,6 +37,7 @@ export class AcceptPartnerComponent implements OnInit {
   clientAddCommentForm: FormGroup;
   finishProjectFrom:FormGroup;
   rejectProjectForm: FormGroup;
+  rejectEditingProjectForm: FormGroup;
   showRejectForm: boolean = false;
   showFinishBoxSuccess = false;
   deliverJobSuccess = false;
@@ -64,6 +65,14 @@ export class AcceptPartnerComponent implements OnInit {
       rejectionReason: new FormControl(null,Validators.required)
 
     })
+    this.rejectEditingProjectForm = new FormGroup({
+      clinetId: new FormControl(localStorage.getItem("clientId")),
+      status: new FormControl("inprogress"),
+      rejectionReason: new FormControl(null,Validators.required)
+
+    })
+
+    
     this.deliverJobForm = new FormGroup({
       status: new FormControl("reviewing"),
       document: new FormControl(null)
@@ -190,6 +199,23 @@ export class AcceptPartnerComponent implements OnInit {
     console.log(this.rejectJobForm.value);
 
     this.projectSev.editJob(this.rejectJobForm.value, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), this.projectId).subscribe(
+      (response: any) => {
+        console.log("تم رفض الكاتب");
+        console.log(response)
+        this.route.navigate(['/myProjects']);
+
+      },
+      err => {
+        console.log("something went wrong");
+        console.log(err);
+      }
+    )
+
+  }
+  rejectEditPartner() {
+    console.log(this.rejectEditingProjectForm.value);
+
+    this.projectSev.editJob(this.rejectEditingProjectForm.value, localStorage.getItem("sessionUserType"), this.uuidValue, localStorage.getItem("auth"), this.projectId).subscribe(
       (response: any) => {
         console.log("تم رفض الكاتب");
         console.log(response)
