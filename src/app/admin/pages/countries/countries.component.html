@@ -1,0 +1,101 @@
+<div class="main-content p30">
+
+  <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addCountryForm" (ngSubmit)="addCountry()">
+
+    <div class="d-flex">
+      <input class="form-control" type="text" placeholder="اسم الدولة " formControlName="name" />
+      <button [disabled]="!addCountryForm.valid" type="submit" class="btn btn-success  auto-width-btn admin-btn">
+        حفظ
+      </button>
+    </div>
+
+
+
+
+
+
+  </form>
+
+
+  <div class="profiles-data admin-table-container countries-table">
+<!-- <pre>{{allCountries | json}}</pre> -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">الدولة</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of allCountries">
+          <td>{{country?.name}}</td>
+          <td>
+            <button (click)="openUpdateDialog(country)" type="button" class="noBorderNoBgBtn gray-btn float-right">
+              <fa-icon class="ml5" [icon]="faEdit"></fa-icon>
+              تعديل
+            </button>
+          </td>
+          <td>
+            <button (click)="deleteCountry(country)" type="button" class="noBorderNoBgBtn gray-btn float-right">
+              <fa-icon class="ml5" [icon]="faTrashAlt"></fa-icon>
+              حذف
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div *ngIf="showLoader" class="loader loaderMaster">
+  <div class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+</div>
+
+
+<div *ngIf="editCountryMode" class="modal2 custom-modal custom-modal22" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <fa-icon [icon]="faEdit" style="padding-left: 5px;"></fa-icon>
+            تعديل الدولة 
+          </h5>
+          <button (click)="closeUpdateDialog()" type="button" class="close" data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p15 text-right">
+          <form  [(formGroup)]="editCountryForm" (ngSubmit)="updateCountry()">
+            <!-- <input type="text"  class="form-control" /> -->
+          
+          <!-- <h1>{{countryToEdit | json}}</h1> -->
+          <div class="d-flex">
+            <input class="form-control" type="text" formControlName="name" />
+            <button [disabled]="!editCountryForm.valid" type="submit" class="btn btn-success  auto-width-btn admin-btn">
+              حفظ
+            </button>
+          </div>
+        </form>
+          <!-- <div class="d-flex">
+            <button (click)="deleteProject()" type="button" style="margin-left: 10px;"
+            class="btn btn-success float-right auto-width-btn admin-btn danger-btn">
+            حذف المشروع
+          </button>
+           
+       
+  
+          </div> -->
+          <!-- <p *ngIf="deleteSuccess">تم حذف المشروع </p>
+          <p *ngIf="deleteFail">حدث خطأ اثناء حذف المشروع </p> -->
+  
+        </div>
+      </div>
+    </div>
+  </div>
+   
