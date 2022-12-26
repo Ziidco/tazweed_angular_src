@@ -1,0 +1,169 @@
+<div class="main-content">
+
+<!-- <pre>{{allBalanceData | json}}</pre> -->
+    <div class="unpaidbalance">
+        <div class="profiles-data admin-table-container">
+    
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">الراسل</th>
+                <th scope="col">الملاحظات</th>
+                <th scope="col">الرصيد</th>
+                <th scope="col">حالة الطلب</th>
+                <th scope="col">تاريخ الطلب</th>
+                <th scope="col">سبب الرفض</th>
+                <th *ngIf="paymentActions" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let Balance of allBalanceData">
+                <td>{{Balance?.profileId.firstName}} {{Balance?.profileId.lastName}}</td>
+                <td>{{Balance?.note}}</td>
+                <td>{{Balance?.balance}}</td>
+                <td *ngIf="Balance.status =='initiated'">بانتظار القبول</td>
+                <td *ngIf="Balance.status =='accepted'">تم القبول</td>
+                <td *ngIf="Balance.status =='rejected'">تم الرفض</td>
+                <td>{{Balance?.createdAt | date}}</td>
+                <td>{{Balance?.rejectedReason}}</td>
+                <td>
+                  <button (click)="openAcceptDialog(Balance)" style="margin-left: 10px;"
+                  *ngIf="Balance?.status=='initiated'" type="button"
+                  class=" float-right accept-user">
+                  <!-- <fa-icon class="ml5 font-18" [icon]="faToggleOff"></fa-icon> -->
+                  قبول الطلب
+                </button>
+                <button (click)="openRejectDialog(Balance)" style="margin-left: 10px;" *ngIf="Balance?.status=='initiated'" 
+                  type="button" class=" float-right reject-user">
+                  <!-- <fa-icon class="ml5 font-18" [icon]="faToggleOn"></fa-icon> -->
+                  رفض الطلب
+                </button>
+                <button (click)="openDetailsDialog(Balance)" style="margin-left: 10px;" 
+                  type="button" class=" float-right accept-user">
+                  <fa-icon class="ml5 font-18" [icon]="faEye"></fa-icon>
+                  تفاصيل الحساب
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+    
+      
+     
+    
+    
+    
+      <div *ngIf="acceptMode" class="modal2 custom-modal custom-modal22 admin-dlg" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">قبول الطلب</h5>
+              <button (click)="closeAcceptDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-right">
+
+              <!-- <pre>{{balanceToAccept | json}}</pre> -->
+              <button (click)="payForPartner(balanceToAccept.profileId._id)" type="button"
+                class="btn btn-success float-right auto-width-btn admin-btn">
+                <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+                قبول
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    
+      <div *ngIf="rejectMode" class="modal2 custom-modal custom-modal22 admin-dlg" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">رفض الطلب</h5>
+              <button (click)="closeRejectDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-right">
+              <div class="d-flex">
+
+              
+              <input (keyup)="logValue2($event)" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="rejectReason" class="form-control" placeholder="سبب الرفض " />
+
+              <!-- <pre>{{balanceToAccept._id}}</pre> -->
+              <button [disabled]="rejectReason==null" (click)="rejectBalanceRequest()" type="button"
+                class="btn btn-danger float-right auto-width-btn admin-btn rej-btn">
+                <fa-icon class="ml5" [icon]="faTimes"></fa-icon>
+                رفض
+              </button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      <div *ngIf="detailsMode" class="modal2 custom-modal custom-modal22 admin-dlg" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">تفاصيل الحساب</h5>
+              <button (click)="closeDetailsDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-right">
+
+
+              <table *ngIf="balanceToDetails?.balanceAccount?.type == 'bank'" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">نوع الحساب</th>
+                    <th scope="col">اسم الحساب</th>
+                    <th scope="col">اسم البنك</th>
+                    <th scope="col">رقم الحساب</th>
+                    <th scope="col">رقم الآيبان</th>
+                    <th scope="col">اسم صاحب الحساب</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>بنك</td>
+                    <td>{{balanceToDetails?.balanceAccount?.aliasName}}</td>
+                    <td>{{balanceToDetails?.balanceAccount?.bankName}}</td>
+                    <td>{{balanceToDetails?.balanceAccount?.accountNumber}}</td>
+                    <td>{{balanceToDetails?.balanceAccount?.ibanNumber}}</td>
+                    <td>{{balanceToDetails?.balanceAccount?.accountName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table *ngIf="balanceToDetails?.balanceAccount?.type == 'paypal'" class="table table-bordered"> 
+                <thead>
+                  <tr>
+                    <th scope="col">نوع الحساب</th>
+                    <th scope="col">اسم الحساب</th>
+                    <th scope="col">بريد بايبال</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>بايبال</td>
+                    <td>{{balanceToDetails?.balanceAccount?.aliasName}}</td>
+                    <td>{{balanceToDetails?.balanceAccount?.paypalEmail}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showLoader" class="loader loaderMaster">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+      </div>
+    </div>
