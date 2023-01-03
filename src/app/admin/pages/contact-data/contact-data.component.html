@@ -1,0 +1,46 @@
+<div class="main-content">
+
+
+    <div class="unpaidbalance">
+        <div class="profiles-data admin-table-container">
+    
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">الراسل</th>
+                <th scope="col">البريد الالكترونى</th>
+                <th scope="col">الهاتف</th>
+                <th scope="col">عنوان الرسالة</th>
+                <th scope="col">الرسالة</th> 
+                <!-- <th *ngIf="paymentActions" scope="col"></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contact of allContactData">
+                <td>{{contact?.name}}</td>
+                <td>{{contact?.email}}</td>
+                <td>{{contact?.mobile}}</td>
+                <td>{{contact?.title}}</td>
+                <td>{{contact?.message}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+    
+      
+     
+    
+    
+    
+ 
+      
+    
+    
+      <div *ngIf="showLoader" class="loader loaderMaster">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+      </div>
+    </div>

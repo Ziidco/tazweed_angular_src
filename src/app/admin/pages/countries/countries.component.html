@@ -1,0 +1,202 @@
+<div class="main-content p30">
+
+  <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addCountryForm" (ngSubmit)="addCountry()">
+
+    <div class="">
+      <div class="d-flex">
+        <div class="d-flex-width" style="margin-left: 10px;">
+          <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="اسم الدولة "
+            formControlName="name" />
+
+          <span class="error-help" *ngIf="!addCountryForm.get('name').valid && addCountryForm.get('name').touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            ادخل اسم الدولة
+
+          </span>
+        </div>
+        <div class="d-flex-width">
+          <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="كود الدولة"
+            formControlName="countryCode" />
+          <span class="error-help"
+            *ngIf="!addCountryForm.get('countryCode').valid && addCountryForm.get('countryCode').touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            ادخل كود الدولة
+
+          </span>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="d-flex-width" style="margin-left: 10px;">
+          <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="مفتاح الدولة"
+            formControlName="countryKey" />
+            <span class="error-help"
+            *ngIf="!addCountryForm.get('countryKey').valid && addCountryForm.get('countryKey').touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            ادخل مفتاح الدولة
+            
+          </span>
+        </div>
+        <div class="d-flex-width">
+          <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="باترن جوال الدولة"
+            formControlName="regex" />
+            <span class="error-help"
+            *ngIf="!addCountryForm.get('regex').valid && addCountryForm.get('regex').touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            ادخل باترن جوال الدولة
+            
+          </span>
+        </div>
+      </div>
+      <div class="text-center mt-2">
+
+        <button style="    min-width: 100px;" [disabled]="!addCountryForm.valid" type="submit"
+          class="btn btn-success  auto-width-btn admin-btn">
+          حفظ
+        </button>
+      </div>
+
+    </div>
+
+
+
+
+
+
+  </form>
+
+
+  <div class="profiles-data admin-table-container countries-table">
+    <!-- <pre>{{allCountries | json}}</pre> -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">الدولة</th>
+          <th scope="col">كود الدولة</th>
+          <th scope="col">مفتاح الدولة</th>
+          <th scope="col">باترن جوال الدولة</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of allCountries">
+          <td>{{country?.name}}</td>
+          <td>{{country?.countryCode}}</td>
+          <td>{{country?.countryKey}}</td>
+          <td>{{country?.regex}}</td>
+          <td>
+            <button (click)="openUpdateDialog(country)" type="button" class="noBorderNoBgBtn gray-btn float-right">
+              <fa-icon class="ml5" [icon]="faEdit"></fa-icon>
+              تعديل
+            </button>
+          </td>
+          <td>
+            <button (click)="deleteCountry(country)" type="button" class="noBorderNoBgBtn gray-btn float-right">
+              <fa-icon class="ml5" [icon]="faTrashAlt"></fa-icon>
+              حذف
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div *ngIf="showLoader" class="loader loaderMaster">
+  <div class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+</div>
+
+
+<div *ngIf="editCountryMode" class="modal2 custom-modal custom-modal22 regexDialog" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <fa-icon [icon]="faEdit" style="padding-left: 5px;"></fa-icon>
+          تعديل الدولة
+        </h5>
+        <button (click)="closeUpdateDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p15 text-right">
+        <form [(formGroup)]="editCountryForm" (ngSubmit)="updateCountry()">
+          <!-- <input type="text"  class="form-control" /> -->
+
+          <!-- <h1>{{countryToEdit | json}}</h1> -->
+          <div class="d-flex">
+            <div class="d-flex-width" style="margin-left: 10px;">
+              <input (keyup)="logValueNested($event)" class="form-control m-1" type="text" formControlName="name" placeholder="اسم الدولة" />
+
+            <span class="error-help"
+            *ngIf="!editCountryForm.get('name').valid && editCountryForm.get('name').touched">
+            <fa-icon [icon]="faExclamationCircle"></fa-icon>
+            ادخل اسم الدولة
+            
+          </span>
+              </div>
+              <div class="d-flex-width">
+                <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="كود الدولة"
+                formControlName="countryCode" />
+                <span class="error-help"
+                *ngIf="!editCountryForm.get('countryCode').valid && editCountryForm.get('countryCode').touched">
+                <fa-icon [icon]="faExclamationCircle"></fa-icon>
+                ادخل كود الدولة
+                
+              </span>
+                </div>
+          
+
+          </div>
+          <div class="d-flex">
+            <div class="d-flex-width" style="margin-left: 10px;">
+               <input class="form-control m-1" (keyup)="logValueNested($event)" type="text" placeholder="مفتاح الدولة"
+              formControlName="countryKey" />
+              <span class="error-help"
+              *ngIf="!editCountryForm.get('countryKey').valid && editCountryForm.get('countryKey').touched">
+              <fa-icon [icon]="faExclamationCircle"></fa-icon>
+              ادخل مفتاح الدولة
+              
+            </span>
+            </div>
+            <div class="d-flex-width">
+              <input class="form-control m-1" (keyup)="logValueNested($event)" type="text"
+              placeholder="باترن جوال الدولة" formControlName="regex" />
+              <span class="error-help"
+              *ngIf="!editCountryForm.get('regex').valid && editCountryForm.get('regex').touched">
+              <fa-icon [icon]="faExclamationCircle"></fa-icon>
+              ادخل باترن جوال الدولة
+              
+            </span>
+            </div>
+            
+          </div>
+          <div class="text-center mt-2">
+            <button style="min-width:100px ;" [disabled]="!editCountryForm.valid" type="submit"
+              class="btn btn-success  auto-width-btn admin-btn">
+              حفظ
+            </button>
+          </div>
+
+
+        </form>
+        <!-- <div class="d-flex">
+            <button (click)="deleteProject()" type="button" style="margin-left: 10px;"
+            class="btn btn-success float-right auto-width-btn admin-btn danger-btn">
+            حذف المشروع
+          </button>
+           
+       
+  
+          </div> -->
+        <!-- <p *ngIf="deleteSuccess">تم حذف المشروع </p>
+          <p *ngIf="deleteFail">حدث خطأ اثناء حذف المشروع </p> -->
+
+      </div>
+    </div>
+  </div>
+</div>

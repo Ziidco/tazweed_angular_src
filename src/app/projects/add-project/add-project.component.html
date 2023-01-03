@@ -1,0 +1,1875 @@
+<app-after-login-header></app-after-login-header>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container">
+
+
+  <!-- <form   showDynamicSteps [(formGroup)]="myForm" (ngSubmit)="addProjectDynamic()">
+
+          <div class="step-1" [ngClass]="stepValue == i ? 'd-block' : 'd-none'" *ngFor="let control of serviceItems.steps;let i = index">
+              <div class="form-group">
+          <div *ngFor="let dat of control?.controls">
+            <h6>{{dat.label}}</h6>
+            <div class="d-flex relative-position">
+              <input *ngIf="dat.type!='textarea'"   [type]="dat.type"
+              
+              [formControlName]="dat.name"
+              [value]="dat.value"  class="form-control" [placeholder]="dat.label" />
+              <textarea *ngIf="dat.type=='textarea'"  
+              [formControlName]="dat.name"
+              [value]="dat.value"  class="form-control" [placeholder]="dat.label"></textarea>
+              <span *ngIf="dat?.validators?.required == true" class="mandatory">*</span>
+              <button 
+              *ngIf="dat.tooltipText != '' "
+              [matTooltip]="dat.tooltipText"
+              matTooltipPosition="right"
+              matTooltipClass="example-tooltip-red"
+              aria-label="Button that shows a red tooltip"
+              class="example-button tooltip-btn">
+       
+              <fa-icon [icon]="faQuestion"></fa-icon> 
+            </button>
+            </div>
+            <div *ngIf="dat?.validators?.required == true">
+              <span *ngIf="!myForm.get(dat.name).valid && myForm.get(dat.name).touched">
+                please enter {{dat.label}}
+                 </span>
+            </div>
+            
+          </div>
+          <div class="form-group justify-content-between d-flex">
+            <button (click)="stepValue =stepValue-1 ;" type="button"
+              class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+              <span>
+                <fa-icon [icon]="faChevronRight"></fa-icon>
+              </span>
+            </button>
+            <button 
+              
+              (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+
+          </div>
+          <hr />
+        </div>
+            </div>
+
+
+
+        <div class="text-left">
+          <button type="submit" class="btn btn-success generalBtnStyle add-project-submit mr20 normal-padding">
+            اضافة
+          </button>
+        </div>
+
+
+
+
+
+
+
+
+  </form> -->
+
+
+  <div *ngIf="showAddForm" class="add-project-container col-lg-9 col-md-9 col-12">
+    <!-- <progressbar [value]="progressValue"></progressbar> -->
+    <!-- step 0 -->
+    <div class="step-1" [ngClass]="stepValue == 0 ? 'd-block' : 'd-none'">
+
+      <div class="form-title">
+        <h1>بداية جديدة</h1>
+        <!-- <pre>{{jobTypes | json}}</pre> -->
+
+        <div class="anotherRegisteration">
+          <span class="ask reg-font ">اختر نوع المحتوى الذي ستدهش به جمهورك</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <!-- hidden-mob-tab -->
+        <div class="types-container ">
+
+          <div class=" cc-selector typeItem" *ngFor="let type of jobTypes" [ngClass]="type.isPublished?'':'soonService'">
+            <!-- <input *ngIf="type?.name == 'وصف منتج'" checked="checked" [id]="type.id" type="radio" [value]="type.nameEn"
+              [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+            <input *ngIf="type?.name == 'مقالات'" checked="checked" [id]="type.id" type="radio" [value]="type.nameEn"
+              [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+            <input *ngIf="type?.name == 'منشورات'" checked="checked" [id]="type.id" type="radio" [value]="type.nameEn"
+              [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}"> -->
+            <!-- <input *ngIf="type?.nameEn == 'dynamicPhotography'" checked="checked" [id]="type._id" type="radio"
+              [value]="type.nameEn" [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}"> -->
+              <input [disabled]="!type.isPublished"  checked="checked" [id]="type._id" type="radio"
+              [value]="type.nameEn" [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+              <span *ngIf="!type.isPublished" class="comeSoonSpan">
+                <!-- قريبًا -->
+                <!-- <span class="skewed-text">
+                  قريبًا
+                </span> -->
+                <!-- <div class='ribbon'>قريبًا</div> -->
+                <div class="ribbonLsat"><span></span></div>
+              </span>
+            <label class="drinkcard-cc bold-font line40" [for]="type._id">
+       
+              <i [class]="'fa '+ type.iconName"></i>
+
+
+
+              {{type.name}}
+              <!-- <span class="block-span" *ngIf="type?.name == 'وصف منتج'">قريبا</span> -->
+            </label>
+          </div>
+
+          
+
+
+        </div>
+
+        <!-- 
+        <div class="hidden-large">
+
+
+
+          <div class="form-check form-check-inline" *ngFor="let type of jobTypes">
+            <input class="form-check-input"  *ngIf="type?.name == 'وصف منتج'" disabled="true" checked="checked" [id]="type.id" type="radio"
+            [value]="type.nameEn" [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+          <input class="form-check-input"  *ngIf="type?.name == 'مقالات'" checked="checked" [id]="type.id" type="radio" [value]="type.nameEn"
+            [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+          <input class="form-check-input"  *ngIf="type?.name == 'منشورات'" checked="checked" [id]="type.id" type="radio" [value]="type.nameEn"
+            [(ngModel)]="selectedService" [ngModelOptions]="{standalone: true}">
+
+            <label class="form-check-label" [for]="type.id">
+              {{type.name}}
+            </label>
+          </div>
+     
+
+
+
+
+        </div> -->
+
+
+      </div>
+
+      <div class="form-group justify-content-end d-flex">
+        <button [disabled]="selectedService == null" (click)="showProjectWay()" type="button"
+          class="btn btn-success next generalBtnStyle add-roject-btn">التالي
+          <span>
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </span></button>
+
+      </div>
+    </div>
+
+
+    <form *ngIf="showArticleWay" [(formGroup)]="addProjectForm" (ngSubmit)="addProject()">
+
+
+
+
+      <div>
+        <!-- step 1-1 -->
+
+
+
+        <!-- step 3 -->
+
+        <div class="step-3" [ngClass]="stepValue == 3 ? 'd-block' : 'd-none'">
+          <h1 class="form-title mb20">حدد حجم استثمارك</h1>
+          <div class="form-group mb20">
+            <span class="mandatory floated">*</span>
+            <h6>اختر حجم المشروع </h6>
+            <div class="d-flex justify-content-between mob-block">
+              <div class="cc-selector typeItem" *ngFor="let Config of projectConfig">
+                <input (change)="calculateCost()" checked="checked" [id]="Config.name" type="radio" [value]="Config.id"
+                  formControlName="quantity">
+
+                <label class="drinkcard-cc" [for]="Config.name">
+                  <span class="bold-font package-title-l" *ngIf="Config.id==1">قصير</span>
+                  <span class="bold-font package-title-l" *ngIf="Config.id==2">متوسط</span>
+                  <span class="bold-font package-title-l" *ngIf="Config.id==3">طويل</span>
+
+                  <br>
+                  <span class="normal-font package-val">
+                    {{Config.quantity}} كلمة
+                  </span>
+
+                </label>
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group mb20">
+            <span class="mandatory floated">*</span>
+            <h6>حدد مدة التنفيذ</h6>
+            <div class="d-flex justify-content-between mob-block">
+              <div class="cc-selector typeItem">
+                <input checked="checked" (change)="calculateCost()" id="shortTime" type="radio" value="1"
+                  name="timePerDay" formControlName="timePerDay">
+                <label class="drinkcard-cc bold-font package-title-l line40" for="shortTime">24 ساعة </label>
+              </div>
+              <div class="cc-selector typeItem">
+                <input checked="checked" (change)="calculateCost()" id="mediumTime" type="radio" value="2"
+                  name="timePerDay" formControlName="timePerDay">
+                <label class="drinkcard-cc bold-font package-title-l line40" for="mediumTime">48 ساعة</label>
+              </div>
+              <div class="cc-selector typeItem">
+                <input checked="checked" (change)="calculateCost()" id="largeTime" type="radio" value="3"
+                  name="timePerDay" formControlName="timePerDay">
+                <label class="drinkcard-cc bold-font package-title-l line40" for="largeTime">72 ساعة</label>
+              </div>
+
+            </div>
+          </div>
+          <div class="total-container">
+
+
+
+            <div class="form-group">
+              <h6>السعر الأولي</h6>
+              <h5>{{projectCost}} ر.س</h5>
+            </div>
+            <!-- <div *ngIf="showAdditionnalValueMessage" class="modal2 custom-modal custom-modal22 addition-box"
+              role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">القيمة الاضافيه</h5>
+                    <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-right">
+                    <h6 class="reg-font">تم إضافة قيمة اضافية</h6>
+                    <h6 class="reg-font">{{addProjectForm.get('addtionalAmount').value}} ر.س</h6>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <p>من فضلك ضع قيمة إضافية تراها مناسبة </p>
+            <div class="form-group additon">
+              <button *ngIf="additionMode" type="button" class="btn very-normal-btn btn-danger"
+                (click)="clearAddition()">إلغاء</button>
+              <button *ngIf="!additionMode"
+                [disabled]="!addProjectForm.get('quantity').valid || !addProjectForm.get('timePerDay').valid || fakeAddition==0 || fakeAddition=='' "
+                type="button" class="btn very-normal-btn" (click)="addAddition()">أضف</button>
+              <input (keyup)="convertAdditionNumberToEnglish(fakeAddition)" type="text"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="fakeAddition"
+                (keypress)="preventNonNumericalInput($event)" class="form-control" placeholder="(أجر إضافي (اختياري" />
+              <span class="hint">زيادة القيمة تجذب أفضل الكتاب وتمنحك الأولوية</span>
+            </div>
+
+            <div class="form-group">
+              <span>الإجمالي (التكلفة + الأجر الإضافي) = </span><span class="total-num">{{finalCost}} ر.س</span>
+            </div>
+
+          </div>
+
+
+          <div class="form-group justify-content-between d-flex">
+            <button (click)="gotoSelectService()" type="button"
+              class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+              <span>
+                <fa-icon [icon]="faChevronRight"></fa-icon>
+              </span>
+            </button>
+            <button [disabled]="!addProjectForm.get('quantity').valid || !addProjectForm.get('timePerDay').valid "
+              (click)="stepValue = 4;progressValue=100" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- step 4 -->
+
+        <div class="step-4" [ngClass]="stepValue == 4 ? 'd-block' : 'd-none'">
+
+
+          <p>هل لديك كوبون خصم؟ </p>
+          <div class="form-group additon" style="position: relative;">
+
+            <button *ngIf="showQueryArtPromoBtn" type="button" class="btn very-normal-btn promo-btn"
+              (click)="checkCuponNameValidity()">استعلام</button>
+            <button type="button" *ngIf="showRemovePromoBtn" class="btn very-normal-btn cancel"
+              (click)="removePromoCodefromJop()">إلغاء</button>
+            <!-- <button type="button" *ngIf="ValiditySuccess" class="btn very-normal-btn"
+              (click)="addPromoCodeToJop()">تفعيل</button> -->
+            <input type="text" (input)="hideallStatus()" class="form-control" formControlName="promoCode"
+              placeholder="ادخل الكوبون الخاص بك" />
+            <div class="validityContainer projectValidity">
+              <div *ngIf="showLoaderInput" id="circularG">
+                <div id="circularG_1" class="circularG"></div>
+                <div id="circularG_2" class="circularG"></div>
+                <div id="circularG_3" class="circularG"></div>
+                <div id="circularG_4" class="circularG"></div>
+                <div id="circularG_5" class="circularG"></div>
+                <div id="circularG_6" class="circularG"></div>
+                <div id="circularG_7" class="circularG"></div>
+                <div id="circularG_8" class="circularG"></div>
+              </div>
+              <fa-icon *ngIf="ValiditySuccess" class="checkValidity" [icon]="faCheckCircle"></fa-icon>
+              <fa-icon *ngIf="ValidityFail" class="checkValidity error" [icon]="faTimesCircle"></fa-icon>
+
+            </div>
+          </div>
+          <div class="form-group">
+
+            <h1 class="form-title mb5">فاتورة المشروع</h1>
+            <h6 class=" gray reg-font">بعد هذه الخطوة سيكون مشروعك بين أيدي كتاب تزويد وستصلك عروضهم
+            </h6>
+          </div>
+          <div class="total-container">
+
+
+            <div class="form-group d-flex justify-content-between">
+              <span>تكلفة المشروع</span>
+              <span class="colored">{{projectCost}} ر.س</span>
+            </div>
+            <div class="form-group d-flex justify-content-between">
+              <span>الأجر الإضافي</span>
+              <span *ngIf="addProjectForm.get('addtionalAmount').value==null" class="colored 1">0 ر.س</span>
+              <span *ngIf="addProjectForm.get('addtionalAmount').value!=null"
+                class="colored 2">{{addProjectForm.get("addtionalAmount").value}} ر.س</span>
+            </div>
+            <!-- <hr> -->
+
+
+          </div>
+
+          <div *ngIf="paymentErrorMessage" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">اتمام الدفع</h5>
+                  <button (click)="closePaymentDialog()" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-right">
+                  <h6 class="reg-font">حدث خطأ أثناء اتمام الدفع برجاء اعادة المحاولة</h6>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+
+
+            <h6 class="blue-title">وسيلة الدفع</h6>
+
+
+
+            <div class="paymentOptions">
+
+              <div class=" cc-selector typeItem">
+                <input checked="checked" (change)="changePaymentWay()" id="payGate" type="radio"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="paymentWay" value="paymentgateway" />
+
+
+                <label class="drinkcard-cc bold-font line40" for="payGate">
+                  <fa-icon [icon]="faCcVisa"></fa-icon>
+                  البطاقة الائتمانية
+
+                </label>
+
+              </div>
+              <div class=" cc-selector typeItem">
+                <input checked="checked" (change)="changePaymentWay()" id="credit" type="radio"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="paymentWay" value="credit" />
+
+
+                <label class="drinkcard-cc bold-font line40" for="credit">
+                  <fa-icon [icon]="faWallet"></fa-icon>
+                  المحفظة
+                  {{(clientCreditBalance).toFixed(2)}}
+
+                </label>
+
+              </div>
+              <!-- <button (click)="openAddBalanceInArticle()" type="button"
+                class="btn btn-success nobg-btn auto-width-btn normal-padding">
+                <span style="padding-left: 5px;">
+                  <fa-icon [icon]="faWallet"></fa-icon>
+                </span>
+                إضافة رصيد
+              </button> -->
+
+
+            </div>
+
+
+          </div>
+
+          <div *ngIf="payWithTax">
+
+            <div class="total-container">
+
+
+
+
+
+              <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+                <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+                <span class="colored">{{finalCost}} ر.س</span>
+              </div>
+              <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+                <span>
+                  ضريبة القيمة المضافة
+                  <span class="m5">{{taxValue}}%</span>
+                </span>
+                <!-- {{ (projectToExport?.taxAmount).toFixed(2)}} -->
+                <span class="colored">{{(+taxValueInRial).toFixed(2)}} ر.س</span>
+              </div>
+
+              <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+                <span>
+                  الإجمالي بعد إضافة ضريبة القيمة المضافة
+                  <!-- <span class="m5">%{{taxValue}}</span> -->
+                </span>
+                <span class="colored">{{costAfterTax}} ر.س</span>
+              </div>
+
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+
+                <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+                <span class="colored"><s>{{finalCost}} ر.س</s></span>
+
+              </div>
+
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+                <span>الإجمالي بعد إضافة كوبون التخفيض</span>
+                <span class="colored">{{finalCostFterPromo}} ر.س</span>
+              </div>
+
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+                <span>
+                  ضريبة القيمة المضافة
+                  <span class="m5">{{taxValue}}%</span>
+                </span>
+                <span class="colored">{{(+taxValueInRial).toFixed(2)}} ر.س</span>
+              </div>
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+                <span>
+                  الإجمالي بعد إضافة ضريبة القيمة المضافة
+                  <!-- <span class="m5">%{{taxValue}}</span> -->
+                </span>
+                <span class="colored">{{costAfterTax}} ر.س</span>
+              </div>
+              <div class="text-left">
+                <button type="submit" class="btn btn-success generalBtnStyle add-project-submit mr20 normal-padding">
+                  ادفع بالبطاقة
+                </button>
+              </div>
+
+
+
+
+            </div>
+
+          </div>
+
+
+
+          <div *ngIf="!payWithTax">
+
+            <div class="total-container">
+
+
+
+
+
+              <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+                <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+                <span class="colored">{{finalCost}} ر.س</span>
+              </div>
+
+
+
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+
+                <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+                <span class="colored"><s>{{finalCost}} ر.س</s></span>
+
+              </div>
+
+              <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+                <span>الإجمالي بعد إضافة كوبون التخفيض</span>
+                <span class="colored">{{finalCostFterPromo}} ر.س</span>
+              </div>
+
+              <div class=" d-flex justify-content-center">
+
+                <button type="button" (click)="addProjectFromCreditBalance()"
+                  class="btn btn-success generalBtnStyle add-project-submit  normal-padding">
+                  ادفع من المحفظة
+                </button>
+                <button (click)="openAddBalanceInArticle()" type="button"
+                  class="btn btn-success nobg-btn auto-width-btn normal-padding mr20">
+                  <span style="padding-left: 5px;">
+                    <fa-icon [icon]="faWallet"></fa-icon>
+                  </span>
+                  إضافة رصيد
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group justify-content-between d-flex mob-block">
+            <button (click)="stepValue = 3;progressValue=75" type="button"
+              class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn normal-padding">الرجوع
+              <span>
+                <fa-icon [icon]="faChevronRight"></fa-icon>
+              </span>
+            </button>
+            <div class="form-group d-flex ">
+              <button (click)="addProjectToCart()" type="button"
+                class="btn btn-success nobg-btn auto-width-btn normal-padding">
+                <span style="padding-left: 5px;">+</span>
+                أضف للسلة
+              </button>
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+
+    </form>
+
+
+  
+
+
+
+<!-- <pre>
+  {{serviceItems?.steps | json}}
+</pre> -->
+
+    <form *ngIf="showDynamicSteps" [(formGroup)]="myForm" (ngSubmit)="addProject()">
+
+      <div class="step-1" [ngClass]="stepValue == i+1 ? 'd-block' : 'd-none'"
+        *ngFor="let control of serviceItems?.steps;let i = index">
+        <!-- <h1>{{serviceItems?.steps[i].controls[i].name}}</h1> -->
+
+        <div class="form-title">
+          <h1>{{control?.stepName}}</h1>
+
+
+          <div class="anotherRegisteration">
+            <span class="ask reg-font">{{control?.stepDescription}}</span>
+          </div>
+          <!-- <progressbar [value]="progressValue"></progressbar> -->
+        </div>
+
+          <div  class="form-group" *ngFor="let dat of control?.controls">
+            <h6>{{dat.label}}</h6>
+            <div class="d-flex relative-position">
+              <input (keyup)="logValueNested($event)"  *ngIf="dat.type=='text'" type="text" [formControlName]="dat.name"
+              class="form-control" [placeholder]="dat.placeholder" />
+              <input min="1" *ngIf="dat.type=='number'" type="number" [formControlName]="dat.name"
+              class="form-control" [placeholder]="dat.placeholder" />
+
+
+                <select class="form-control" *ngIf="dat.type=='select'"  [type]="dat.type" [formControlName]="dat.name">
+                  <option [value]="opt" *ngFor="let opt of dat?.selectOptions">{{opt}}</option>
+
+                </select>
+              <textarea (keyup)="logValueNested($event)"  *ngIf="dat.type=='textarea'" [formControlName]="dat.name" 
+                class="form-control" [placeholder]="dat.placeholder"></textarea>
+              <span *ngIf="dat?.validators?.required == true || dat?.validators?.required == 'true'" class="mandatory">*</span>
+              <button type="button" *ngIf="dat.tooltipText != '' " [matTooltip]="dat.tooltipText" matTooltipPosition="right"
+                matTooltipClass="example-tooltip-red" aria-label="Button that shows a red tooltip"
+                class="example-button tooltip-btn">
+
+                <fa-icon [icon]="faQuestion"></fa-icon>
+              </button>
+            </div>
+            <div *ngIf="dat?.validators?.required == true || dat?.validators?.required == 'true'">
+              <span *ngIf="!myForm.get(dat.name).valid && myForm.get(dat.name).touched">
+                أدخل {{dat.label}}
+              </span>
+            </div>
+            <!-- <div class="form-group justify-content-between d-flex">
+              <button (click)="stepValue =stepValue-1 ;" type="button"
+                class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+                <span>
+                  <fa-icon [icon]="faChevronRight"></fa-icon>
+                </span>
+              </button>
+              <button [disabled]="!myForm.get(dat.name).valid" (click)="stepValue = stepValue + 1;" type="button"
+                class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+                <span>
+                  <fa-icon [icon]="faChevronLeft"></fa-icon>
+                </span>
+              </button>
+  
+            </div> -->
+          </div>
+
+          <div *ngIf="serviceItems?.isContainsAttachments == true || serviceItems?.isContainsAttachments == 'true'" class="form-group">
+            <div *ngIf="serviceItems?.steps?.length == i+1" class="form-group">
+              <h6>المرفقات</h6>
+              <h6 style="margin: 5px 0;" class="reg-font">هذه الملفات تساعد الكاتب في تنفيذ المشروع
+              </h6>
+              <!-- <h6 class="reg-font">pdf , docx , doc , xlsx , jpg , jpeg or png </h6> -->
+              <!-- <form   [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">    -->
+  
+  
+              <div>
+  
+                <div>
+                  <input multiple class="form-control" type="file" id="formFile" accept="image/*,.pdf,.doc,.docx"
+                    (change)="onFileSelect($event)" />
+                  <input multiple type="text" hidden name="attach" class="form-control">
+  
+                </div>
+              </div>
+  
+              <ul class="upload-list">
+                <li *ngFor="let upload of selectedUploadedFiles;let i = index">
+                  {{upload?.name}}
+                  <button (click)="onRemoveFile2(i)" class="btn btn-default add-remove-btn remove-file" type="button">
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                  </button>
+  
+                </li>
+  
+              </ul>
+              <!-- <div class="text-center"> 
+                  <button class="btn btn-success mr10 mt10 auto-width-btn" type="submit">Upload</button>
+                </div>
+               -->
+  
+  
+  
+              <!-- </form> -->
+  
+            </div>
+            </div>
+          
+          <div class="form-group justify-content-between d-flex">
+            <!-- <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 1">one control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 2">2 control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 3">3 control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 4">4 control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 5">5 control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 6">6 control</h1>
+            <h1 *ngIf="serviceItems?.steps[i]?.controls.length == 7">7 control</h1> -->
+            <!-- progressValue = progressIncrement - progressIncrement -->
+            <button *ngIf="stepValue == 1" (click)="gotoSelectService()" type="button"
+              class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            
+              <span>
+                <fa-icon [icon]="faChevronRight"></fa-icon>
+              </span>
+            </button>
+            <button *ngIf="stepValue != 1" (click)="gotoSelectServiceWithoutClear()" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+            <!-- progressValue = progressIncrement + progressIncrement -->
+            <!-- [disabled]="!((serviceItems?.steps[i].controls).valid)" -->
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==1"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==2"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==3"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==4"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==5"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==6"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[5]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==7"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[5]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[6]?.name)?.valid"
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==8"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[5]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[6]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[7]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==9"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[5]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[6]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[7]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[8]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+            <button  
+            *ngIf="serviceItems?.steps[i]?.controls.length ==10"
+            [disabled]="!myForm.get(serviceItems?.steps[i]?.controls[0]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[1]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[2]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[3]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[4]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[5]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[6]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[7]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[8]?.name)?.valid || !myForm.get(serviceItems?.steps[i]?.controls[9]?.name)?.valid "
+            (click)="stepValue = stepValue + 1;" type="button"
+              class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+              <span>
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+              </span>
+            </button>
+          </div>
+          <!-- <hr /> -->
+       
+      </div>
+
+      <div class="step-3" [ngClass]="stepValue == stepsCount+1 ? 'd-block' : 'd-none'">
+        <h1 class="form-title mb20">حدد حجم استثمارك</h1>
+        <div class="form-group mb20">
+          <span class="mandatory floated">*</span>
+          <h6>اختر حجم المشروع </h6>
+          <div class="d-flex justify-content-right mob-block">
+            <div class="cc-selector typeItem" *ngFor="let Confi of dynamicPricesObject">
+              <!-- <input (change)="calculateCost()" checked="checked" [id]="Confi.id" type="radio" formControlName="quantity" [value]="Confi.id"> -->
+              <input checked="checked" (change)="definePrices()" [id]="Confi.name" type="radio" [value]="Confi.id" formControlName="quantity">
+
+              <label class="drinkcard-cc" [for]="Confi.name">
+                <span class="bold-font package-title-l">{{Confi.name}}</span>
+
+
+                <br>
+                <span class="normal-font package-val">
+                  {{Confi.quantity}}    {{Confi.quantityUnit}}  
+                </span>
+   
+
+              </label>
+
+
+              
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+        <div class="form-group mb20" *ngIf="showDurationLine">
+          <span class="mandatory floated">*</span>
+          <h6>حدد مدة التنفيذ</h6>
+          <div class="d-flex justify-content-right mob-block">
+
+            <!-- (change)="calculateCost()" -->
+            <div class="cc-selector typeItem" *ngFor="let duratOb of durationObject; let i = index">
+              <input checked="checked" (change)="calculateCost()"  [id]="duratOb.id + 'rr' + i" type="radio" [value]="duratOb.id" formControlName="timePerDay">
+              <label class="drinkcard-cc bold-font package-title-l line40" [for]="duratOb.id + 'rr' + i">
+                
+                {{duratOb.duration}} {{duratOb.unit}}
+              </label>
+            </div>
+           
+         
+
+          </div>
+        </div>
+        <div class="total-container">
+
+
+
+          <div class="form-group">
+            <h6>السعر الأولي</h6>
+            <h5>{{projectCost}} ر.س</h5>
+          </div>
+          <p>من فضلك ضع قيمة إضافية تراها مناسبة </p>
+          <div class="form-group additon">
+            <button *ngIf="additionMode" type="button" class="btn very-normal-btn btn-danger"
+              (click)="clearAddition()">إلغاء</button>
+              <!-- !myForm.get('timePerDay').valid || -->
+            <button *ngIf="!additionMode"
+              [disabled]="!myForm.get('quantity').valid || fakeAddition==0 || fakeAddition=='' "
+              type="button" class="btn very-normal-btn" (click)="addAddition()">أضف</button>
+              <!-- (keyup)="convertAdditionNumberToEnglish(fakeAddition)" -->
+              <input  type="number"
+              [ngModelOptions]="{standalone: true}" [(ngModel)]="fakeAddition"
+              (keypress)="preventNonNumericalInput($event)" class="form-control" placeholder="(أجر إضافي (اختياري" />
+            <span class="hint">زيادة القيمة تجذب أفضل الكتاب وتمنحك الأولوية</span>
+          </div>
+
+          <div class="form-group">
+            <span>الإجمالي (التكلفة + الأجر الإضافي) = </span><span class="total-num">{{finalCost}} ر.س</span>
+          </div>
+
+        </div>
+
+
+        <div class="form-group justify-content-between d-flex">
+          <button (click)="stepValue = stepsCount;progressValue=50" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn">الرجوع
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+          <button 
+          [disabled]="!myForm.get('quantity').valid || !myForm.get('timePerDay').valid"
+            (click)="stepValue = stepsCount+2;progressValue=100" type="button"
+            class="btn btn-success generalBtnStyle next add-roject-btn">التالي
+            <span>
+              <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="step-4" [ngClass]="stepValue ==  stepsCount+2 ? 'd-block' : 'd-none'">
+
+
+        <p>هل لديك كوبون خصم؟ </p>
+        <div class="form-group additon" style="position: relative;">
+
+          <button *ngIf="showQueryArtPromoBtn" type="button" class="btn very-normal-btn promo-btn"
+            (click)="checkCuponNameValidity()">استعلام</button>
+          <button type="button" *ngIf="showRemovePromoBtn" class="btn very-normal-btn cancel"
+            (click)="removePromoCodefromJop()">إلغاء</button>
+          <!-- <button type="button" *ngIf="ValiditySuccess" class="btn very-normal-btn"
+            (click)="addPromoCodeToJop()">تفعيل</button> -->
+          <input type="text" (input)="hideallStatus()" class="form-control" formControlName="promoCode"
+            placeholder="ادخل الكوبون الخاص بك" />
+          <div class="validityContainer projectValidity">
+            <div *ngIf="showLoaderInput" id="circularG">
+              <div id="circularG_1" class="circularG"></div>
+              <div id="circularG_2" class="circularG"></div>
+              <div id="circularG_3" class="circularG"></div>
+              <div id="circularG_4" class="circularG"></div>
+              <div id="circularG_5" class="circularG"></div>
+              <div id="circularG_6" class="circularG"></div>
+              <div id="circularG_7" class="circularG"></div>
+              <div id="circularG_8" class="circularG"></div>
+            </div>
+            <fa-icon *ngIf="ValiditySuccess" class="checkValidity" [icon]="faCheckCircle"></fa-icon>
+            <fa-icon *ngIf="ValidityFail" class="checkValidity error" [icon]="faTimesCircle"></fa-icon>
+
+          </div>
+        </div>
+        <div class="form-group">
+
+          <h1 class="form-title mb5">فاتورة المشروع</h1>
+          <h6 class=" gray reg-font">بعد هذه الخطوة سيكون مشروعك بين أيدي كتاب تزويد وستصلك عروضهم
+          </h6>
+        </div>
+        <div class="total-container">
+
+
+          <div class="form-group d-flex justify-content-between">
+            <span>تكلفة المشروع</span>
+            <span class="colored">{{projectCost}} ر.س</span>
+          </div>
+          <div class="form-group d-flex justify-content-between">
+            <span>الأجر الإضافي</span>
+            <span *ngIf="myForm.get('addtionalAmount').value==null" class="colored 1">0 ر.س</span>
+            <span *ngIf="myForm.get('addtionalAmount').value!=null"
+              class="colored 2">{{myForm.get("addtionalAmount").value}} ر.س</span>
+          </div>
+          <!-- <hr> -->
+
+
+        </div>
+
+        <div *ngIf="paymentErrorMessage" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">اتمام الدفع</h5>
+                <button (click)="closePaymentDialog()" type="button" class="close" data-dismiss="modal"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-right">
+                <h6 class="reg-font">حدث خطأ أثناء اتمام الدفع برجاء اعادة المحاولة</h6>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+
+
+          <h6 class="blue-title">وسيلة الدفع</h6>
+
+
+
+          <div class="paymentOptions">
+
+            <div class=" cc-selector typeItem">
+              <input checked="checked" (change)="changePaymentWay()" id="payGate" type="radio"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="paymentWay" value="paymentgateway" />
+
+
+              <label class="drinkcard-cc bold-font line40" for="payGate">
+                <fa-icon [icon]="faCcVisa"></fa-icon>
+                البطاقة الائتمانية
+
+              </label>
+
+            </div>
+            <div class=" cc-selector typeItem">
+              <input checked="checked" (change)="changePaymentWay()" id="credit" type="radio"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="paymentWay" value="credit" />
+
+
+              <label class="drinkcard-cc bold-font line40" for="credit">
+                <fa-icon [icon]="faWallet"></fa-icon>
+                المحفظة
+                {{(clientCreditBalance).toFixed(2)}}
+
+              </label>
+
+            </div>
+            <!-- <button (click)="openAddBalanceInArticle()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding">
+              <span style="padding-left: 5px;">
+                <fa-icon [icon]="faWallet"></fa-icon>
+              </span>
+              إضافة رصيد
+            </button> -->
+
+
+          </div>
+
+
+        </div>
+
+        <div *ngIf="payWithTax">
+
+          <div class="total-container">
+
+
+
+
+
+            <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+              <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+              <span class="colored">{{finalCost}} ر.س</span>
+            </div>
+            <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+              <span>
+                ضريبة القيمة المضافة
+                <span class="m5">{{taxValue}}%</span>
+              </span>
+              <!-- {{ (projectToExport?.taxAmount).toFixed(2)}} -->
+              <span class="colored">{{(+taxValueInRial).toFixed(2)}} ر.س</span>
+            </div>
+
+            <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+              <span>
+                الإجمالي بعد إضافة ضريبة القيمة المضافة
+                <!-- <span class="m5">%{{taxValue}}</span> -->
+              </span>
+              <span class="colored">{{costAfterTax}} ر.س</span>
+            </div>
+
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+
+              <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+              <span class="colored"><s>{{finalCost}} ر.س</s></span>
+
+            </div>
+
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+              <span>الإجمالي بعد إضافة كوبون التخفيض</span>
+              <span class="colored">{{finalCostFterPromo.toFixed(2)}} ر.س</span>
+            </div>
+
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+              <span>
+                ضريبة القيمة المضافة
+                <span class="m5">{{taxValue}}%</span>
+              </span>
+              <span class="colored">{{(+taxValueInRial).toFixed(2)}} ر.س</span>
+            </div>
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+              <span>
+                الإجمالي بعد إضافة ضريبة القيمة المضافة
+                <!-- <span class="m5">%{{taxValue}}</span> -->
+              </span>
+              <span class="colored">{{costAfterTax.toFixed(2)}} ر.س</span>
+            </div>
+            <div class="text-left">
+              <button type="submit" class="btn btn-success generalBtnStyle add-project-submit mr20 normal-padding">
+                ادفع بالبطاقة
+              </button>
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+
+
+        <div *ngIf="!payWithTax">
+
+          <div class="total-container">
+
+
+
+
+
+            <div *ngIf="!promocodeadded" class="form-group d-flex justify-content-between">
+              <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+              <span class="colored">{{finalCost}} ر.س</span>
+            </div>
+
+
+
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+
+              <span>الإجمالي (التكلفة + الأجر الإضافي)</span>
+              <span class="colored"><s>{{finalCost}} ر.س</s></span>
+
+            </div>
+
+            <div *ngIf="promocodeadded" class="form-group d-flex justify-content-between">
+              <span>الإجمالي بعد إضافة كوبون التخفيض</span>
+              <span class="colored">{{finalCostFterPromo.toFixed(2)}} ر.س</span>
+            </div>
+
+            <div class=" d-flex justify-content-center">
+
+              <button type="button" (click)="addProjectFromCreditBalance()"
+                class="btn btn-success generalBtnStyle add-project-submit  normal-padding">
+                ادفع من المحفظة
+              </button>
+              <button (click)="openAddBalanceInArticle()" type="button"
+                class="btn btn-success nobg-btn auto-width-btn normal-padding mr20">
+                <span style="padding-left: 5px;">
+                  <fa-icon [icon]="faWallet"></fa-icon>
+                </span>
+                إضافة رصيد
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group justify-content-between d-flex mob-block">
+          <button (click)="stepValue = stepsCount+1;progressValue=75" type="button"
+            class="btn btn-success generalBtnStyle prev-btn-custom prev add-roject-btn normal-padding">الرجوع
+            <span>
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </span>
+          </button>
+          <div class="form-group d-flex ">
+            <button (click)="addProjectToCart()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding">
+              <span style="padding-left: 5px;">+</span>
+              أضف للسلة
+            </button>
+
+
+
+
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+
+
+      <!-- <div class="text-left">
+        <button type="submit" class="btn btn-success generalBtnStyle add-project-submit mr20 normal-padding">
+          اضافة
+        </button>
+      </div> -->
+
+
+
+
+
+
+
+
+    </form>
+
+
+
+  </div>
+  <!-- *ngIf="showAddToCartMessage" -->
+  <div *ngIf="showAddToCartMessage" class="text-center success-project m010">
+    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    <h1>طلبك الآن في السلة!</h1>
+    <p>بإمكانك طلب المزيد من المحتوى أو التوجه إلى السلة لإتمام الدفع
+    </p>
+
+
+
+    <div class="form-group  d-flex justify-content-center">
+      <button routerLink="/cart" type="button" class="btn btn-success nobg-btn auto-width-btn">
+        انتقال للسلة
+
+      </button>
+      <button (click)="newProjectAdd()" type="button" class="btn btn-success generalBtnStyle add-project-submit mr20">
+        <span style="padding-left: 5px;">+</span>
+        طلب مشروع جديد
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showSuccessMessageForWallet" class="text-center success-project">
+    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    <h1>طلبك وصل!</h1>
+    <p>تم إضافة المشروع بواسطة المحفظة</p>
+    <!-- <button routerLink="/myProjects" type="button" class="btn btn-success generalBtnStyle add-project-submit">أنتقل إلى صفحة المشاريع </button> -->
+    <!-- <a target="_blank" class="btn btn-success generalBtnStyle add-project-submit" [href]="paymentUrl">أنتقل إلى صفحة الدفع لاتمام إضافة مشروعك</a> -->
+  </div>
+
+  <div *ngIf="showSuccessMessage" class="text-center success-project">
+    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    <h1>طلبك وصل!</h1>
+    <p>سوف يتم تحويلك تلقائيا الى صفحة الدفع واتمام إضافة المشروع</p>
+    <!-- <button routerLink="/myProjects" type="button" class="btn btn-success generalBtnStyle add-project-submit">أنتقل إلى صفحة المشاريع </button> -->
+    <!-- <a target="_blank" class="btn btn-success generalBtnStyle add-project-submit" [href]="paymentUrl">أنتقل إلى صفحة الدفع لاتمام إضافة مشروعك</a> -->
+  </div>
+
+  <!-- <div *ngIf="showAddSuccessIframeContainer" class="iframe-container">
+    <div *ngIf="showLoaderIframe" class="loader">
+      <div class="cssload-container">
+        <div class="cssload-speeding-wheel"></div>
+        </div>
+    </div>
+    <div *ngIf="showSuccessMessage"  class="text-center success-project"> 
+      <fa-icon [icon]="faCheckCircle"></fa-icon>
+      <h1>طلبك وصل!</h1>
+      <p>سوف يتم تحويلك تلقائيا الى صفحة الدفع واتمام إضافة المشروع</p>
+    </div>
+    <a (click)="closeIframe()" class="close-iframe"><fa-icon [icon]='faTimes'></fa-icon></a>
+    <iframe *ngIf="showIframe"  width="100%" height="800" src="/payment">
+      
+    </iframe>
+  </div> -->
+
+
+</div>
+
+
+
+<div *ngIf="showAddJobLssThanLimit" class="modal2 custom-modal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">إضافة مشروع</h5>
+        <button (click)="closeaddLimitDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>عذرا.. الحد الأدنى للمشروع ٥ ريالات</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 
+<form   [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">   
+  <div class="container">
+
+
+
+  <div   formArrayName="files" *ngFor="let relati of uploadForm.get('files')['controls']; let i = index">
+
+    <div class="d-flex">
+
+  
+      <input class="form-control" type="file" id="formFile" accept="image/*,.pdf,.doc,.docx"   (change)="onFileSelect($event)" />
+      <input type="text" hidden name="attach" class="form-control" [formControlName]="i">
+    </div>
+</div>
+  <div>
+    <button class="btn btn-success mr10  " type="submit">Upload</button>
+  </div>
+
+
+  <ul>
+    <li *ngFor="let upload of selectedUploadedFiles;let i = index">
+      {{upload?.name}}    <button   (click)="onRemoveFile2(i)" class="btn btn-default add-remove-btn" type="button">-</button>
+
+    </li>
+
+  </ul>
+</div>
+</form> -->
+
+
+
+
+<!-- <form   [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">   
+  <div class="container">
+
+  <div>
+   
+    <div class="d-flex">
+      <input class="form-control" type="file" id="formFile" accept="image/*,.pdf,.doc,.docx"   (change)="onFileSelect($event)" />
+      <input type="text" hidden name="attach" class="form-control">
+    </div>
+</div>
+
+<ul class="upload-list">
+  <li  *ngFor="let upload of selectedUploadedFiles;let i = index">
+    {{upload?.name}}   
+     <button   (click)="onRemoveFile2(i)" class="btn btn-default add-remove-btn remove-file" type="button">
+       <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+
+  </li>
+
+</ul>
+  <div class="text-center"> 
+    <button class="btn btn-success mr10 mt10 auto-width-btn" type="submit">Upload</button>
+  </div>
+
+
+ 
+</div>
+</form>
+
+
+
+
+<div style="margin: 30px;">
+  <form [formGroup] = "uploadForm2" (ngSubmit)="onSubmit2()">      
+    <div>
+      <input type="file" name="profile" (change)="onFileSelect2($event)" />
+    </div>
+    <div>
+      <button type="submit">Upload2</button>
+    </div>
+  </form>
+</div> -->
+<!-- <div class="form-group">
+  <h6>المرفقات</h6>
+  <form   [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">   
+    <div class="container">
+  
+    <div>
+     
+      <div class="d-flex">
+        <input class="form-control" type="file" id="formFile" accept="image/*,.pdf,.doc,.docx"   (change)="onFileSelect($event)" />
+        <input type="text" hidden name="attach" class="form-control">
+      </div>
+  </div>
+  
+  <ul class="upload-list">
+    <li  *ngFor="let upload of selectedUploadedFiles;let i = index">
+      {{upload?.name}}   
+       <button   (click)="onRemoveFile2(i)" class="btn btn-default add-remove-btn remove-file" type="button">
+         <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+  
+    </li>
+  
+  </ul>
+    <div class="text-center"> 
+      <button class="btn btn-success mr10 mt10 auto-width-btn" type="submit">Upload</button>
+    </div>
+  
+  
+   
+  </div>
+  </form>
+  
+</div> -->
+
+<app-footer-inner></app-footer-inner>
+<div *ngIf="showLoader" class="loader loaderMaster">
+  <div class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+</div>
+
+
+
+<div *ngIf="paymentNotSufficient" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">إتمام الدفع بالمحفظة</h5>
+        <button (click)="closeNoBalnceValid()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+        <h6 class="reg-font">الرصيد لا يكفي</h6>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="paymentNotSufficientPost" class="modal2 custom-modal custom-modal22 addition-box" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">إتمام الدفع بالمحفظة</h5>
+        <button (click)="closeNoBalnceValidPost()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+        <h6 class="reg-font">الرصيد لا يكفي</h6>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showAddBalanceInArticle" class="billModal billModal600 noHeaderModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="closeAddBalanceInArticle()" type="button" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+
+
+        <div *ngIf="showAddBalanceBox">
+
+
+          <h6 class="project-title">
+            الرصيد الحالي
+
+            <span class="reg-font mr10">
+              {{clientCreditBalance.toFixed(2)}} ر.س
+            </span>
+
+
+          </h6>
+          <h6 class="project-title">إضافة رصيد</h6>
+
+          <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addCreditBalanceArtForm"
+            (ngSubmit)="addCreditBalanceArt()">
+
+
+
+
+
+
+            <div class="form-group">
+              <!-- <label>الرصيد</label> -->
+              <input type="number" min="0" (input)="calaculateCreditBalanceAfterTaxArt()"
+                (keypress)="preventNonNumericalInput($event)" class="form-control small-input"
+                formControlName="amount" />
+              <div *ngIf="showCreditError">
+                <span class="error-help">
+                  من فضلك الرصيد لايزيد عن 4 خانات
+                </span>
+              </div>
+              <div *ngIf="showCreditErrorLimit">
+                <span class="error-help">
+                  أقل مبلغ هو ٦ ريال
+                </span>
+              </div>
+
+            </div>
+
+
+            <div *ngIf="addCreditBalanceArtForm.valid && addCreditBalanceArtForm.get('amount').value !=0"
+              class="form-group">
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  ضريبة القيمة المضافة
+                  <span class="mr10">{{taxValueForBalance}} %</span>
+                </span>
+                <span class="colored">
+                  {{(+taxValueInRialForBalance).toFixed(2)}} ر.س
+                </span>
+              </div>
+
+
+
+
+
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الإجمالي بعد إضافة ضريبة القيمة المضافة
+                </span>
+                <span class="colored">
+                  {{(+costAfterTaxForBalance).toFixed(2)}} ر.س
+                </span>
+              </div>
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الرصيد بعد إضافة المبلغ
+                </span>
+                <span class="colored">
+                  {{(+(clientCreditBalance  + addCreditBalanceArtForm.get("amount").value ).toFixed(2))}}
+                  ر.س
+                </span>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+            <div class="text-center form-group">
+              <button [disabled]="!addCreditBalanceArtForm.valid" type="submit" class="btn btn-success">إضافة</button>
+            </div>
+
+
+
+
+          </form>
+        </div>
+        <div *ngIf="showAddBalanceError">
+          <p>حدث خطأ أثناء إضافة الرصيد برجاء اعادة المحاولة</p>
+        </div>
+
+        <div *ngIf="showAddBalanceSuccess">
+          <p>سيتم تحويلك تلقائيا إلى صفحة الدفع لإتمام العملية</p>
+        </div>
+        <div *ngIf="showAddtoCartBox">
+
+          <h6 class="project-title">أنت الآن بصدد إضافة رصيد للمحفظة </h6>
+          <p>سيتم إضافة المشروع إلى السلة وتحويلك إلى صفحة الدفع , هل ترغب بالاستمرار ؟
+          </p>
+
+          <div class="form-group d-flex justify-content-center ">
+            <button (click)="addProjectToCartBeforLeave()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding">
+              <span style="padding-left: 5px;">+</span>
+              أستمرار
+            </button>
+
+            <button (click)="ignoreProjectCartBeforLeaveArt()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding mr10">
+              تجاهل
+            </button>
+
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showAddBalanceInPost" class="billModal billModal600 noHeaderModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="closeAddBalanceInPost()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+
+
+        <div *ngIf="showAddBalanceBox">
+
+
+          <h6 class="project-title">
+            الرصيد الحالي
+
+            <span class="reg-font mr10">
+              {{clientCreditBalance.toFixed(2)}} ر.س
+            </span>
+
+
+          </h6>
+          <h6 class="project-title">إضافة رصيد</h6>
+
+          <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addCreditBalancePostForm"
+            (ngSubmit)="addCreditBalancePost()">
+
+
+
+
+
+
+            <div class="form-group">
+              <!-- <label>الرصيد</label> -->
+              <input type="number" min="0" (input)="calaculateCreditBalanceAfterTaxPost()"
+                (keypress)="preventNonNumericalInput($event)" class="form-control small-input"
+                formControlName="amount" />
+              <div *ngIf="showCreditError">
+                <span class="error-help">
+                  من فضلك الرصيد لايزيد عن 4 خانات
+                </span>
+              </div>
+              <div *ngIf="showCreditErrorLimit">
+                <span class="error-help">
+                  أقل مبلغ هو ٦ ريال
+                </span>
+              </div>
+
+            </div>
+
+
+            <div *ngIf="addCreditBalancePostForm.valid && addCreditBalancePostForm.get('amount').value !=0"
+              class="form-group">
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  ضريبة القيمة المضافة
+                  <span class="mr10">{{taxValueForBalance}} %</span>
+                </span>
+                <span class="colored">
+                  {{(+taxValueInRialForBalance).toFixed(2)}} ر.س
+                </span>
+              </div>
+
+              <!-- <h6 class="project-title">
+              ضريبة القيمة المضافة
+
+              <span class="reg-font mr10">
+                {{taxValue}} %
+              </span>
+              <span class="mr10">
+                {{taxValueInRial}} ر.س
+              </span>
+
+
+            </h6> -->
+
+
+
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الإجمالي بعد إضافة ضريبة القيمة المضافة
+                </span>
+                <span class="colored">{{+costAfterTaxForBalance.toFixed(2)}} ر.س</span>
+              </div>
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الرصيد بعد إضافة المبلغ
+                </span>
+                <span class="colored">
+                  {{(+(clientCreditBalance  + addCreditBalancePostForm.get("amount").value )).toFixed(2)}}
+                  ر.س
+                </span>
+              </div>
+
+              <!-- <h6 class="project-title">
+              الإجمالي بعد إضافة ضريبة القيمة المضافة
+
+              <span class="mr10">
+                {{costAfterTax}} ر.س
+              </span>
+
+
+            </h6> -->
+
+
+
+
+            </div>
+
+
+
+
+            <div class="text-center form-group">
+              <button [disabled]="!addCreditBalancePostForm.valid" type="submit" class="btn btn-success">إضافة</button>
+            </div>
+
+
+
+
+          </form>
+        </div>
+        <div *ngIf="showAddBalanceError">
+          <p>حدث خطأ أثناء إضافة الرصيد برجاء اعادة المحاولة</p>
+        </div>
+
+        <div *ngIf="showAddBalanceSuccess">
+          <p>سيتم تحويلك تلقائيا إلى صفحة الدفع لإتمام العملية</p>
+        </div>
+        <div *ngIf="showAddtoCartBox">
+
+          <h6 class="project-title">أنت الآن بصدد إضافة رصيد للمحفظة </h6>
+          <p>سيتم إضافة المشروع إلى السلة وتحويلك إلى صفحة الدفع , هل ترغب بالاستمرار ؟
+          </p>
+
+          <div class="form-group d-flex justify-content-center ">
+            <button (click)="addPostToCartBeforLeave()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding">
+              <span style="padding-left: 5px;">+</span>
+              استمرار
+            </button>
+
+            <button (click)="ignoreProjectCartBeforLeavePost()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding mr10">
+              تجاهل
+            </button>
+
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showAddBalanceInProDesc" class="billModal billModal600 noHeaderModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="closeAddBalanceInProDesc()" type="button" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+
+
+        <div *ngIf="showAddBalanceBox">
+
+
+          <h6 class="project-title">
+            الرصيد الحالي
+
+            <span class="reg-font mr10">
+              {{clientCreditBalance.toFixed(2)}}} ر.س
+            </span>
+
+
+          </h6>
+          <h6 class="project-title">إضافة رصيد</h6>
+
+          <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addCreditBalanceProDescForm"
+            (ngSubmit)="addCreditBalanceProDesc()">
+
+
+
+
+
+
+            <div class="form-group">
+              <!-- <label>الرصيد</label> -->
+              <input type="number" min="0" (input)="calaculateCreditBalanceAfterTaxProDesc()"
+                (keypress)="preventNonNumericalInput($event)" class="form-control small-input"
+                formControlName="amount" />
+              <div *ngIf="showCreditError">
+                <span class="error-help">
+                  من فضلك الرصيد لايزيد عن 4 خانات
+                </span>
+              </div>
+              <div *ngIf="showCreditErrorLimit">
+                <span class="error-help">
+                  أقل مبلغ هو ٦ ريال
+                </span>
+              </div>
+
+            </div>
+
+
+            <div *ngIf="addCreditBalanceProDescForm.valid && addCreditBalanceProDescForm.get('amount').value !=0"
+              class="form-group">
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  ضريبة القيمة المضافة
+                  <span class="mr10">{{taxValueForBalance}} %</span>
+                </span>
+                <span class="colored">
+                  {{(+taxValueInRialForBalance).toFixed(2)}} ر.س
+                </span>
+              </div>
+
+              <!-- <h6 class="project-title">
+              ضريبة القيمة المضافة
+
+              <span class="reg-font mr10">
+                {{taxValue}} %
+              </span>
+              <span class="mr10">
+                {{taxValueInRial}} ر.س
+              </span>
+
+
+            </h6> -->
+
+
+
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الإجمالي بعد إضافة ضريبة القيمة المضافة
+                </span>
+                <span class="colored">{{+costAfterTaxForBalance.toFixed(2)}} ر.س</span>
+              </div>
+              <div class="form-group d-flex justify-content-between">
+                <span>
+                  الرصيد بعد إضافة المبلغ
+                </span>
+                <span class="colored">
+                  {{(+(clientCreditBalance  + addCreditBalanceProDescForm.get("amount").value )).toFixed(2)}}
+                  ر.س
+                </span>
+              </div>
+
+              <!-- <h6 class="project-title">
+              الإجمالي بعد إضافة ضريبة القيمة المضافة
+
+              <span class="mr10">
+                {{costAfterTax}} ر.س
+              </span>
+
+
+            </h6> -->
+
+
+
+
+            </div>
+
+
+
+
+            <div class="text-center form-group">
+              <button [disabled]="!addCreditBalanceProDescForm.valid" type="submit"
+                class="btn btn-success">إضافة</button>
+            </div>
+
+
+
+
+          </form>
+        </div>
+        <div *ngIf="showAddBalanceError">
+          <p>حدث خطأ أثناء إضافة الرصيد برجاء اعادة المحاولة</p>
+        </div>
+
+        <div *ngIf="showAddBalanceSuccess">
+          <p>سيتم تحويلك تلقائيا إلى صفحة الدفع لإتمام العملية</p>
+        </div>
+        <div *ngIf="showAddtoCartBox">
+
+          <h6 class="project-title">أنت الآن بصدد إضافة رصيد للمحفظة </h6>
+          <p>سيتم إضافة المشروع إلى السلة وتحويلك إلى صفحة الدفع , هل ترغب بالاستمرار ؟
+          </p>
+
+          <div class="form-group d-flex justify-content-center ">
+            <button (click)="addProDescToCartBeforLeave()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding">
+              <span style="padding-left: 5px;">+</span>
+              استمرار
+            </button>
+
+            <button (click)="ignoreProjectCartBeforLeaveProDesc()" type="button"
+              class="btn btn-success nobg-btn auto-width-btn normal-padding mr10">
+              تجاهل
+            </button>
+
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

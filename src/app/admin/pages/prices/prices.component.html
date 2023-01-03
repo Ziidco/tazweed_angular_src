@@ -1,0 +1,531 @@
+<div class="main-content p-4">
+  <div *ngIf="showError" class="container" style="margin-top:20px;">
+    <div class="text-center noProjectsMessage">
+      <fa-icon [icon]="faMoneyBillWave"></fa-icon>
+      <h4>حدث خطأ أثناء استرجاع الاسعار قم باعادة تحميل الصفحة</h4>
+    </div>
+
+  </div>
+
+  <div class="d-flex  align-items-center">
+    <h6 class="project-title m-0 mr-2 ml-2">اختر الخدمة</h6>
+    <select (change)="filterPrices()" style="max-width: 50%;" class="form-control" [(ngModel)]="selectedService">
+      <option *ngFor="let type of jobTypes" [value]="type?.nameEn">
+        {{type?.name}}
+      </option>
+
+    </select>
+  </div>
+  <!-- *ngFor="let mainPrice of mainprojectConfig"  -->
+  <div *ngIf="showPriceTable" class="newPricesContainer">
+
+
+    <div class="price-item">
+      <h6 class="project-title small-title">{{selectedServiceAr}}</h6>
+
+
+      <div class="form-group">
+        <div class="mb-10 add-project-container" *ngFor="let config of selectedPriceObject">
+          <div>
+            <div class="d-flex justify-content-between">
+              <div>
+                <label>اسم الباقة</label>
+                <h6>{{config.name}}</h6>
+                <!-- <input class="form-control" type="text" placeholder="اسم الباقة" [value]="config.name" /> -->
+              </div>
+
+              <div>
+                <label>الوحدة</label>
+                <h6>{{config.quantityUnit}}</h6>
+              </div>
+              <div>
+                <label>الكمية</label>
+                <h6>{{config.quantity}}</h6>
+                <!-- <input class="form-control" type="number" placeholder="quantity" [value]="config.quantity" /> -->
+              </div>
+              <div>
+                <label>التكلفة</label>
+                <h6>{{config.amount}}</h6>
+                <!-- <input class="form-control" type="number" placeholder="amount" [value]="config.amount" /> -->
+              </div>
+            </div>
+
+
+
+
+            <div>
+              <h6 class="project-title small-title">الباقات</h6>
+
+
+              <div class="m-3 add-project-container" *ngFor="let deliver of config.deliver ">
+                <div class="d-flex justify-content-between">
+                  <!-- <span>index {{skillIndex}}</span> -->
+                  <!-- <input class="form-control" disapled [value]="skillIndex" placeholder="ID" type="text"
+                  formControlName="id" /> -->
+
+
+
+                  <div>
+                    <label>الوحدة</label>
+                    <h6>{{deliver.unit}}</h6>
+                    <!-- <input class="form-control" placeholder="الوحدة" type="text" [value]="deliver.unit" /> -->
+                  </div>
+
+                  <div>
+                    <label>المدة</label>
+                    <h6>{{deliver.duration}}</h6>
+                    <!-- <input class="form-control" type="text" placeholder="المدة" [value]="deliver.duration" /> -->
+                  </div>
+                  <div>
+                    <label>التكلفة</label>
+                    <h6>{{deliver.amount}}</h6>
+                    <!-- <input class="form-control" placeholder="الكمية" type="text" [value]="deliver.amount" /> -->
+                  </div>
+
+
+
+
+
+
+
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="text-left">
+
+            <button (click)="openEditDialog(config)" type="button" class="btn btn-success auto-width-btn admin-btn">
+              <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+              تعديل
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- <table class="table table-bordered">
+
+ 
+    <thead> 
+      <tr>
+        <th scope="col">الاسم</th>
+        <th scope="col">عدد الحروف</th>
+        <th scope="col">التكلفة</th>
+        <th scope="col">اليوم الواحد</th>
+        <th scope="col">يومين</th>
+        <th scope="col">ثلاثة ايام</th>
+        <th *ngIf="takeActionsPrivilage"></th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let config of selectedPriceObject">
+        <td>{{config.name}}</td>
+        <td>
+          <input type="number" [value]="config.quantity" class="form-control edit-text" #size />
+        </td>
+        <td>
+          <input type="number" [value]="config.amount" class="form-control edit-text" #amount />
+        </td>
+        <td>
+          <input type="number" [value]="config.day1" class="form-control edit-text" #day1 />
+        </td>
+        <td>
+          <input type="number" [value]="config.day2" class="form-control edit-text" #day2 />
+        </td>
+        <td>
+          <input type="number" [value]="config.day3" class="form-control edit-text" #day3 />
+        </td>
+        <td *ngIf="takeActionsPrivilage" class="text-center">
+          <button (click)="editJobConfig(size,amount,day1,day2,day3,config)" type="button"
+            class="btn btn-success auto-width-btn admin-btn">
+            <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+            تعديل
+          </button>
+        </td>
+
+
+      </tr>
+
+
+
+    </tbody>
+  </table> -->
+  </div>
+
+
+  <!-- <h6 class="project-title admin-price-title">المقالات</h6>
+<table class="table table-bordered">
+
+ 
+    <thead> 
+      <tr>
+        <th scope="col">الاسم</th>
+        <th scope="col">عدد الحروف</th>
+        <th scope="col">التكلفة</th>
+        <th scope="col">اليوم الواحد</th>
+        <th scope="col">يومين</th>
+        <th scope="col">ثلاثة ايام</th>
+        <th *ngIf="takeActionsPrivilage"></th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let config of projectConfig">
+        <td>{{config.name}}</td>
+        <td>
+          <input type="number" [value]="config.quantity" class="form-control edit-text" #size />
+        </td>
+        <td>
+          <input type="number" [value]="config.amount" class="form-control edit-text" #amount />
+        </td>
+        <td>
+          <input type="number" [value]="config.day1" class="form-control edit-text" #day1 />
+        </td>
+        <td>
+          <input type="number" [value]="config.day2" class="form-control edit-text" #day2 />
+        </td>
+        <td>
+          <input type="number" [value]="config.day3" class="form-control edit-text" #day3 />
+        </td>
+        <td *ngIf="takeActionsPrivilage" class="text-center">
+          <button (click)="editJobConfig(size,amount,day1,day2,day3,config)" type="button"
+            class="btn btn-success auto-width-btn admin-btn">
+            <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+            تعديل
+          </button>
+        </td>
+
+
+      </tr>
+
+
+
+    </tbody>
+  </table>
+
+
+
+
+  <h6 class="project-title admin-price-title">المنشورات</h6>
+<table class="table table-bordered">
+
+
+    <thead> 
+      <tr>
+        <th scope="col">الاسم</th>
+        <th scope="col">عدد المنشورات</th>
+        <th scope="col">التكلفة</th>
+        <th scope="col">اليوم الواحد</th>
+        <th scope="col">يومين</th>
+        <th scope="col">ثلاثة ايام</th>
+        <th *ngIf="takeActionsPrivilage"></th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of postConfig">
+        <td *ngIf="post.id==1">منشور قصير</td>
+        <td *ngIf="post.id==2">منشور متوسط</td>
+        <td *ngIf="post.id==3">منشور طويل</td>
+        <td>
+          <input type="number" [value]="post.quantity" class="form-control edit-text" #quantity />
+        </td>
+        <td>
+          <input type="number" [value]="post.amount" class="form-control edit-text" #amount />
+        </td>
+        <td>
+          <input type="number" [value]="post.day1" class="form-control edit-text" #day1 />
+        </td>
+        <td>
+          <input type="number" [value]="post.day2" class="form-control edit-text" #day2 />
+        </td>
+        <td>
+          <input type="number" [value]="post.day3" class="form-control edit-text" #day3 />
+        </td>
+
+        <td *ngIf="takeActionsPrivilage" class="text-center">
+          <button (click)="editPostConfig(quantity,amount,day1,day2,day3,post)" type="button"
+            class="btn btn-success auto-width-btn admin-btn">
+            <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+            تعديل
+          </button>
+        </td>
+
+
+      </tr>
+
+
+
+    </tbody>
+  </table>
+
+
+  <h6 class="project-title admin-price-title">وصف المنتج</h6>
+<table class="table table-bordered">
+
+
+    <thead> 
+      <tr>
+        <th scope="col">الاسم</th>
+        <th scope="col">عدد الأوصاف</th>
+        <th scope="col">التكلفة</th>
+        <th scope="col">اليوم الواحد</th>
+        <th scope="col">يومين</th>
+        <th scope="col">ثلاثة ايام</th>
+        <th *ngIf="takeActionsPrivilage"></th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of productDescriptionConfig">
+        <td *ngIf="post.quantity==1">وصف منتج قصير</td>
+        <td *ngIf="post.quantity==2">وصف منتج متوسط</td>
+        <td *ngIf="post.quantity==3">وصف منتج طويل</td>
+        <td>
+          <input type="number" [value]="post.quantity" class="form-control edit-text" #quantity />
+        </td>
+        <td>
+          <input type="number" [value]="post.amount" class="form-control edit-text" #amount />
+        </td>
+        <td>
+          <input type="number" [value]="post.day1" class="form-control edit-text" #day1 />
+        </td>
+        <td>
+          <input type="number" [value]="post.day2" class="form-control edit-text" #day2 />
+        </td>
+        <td>
+          <input type="number" [value]="post.day3" class="form-control edit-text" #day3 />
+        </td>
+        <td *ngIf="takeActionsPrivilage" class="text-center">
+          <button (click)="editProductDescConfig(quantity,amount,day1,day2,day3,post)" type="button"
+            class="btn btn-success auto-width-btn admin-btn">
+            <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+            تعديل
+          </button>
+        </td>
+
+
+      </tr>
+
+
+
+    </tbody>
+  </table> -->
+
+
+
+
+  <div *ngIf="showEditSuccess" class="modal2 custom-modal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">تعديل الاسعار</h5>
+          <button (click)="closeSuccessDlg()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>تم تعديل الاسعار بنجاح</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showEditFail" class="modal2 custom-modal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">تعديل الاسعار</h5>
+          <button (click)="closeFailDlg()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>خطأ أثناء تعديل الاسعار</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div *ngIf="showLoader" class="loader loaderMaster">
+    <div class="cssload-container">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="editModeDynamic" class="billModal r60" role="dialog">
+  <div class="modal-dialog w900" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">تعديل الاسعار </h5>
+        <button (click)="closeEditDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p0 text-right">
+
+        <!-- <pre>{{priceToEdit | json}}</pre> -->
+        <!-- <form (keydown.enter)="$event.preventDefault()" [(formGroup)]="addRatingForPartnerForm"
+          (ngSubmit)="addRateForPartner()">
+          <div class="stars-block">
+
+
+            <ngb-rating max="5" formControlName="rate" [(rate)]="currentRate">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+
+
+          </div>
+          <div class="rate-result-container">
+            <p class="rate-result" *ngIf="currentRate==1">سيئة</p>
+            <p class="rate-result" *ngIf="currentRate==2">مقبولة</p>
+            <p class="rate-result" *ngIf="currentRate==3">جيدة</p>
+            <p class="rate-result" *ngIf="currentRate==4">جيدة جداً</p>
+            <p class="rate-result" *ngIf="currentRate==5">ممتازة</p>
+          </div>
+
+
+          <textarea formControlName="comment" class="form-control m20" placeholder="ضع تعليقك من فضلك "></textarea>
+          <div>
+            <span class="error-help"
+              *ngIf="!addRatingForPartnerForm.get('comment').valid && addRatingForPartnerForm.get('comment').touched">
+              <fa-icon [icon]="faExclamationCircle"></fa-icon>
+              نسيت التعليق!
+            </span>
+          </div>
+          <div><button [disabled]="!addRatingForPartnerForm.valid" type="submit"
+              class="btn btn-success app-button full-width-btn">إرسال التقييم</button></div>
+        </form> -->
+
+
+
+        <div class="form-group">
+          <form (keydown.enter)="$event.preventDefault()" (ngSubmit)="editJobConfigDynamic()"
+            [(formGroup)]="priceFormDynamic">
+
+
+            <div class="mb-10 add-project-container">
+              <div>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <label>اسم الباقة</label>
+                    <input class="form-control" type="text" placeholder="اسم الباقة" formControlName="name" />
+                  </div>
+                  <div>
+                    <label>الوحدة</label>
+                    <input class="form-control" type="text" placeholder="الوحدة" formControlName="quantityUnit" />
+                  </div>
+
+                  <div>
+                    <label>الكمية</label>
+                    <input class="form-control" type="number" placeholder="quantity" formControlName="quantity" />
+                  </div>
+                  <div>
+                    <label>التكلفة</label>
+                    <input class="form-control" type="number" placeholder="amount" formControlName="amount" />
+                  </div>
+                </div>
+
+
+
+
+                <div>
+                  <h6 class="project-title small-title">الباقات</h6>
+
+
+                  <div formArrayName="deliver">
+                    <div class="m-3 add-project-container" *ngFor="let price of Deliver().controls; let emIndex=index">
+                      <div [formGroupName]="emIndex" class="d-flex justify-content-between">
+
+
+
+
+                        <div>
+                          <label>الوحدة</label>
+                          <!-- <input class="form-control" placeholder="الوحدة" type="text" formControlName="unit" /> -->
+
+
+                          <select class="form-control" formControlName="unit">
+                            <option value="يوم">يوم</option>
+                            <option value="اسبوع">اسبوع</option>
+                            <option value="شهر">شهر</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label>المدة</label>
+                          <input class="form-control" type="number" placeholder="المدة" formControlName="duration" />
+                        </div>
+                        <div>
+                          <label>التكلفة</label>
+                          <input class="form-control" placeholder="الكمية" type="number" formControlName="amount" />
+                        </div>
+
+
+
+
+
+
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <!-- <div class="" formArrayName="deliver"
+              *ngFor="let relati of priceFormDynamic.get('deliver')['controls']; let i = index">
+              <div class="relevants" [formGroupName]="i">
+                <div class="form-group row">
+                  <div class="">
+                    <input type="text" name="unit" class="form-control" formControlName="unit"
+                      placeholder="unit" />
+                  </div>
+        
+                
+                </div>
+              </div>
+            </div> -->
+
+
+                </div>
+
+
+              </div>
+
+              <button (click)="editJobConfigDynamic()" type="submit" class="btn btn-success auto-width-btn admin-btn">
+                <fa-icon class="ml5" [icon]="faCheck"></fa-icon>
+                حفظ
+              </button>
+            </div>
+          </form>
+
+          <h1 *ngIf="editSuccess">تم التعديل</h1>
+          <h1 *ngIf="editFail">خطأ أثناء التعديل</h1>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="main-content p-30">
+    <h6 class="">
+        حسابات   {{accName}} 
+    </h6>
+
+
+<h6 class="text-center" *ngIf="allBalanceTempletes?.length==0">
+    لاتوجد حسابات 
+</h6>
+  <table *ngIf="allBalanceTempletes?.length>0" class="table table-bordered">
+    <thead>
+      <tr>
+
+        <th scope="col">النوع</th>
+        <th scope="col">اسم الحساب</th>
+        <th scope="col">بريد بايبال</th>
+        <th scope="col">اسم البنك</th>
+        <th scope="col">رقم الحساب</th>
+        <th scope="col">رقم الآيبان</th>
+        <th scope="col">اسم صاحب الحساب</th>
+        <th scope="col">تاريخ الاضافة</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Balance of allBalanceTempletes">
+        <td>{{Balance?.type}}</td>
+        <td>{{Balance?.aliasName}}</td>
+        <td>{{Balance?.paypalEmail}}</td>
+        <td>{{Balance?.bankName}}</td>
+        <td>{{Balance?.accountNumber}}</td>
+        <td>{{Balance?.ibanNumber}}</td>
+        <td>{{Balance?.accountName}}</td>
+        <td>{{Balance?.createdAt | date}}</td>
+    
+
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showLoader" class="loader loaderMaster">
+    <div class="cssload-container">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
+  </div>
